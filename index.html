@@ -7,14 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@1,700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<!-- Firebase SDK v8 Compat -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
   --gold:#c8962c;--gold-light:#e8b84b;--gold-bright:#f5d060;
   --gold-dark:#8b5e0a;--gold-pale:#fffbe0;--bg-deep:#07060a;
@@ -23,38 +19,23 @@
   --accent-green-dim:rgba(74,220,32,.15);--red:#cc2222;
   --blue:#1a6aff;--txt-dim:rgba(200,180,140,.55);
 }
-
 body{
   font-family:'Cinzel',serif;background-color:var(--bg-deep);
   background-image:url('https://cdn.areabermain.club/assets/cdn/az7/2026/06/13/20260613/6440b79d16d7215decaa0bf5a2f9f1a0/8e35011e-6793-4bfc-ba03-ac317c74beca.png');
   background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;
   display:flex;justify-content:center;min-height:100vh;padding:20px;overflow-x:hidden;
 }
-
 .ambient-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:.12;animation:orbFloat 18s ease-in-out infinite alternate;}
 .ambient-orb.a{width:420px;height:420px;background:radial-gradient(circle,#c8962c,transparent 70%);top:-80px;left:-100px;animation-duration:22s;}
 .ambient-orb.b{width:350px;height:350px;background:radial-gradient(circle,#8b5e0a,transparent 70%);bottom:-60px;right:-80px;animation-duration:16s;animation-delay:-5s;}
 .ambient-orb.c{width:260px;height:260px;background:radial-gradient(circle,#e8b84b,transparent 70%);top:40%;left:50%;animation-duration:20s;animation-delay:-10s;}
 @keyframes orbFloat{0%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.08);}66%{transform:translate(-20px,30px) scale(.94);}100%{transform:translate(15px,-15px) scale(1.03);}}
-
 .main-layout{display:flex;gap:18px;align-items:flex-start;width:100%;max-width:1240px;position:relative;z-index:1;}
 .cw{flex-shrink:0;}
-
-#card{
-  width:960px;height:960px;position:relative;overflow:hidden;
-  border-radius:6px;
-  box-shadow:0 0 0 1px rgba(200,150,44,.15),0 8px 40px rgba(0,0,0,.6),0 0 80px rgba(200,150,44,.06);
-}
+#card{width:960px;height:960px;position:relative;overflow:hidden;border-radius:6px;box-shadow:0 0 0 1px rgba(200,150,44,.15),0 8px 40px rgba(0,0,0,.6),0 0 80px rgba(200,150,44,.06);}
 #card-bg{position:absolute;top:0;left:0;width:960px;height:960px;object-fit:fill;z-index:0;pointer-events:none;}
-
 .side-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:10px;position:sticky;top:20px;}
-
-.panel-box{
-  width:100%;background:var(--bg-panel);border:1px solid var(--border-gold);
-  border-radius:14px;overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  box-shadow:0 4px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(200,150,44,.08);
-}
-
+.panel-box{width:100%;background:var(--bg-panel);border:1px solid var(--border-gold);border-radius:14px;overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(200,150,44,.08);}
 .panel-header{display:flex;align-items:center;justify-content:center;padding:12px 16px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
 .panel-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,150,44,.06),transparent 60%);pointer-events:none;}
 .panel-header.open{border-bottom-color:var(--border-gold);}
@@ -62,9 +43,7 @@ body{
 .panel-header h3{color:var(--gold-light);font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-align:center;position:relative;z-index:1;}
 .panel-header .arrow{color:var(--gold);font-size:11px;transition:transform .3s cubic-bezier(.4,0,.2,1);flex-shrink:0;margin-left:8px;}
 .panel-header.open .arrow{transform:rotate(180deg);}
-.panel-header.static{cursor:default;}
-.panel-header.static .arrow{display:none;}
-
+.panel-header.static{cursor:default;}.panel-header.static .arrow{display:none;}
 .panel-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
 .panel-body.open{max-height:700px;overflow-y:auto;}
 .panel-body::-webkit-scrollbar{width:4px;}
@@ -73,31 +52,22 @@ body{
 .panel-body::-webkit-scrollbar-thumb:hover{background:rgba(200,150,44,.5);}
 .panel-body.always-open{max-height:none;overflow:visible;padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
 .panel-body.padded{padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
-
 .cg{display:flex;flex-direction:column;gap:3px;}
 .cg label{color:var(--gold);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:.85;}
 .cg input,.cg select{background:rgba(10,8,4,.7);border:1px solid var(--border-gold);border-radius:8px;color:#f0e6d0;padding:8px 10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;width:100%;transition:border-color .2s,box-shadow .2s,background .2s;letter-spacing:.5px;}
 .cg input:focus,.cg select:focus{outline:none;border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.12);background:rgba(10,8,4,.9);}
 .cg input::placeholder{color:var(--txt-dim);font-size:11px;}
 .cg select option{background:#1a1408;color:#f0e6d0;}
-
-input[type="color"]{
-  -webkit-appearance:none;-moz-appearance:none;appearance:none;
-  border:1px solid var(--border-gold);border-radius:8px;
-  width:100%;height:38px;padding:4px;cursor:pointer;
-  background:rgba(10,8,4,.7);transition:border-color .2s,box-shadow .2s;
-}
+input[type="color"]{-webkit-appearance:none;-moz-appearance:none;appearance:none;border:1px solid var(--border-gold);border-radius:8px;width:100%;height:38px;padding:4px;cursor:pointer;background:rgba(10,8,4,.7);transition:border-color .2s,box-shadow .2s;}
 input[type="color"]:hover{border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.1);}
 input[type="color"]::-webkit-color-swatch-wrapper{padding:3px;}
 input[type="color"]::-webkit-color-swatch{border:none;border-radius:5px;}
 input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
-
 .btn-row{display:flex;flex-direction:column;gap:6px;margin-top:2px;}
 .btn{border:none;border-radius:10px;padding:10px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .25s cubic-bezier(.4,0,.2,1);width:100%;position:relative;overflow:hidden;}
 .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,transparent 50%);pointer-events:none;}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.4);}
 .btn:active{transform:translateY(0) scale(.98);box-shadow:0 2px 8px rgba(0,0,0,.3);}
-
 .btn-g{background:linear-gradient(135deg,#a67c1a,#e8b84b,#c8962c);color:#0a0800;}
 .btn-g:hover{background:linear-gradient(135deg,#b8880e,#f0c45a,#d4a030);}
 .btn-r{background:linear-gradient(135deg,#7a0a0a,#cc2222,#9a1515);color:#fff;}
@@ -109,12 +79,9 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 .btn-reset{background:transparent;color:var(--txt-dim);border:1px dashed rgba(200,150,44,.25);font-size:9px;padding:8px 14px;}
 .btn-reset:hover{color:var(--red);border-color:var(--red);background:rgba(204,34,34,.08);transform:translateY(-1px);}
 .btn-sm{padding:7px 10px;font-size:8px;letter-spacing:1px;}
-
 .gt{font-family:'Cinzel Decorative',serif;font-weight:900;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;display:block;white-space:nowrap;}
 .gt-syair{font-family:'Playfair Display',serif;font-style:italic;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;text-align:center;}
-
 .dl-mode .gt,.dl-mode .gt-syair{background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#e8c84a;background-clip:unset;color:#e8c84a;text-shadow:0 2px 8px rgba(0,0,0,.95);filter:none;}
-
 .el{position:absolute;z-index:10;cursor:move;user-select:none;transition:outline-color .15s;}
 .el:hover{outline:1.5px dashed rgba(100,220,40,.6);}
 .el.active{outline:2px solid rgba(100,220,40,1);z-index:50;}
@@ -123,31 +90,19 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 .el-ctrl button{background:rgba(200,150,44,.12);border:1px solid rgba(200,150,44,.3);color:#e8b84b;font-size:10px;border-radius:5px;padding:3px 7px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600;line-height:1;transition:background .15s,border-color .15s;}
 .el-ctrl button:hover{background:rgba(200,150,44,.35);border-color:rgba(200,150,44,.6);}
 .el-ctrl .sv{color:var(--accent-green);font-size:9px;min-width:26px;text-align:center;font-family:'Outfit',sans-serif;font-weight:600;}
-
 .rh{position:absolute;bottom:-6px;right:-6px;width:14px;height:14px;background:var(--accent-green);border:2px solid rgba(0,0,0,.5);border-radius:50%;cursor:se-resize;opacity:0;transition:opacity .15s,transform .15s;box-shadow:0 0 8px rgba(74,220,32,.4);}
 .el:hover .rh,.el.active .rh{opacity:1;}
 .rh:hover{transform:scale(1.3);}
-
 #toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,rgba(10,40,10,.95),rgba(20,80,20,.95));color:#b8ff80;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;padding:12px 28px;border-radius:12px;border:1px solid rgba(0,204,68,.3);z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;pointer-events:none;opacity:0;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.5);}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
-
 #dl-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:18px;backdrop-filter:blur(8px);}
 #dl-overlay.show{display:flex;}
 #dl-overlay p{color:var(--gold-light);font-family:'Outfit',sans-serif;font-size:14px;letter-spacing:2px;font-weight:600;}
 .spinner{width:48px;height:48px;border:3px solid rgba(200,150,44,.15);border-top-color:var(--gold-light);border-radius:50%;animation:spin .7s linear infinite;box-shadow:0 0 20px rgba(200,150,44,.15);}
 @keyframes spin{to{transform:rotate(360deg);}}
-
 .version-badge{text-align:center;padding:6px;color:var(--txt-dim);font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;}
 .panel-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:3px 0;}
-
-/* Status bar sync */
-.sync-bar{
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:6px 10px;font-family:'Outfit',sans-serif;font-size:8px;
-  letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;
-  background:rgba(10,8,4,.5);border:1px solid rgba(200,150,44,.15);
-  transition:all .3s;
-}
+.sync-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 10px;font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;background:rgba(10,8,4,.5);border:1px solid rgba(200,150,44,.15);transition:all .3s;}
 .sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:background .3s;}
 .sync-dot.online{background:#4adc20;box-shadow:0 0 6px rgba(74,220,32,.5);}
 .sync-dot.offline{background:#cc2222;box-shadow:0 0 6px rgba(204,34,34,.5);}
@@ -160,128 +115,73 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 </style>
 </head>
 <body>
-
 <div class="ambient-orb a"></div>
 <div class="ambient-orb b"></div>
 <div class="ambient-orb c"></div>
-
 <div class="main-layout">
-
   <div class="cw"><div id="card">
     <img id="card-bg" src="https://files.catbox.moe/2ig1k5.png" crossorigin="anonymous" alt="">
-
     <div class="el" id="el-logo" style="top:56px;left:341px;">
-      <div class="el-ctrl">
-        <button onclick="rz('el-logo','w',-10)">W-</button><span class="sv" id="sv-lw">283</span><button onclick="rz('el-logo','w',10)">W+</button>
-        <button onclick="rz('el-logo','h',-10)">H-</button><span class="sv" id="sv-lh">89</span><button onclick="rz('el-logo','h',10)">H+</button>
-      </div>
+      <div class="el-ctrl"><button onclick="rz('el-logo','w',-10)">W-</button><span class="sv" id="sv-lw">283</span><button onclick="rz('el-logo','w',10)">W+</button><button onclick="rz('el-logo','h',-10)">H-</button><span class="sv" id="sv-lh">89</span><button onclick="rz('el-logo','h',10)">H+</button></div>
       <img id="logo-img" src="https://i.postimg.cc/BZCrMVJ8/togelon-1.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="LOGO" style="width:283px;height:89px;object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));">
       <div class="rh" data-el="el-logo"></div>
     </div>
-
     <div class="el" id="el-date" style="top:180px;left:352px;">
-      <div class="el-ctrl">
-        <button onclick="fs('date-txt',-1)">A-</button><span class="sv" id="sv-dfs">36</span><button onclick="fs('date-txt',1)">A+</button>
-      </div>
+      <div class="el-ctrl"><button onclick="fs('date-txt',-1)">A-</button><span class="sv" id="sv-dfs">36</span><button onclick="fs('date-txt',1)">A+</button></div>
       <span id="date-txt" class="gt" style="font-size:36px;letter-spacing:2px;">12 JULI 2026</span>
       <div class="rh" data-el="el-date"></div>
     </div>
-
     <div class="el" id="el-pasaran" style="top:215px;left:387px;">
-      <div class="el-ctrl">
-        <button onclick="rz('el-pasaran','w',-10)">W-</button><span class="sv" id="sv-pw">220</span><button onclick="rz('el-pasaran','w',10)">W+</button>
-        <button onclick="rz('el-pasaran','h',-10)">H-</button><span class="sv" id="sv-ph">138</span><button onclick="rz('el-pasaran','h',10)">H+</button>
-      </div>
+      <div class="el-ctrl"><button onclick="rz('el-pasaran','w',-10)">W-</button><span class="sv" id="sv-pw">220</span><button onclick="rz('el-pasaran','w',10)">W+</button><button onclick="rz('el-pasaran','h',-10)">H-</button><span class="sv" id="sv-ph">138</span><button onclick="rz('el-pasaran','h',10)">H+</button></div>
       <img id="pas-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/logo%20hoki%20draw.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:220px;height:138px;object-fit:contain;display:block;filter:drop-shadow(0 0 18px rgba(200,150,44,.9));">
       <div class="rh" data-el="el-pasaran"></div>
     </div>
-
     <div class="el" id="el-c1" style="top:422px;left:46px;">
       <div class="el-ctrl"><button onclick="fs('c1',-2)">A-</button><span class="sv" id="sv-c1">46</span><button onclick="fs('c1',2)">A+</button></div>
-      <span id="c1" class="gt" style="font-size:46px;line-height:1;display:block;">1</span>
-      <div class="rh" data-el="el-c1"></div>
+      <span id="c1" class="gt" style="font-size:46px;line-height:1;display:block;">1</span><div class="rh" data-el="el-c1"></div>
     </div>
     <div class="el" id="el-c2" style="top:424px;left:215px;">
       <div class="el-ctrl"><button onclick="fs('c2',-2)">A-</button><span class="sv" id="sv-c2">46</span><button onclick="fs('c2',2)">A+</button></div>
-      <span id="c2" class="gt" style="font-size:46px;line-height:1;display:block;">5</span>
-      <div class="rh" data-el="el-c2"></div>
+      <span id="c2" class="gt" style="font-size:46px;line-height:1;display:block;">5</span><div class="rh" data-el="el-c2"></div>
     </div>
     <div class="el" id="el-c3" style="top:581px;left:48px;">
       <div class="el-ctrl"><button onclick="fs('c3',-2)">A-</button><span class="sv" id="sv-c3">46</span><button onclick="fs('c3',2)">A+</button></div>
-      <span id="c3" class="gt" style="font-size:46px;line-height:1;display:block;">6</span>
-      <div class="rh" data-el="el-c3"></div>
+      <span id="c3" class="gt" style="font-size:46px;line-height:1;display:block;">6</span><div class="rh" data-el="el-c3"></div>
     </div>
     <div class="el" id="el-c4" style="top:579px;left:203px;">
       <div class="el-ctrl"><button onclick="fs('c4',-2)">A-</button><span class="sv" id="sv-c4">46</span><button onclick="fs('c4',2)">A+</button></div>
-      <span id="c4" class="gt" style="font-size:46px;line-height:1;display:block;">8</span>
-      <div class="rh" data-el="el-c4"></div>
+      <span id="c4" class="gt" style="font-size:46px;line-height:1;display:block;">8</span><div class="rh" data-el="el-c4"></div>
     </div>
-
     <div class="el" id="el-bbfs" style="top:380px;left:771px;">
       <div class="el-ctrl"><button onclick="fs('bbfs-num',-1)">A-</button><span class="sv" id="sv-bfs">34</span><button onclick="fs('bbfs-num',1)">A+</button></div>
-      <div id="bbfs-num" class="gt" style="font-size:34px;letter-spacing:4px;line-height:1.55;text-align:center;">0 1 2 3<br>5 6 7 8</div>
-      <div class="rh" data-el="el-bbfs"></div>
+      <div id="bbfs-num" class="gt" style="font-size:34px;letter-spacing:4px;line-height:1.55;text-align:center;">0 1 2 3<br>5 6 7 8</div><div class="rh" data-el="el-bbfs"></div>
     </div>
-
     <div class="el" id="el-tarung" style="top:589px;left:744px;">
       <div class="el-ctrl"><button onclick="fs('tarung-num',-1)">A-</button><span class="sv" id="sv-tfs">31</span><button onclick="fs('tarung-num',1)">A+</button></div>
-      <div id="tarung-num" class="gt" style="font-size:31px;letter-spacing:3px;text-align:center;">2-3-5-8-9</div>
-      <div class="rh" data-el="el-tarung"></div>
+      <div id="tarung-num" class="gt" style="font-size:31px;letter-spacing:3px;text-align:center;">2-3-5-8-9</div><div class="rh" data-el="el-tarung"></div>
     </div>
-
     <div class="el" id="el-shio" style="top:312px;left:263px;">
-      <div class="el-ctrl">
-        <button onclick="rz('el-shio','w',-10)">W-</button><span class="sv" id="sv-sw">452</span><button onclick="rz('el-shio','w',10)">W+</button>
-        <button onclick="rz('el-shio','h',-10)">H-</button><span class="sv" id="sv-sh">391</span><button onclick="rz('el-shio','h',10)">H+</button>
-      </div>
+      <div class="el-ctrl"><button onclick="rz('el-shio','w',-10)">W-</button><span class="sv" id="sv-sw">452</span><button onclick="rz('el-shio','w',10)">W+</button><button onclick="rz('el-shio','h',-10)">H-</button><span class="sv" id="sv-sh">391</span><button onclick="rz('el-shio','h',10)">H+</button></div>
       <img id="shio-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/shio%20ular.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:452px;height:391px;object-fit:contain;display:block;filter:drop-shadow(0 0 20px rgba(200,150,44,.7));">
       <div class="rh" data-el="el-shio"></div>
     </div>
-
     <div class="el" id="el-syair" style="top:759px;left:360px;">
       <div class="el-ctrl"><button onclick="fs('syair-txt',-1)">A-</button><span class="sv" id="sv-sfs">15</span><button onclick="fs('syair-txt',1)">A+</button></div>
       <span id="syair-txt" class="gt-syair" style="font-size:15px;line-height:1.75;display:block;text-align:center;">Bintang bersinar di langit malam,<br>Angka turun dari kedalaman alam.<br>Semoga hoki menyertai kita,<br>Rezeki lancar tiada dusta.</span>
       <div class="rh" data-el="el-syair"></div>
     </div>
-
   </div></div>
 
-  <!-- ===== SIDE PANEL ===== -->
   <div class="side-panel">
-
-    <!-- Panel Utama -->
     <div class="panel-box">
-      <div class="panel-header static">
-        <h3>&#9876; Syair Generator</h3>
-      </div>
+      <div class="panel-header static"><h3>&#9876; Syair Generator</h3></div>
       <div class="panel-body always-open">
-        <div class="cg">
-          <label>Pasaran</label>
-          <select id="sel-pas" onchange="setPasaran(this.value)">
-            <option value="sgp">Singapore</option><option value="hk">Hongkong</option>
-            <option value="sydney">Sydney</option><option value="macau">Toto Macau</option>
-            <option value="cambodia">Cambodia</option><option value="bangkok">Bangkok</option>
-            <option value="huahin">Huahin</option><option value="poipet">Poipet</option>
-            <option value="brunei">Brunei</option><option value="magnum">Magnum</option>
-            <option value="pcso">PCSO</option><option value="kentucky">Kentucky</option>
-            <option value="california">California</option><option value="florida">Florida</option>
-            <option value="newyork">New York</option><option value="nevada">Nevada</option>
-            <option value="oregon">Oregon</option><option value="carolina">Carolina</option>
-            <option value="bullseye">Bullseye</option><option value="kingkong">King Kong</option>
-            <option value="hokidraw">Hoki Draw</option><option value="totoMali">Toto Mali</option>
-          </select>
-        </div>
-        <div class="cg">
-          <label>Shio</label>
-          <select id="sel-shio" onchange="setShio(this.selectedIndex)">
-            <option value="0">Tikus</option><option value="1">Kerbau</option>
-            <option value="2">Harimau</option><option value="3">Kelinci</option>
-            <option value="4">Naga</option><option value="5">Ular</option>
-            <option value="6">Kuda</option><option value="7" selected>Kambing</option>
-            <option value="8">Monyet</option><option value="9">Ayam</option>
-            <option value="10">Anjing</option><option value="11">Babi</option>
-          </select>
-        </div>
+        <div class="cg"><label>Pasaran</label><select id="sel-pas" onchange="setPasaran(this.value)">
+          <option value="sgp">Singapore</option><option value="hk">Hongkong</option><option value="sydney">Sydney</option><option value="macau">Toto Macau</option><option value="cambodia">Cambodia</option><option value="bangkok">Bangkok</option><option value="huahin">Huahin</option><option value="poipet">Poipet</option><option value="brunei">Brunei</option><option value="magnum">Magnum</option><option value="pcso">PCSO</option><option value="kentucky">Kentucky</option><option value="california">California</option><option value="florida">Florida</option><option value="newyork">New York</option><option value="nevada">Nevada</option><option value="oregon">Oregon</option><option value="carolina">Carolina</option><option value="bullseye">Bullseye</option><option value="kingkong">King Kong</option><option value="hokidraw">Hoki Draw</option><option value="totoMali">Toto Mali</option>
+        </select></div>
+        <div class="cg"><label>Shio</label><select id="sel-shio" onchange="setShio(this.selectedIndex)">
+          <option value="0">Tikus</option><option value="1">Kerbau</option><option value="2">Harimau</option><option value="3">Kelinci</option><option value="4">Naga</option><option value="5">Ular</option><option value="6">Kuda</option><option value="7" selected>Kambing</option><option value="8">Monyet</option><option value="9">Ayam</option><option value="10">Anjing</option><option value="11">Babi</option>
+        </select></div>
         <div class="cg"><label>Tanggal</label><input type="date" id="inp-date"></div>
         <div class="panel-divider"></div>
         <div class="cg"><label>Colok (4 angka)</label><input type="text" id="inp-colok" maxlength="4" placeholder="Contoh: 1234"></div>
@@ -291,122 +191,65 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
         <div class="btn-row">
           <button class="btn btn-g" onclick="randomAll()">&#127922; Acak Semua</button>
           <button class="btn btn-r" onclick="generate()">&#9889; Generate</button>
-          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download PNG (1350x1350)</button>
+          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download Full HD (1920x1920)</button>
           <button class="btn btn-save" onclick="savePositions()">&#128190; Simpan ke File HTML</button>
           <button class="btn btn-reset" onclick="resetPositions()">&#8634; Reset Semua Posisi</button>
         </div>
       </div>
     </div>
-
-    <!-- Panel Warna Tulisan -->
     <div class="panel-box">
-      <div class="panel-header" onclick="togglePanel(this)">
-        <h3>&#127912; Warna Tulisan</h3>
-        <span class="arrow">&#9660;</span>
-      </div>
-      <div class="panel-body" id="color-body">
-        <div class="panel-body padded">
-          <div class="cg">
-            <label>Tanggal</label>
-            <input type="color" id="clr-date" value="#f5d060" onchange="applyTextColor('date-txt',this.value)">
-          </div>
-          <div class="cg">
-            <label>Colok (4 angka)</label>
-            <input type="color" id="clr-colok" value="#f5d060" onchange="applyColokColor(this.value)">
-          </div>
-          <div class="cg">
-            <label>BBFS</label>
-            <input type="color" id="clr-bbfs" value="#f5d060" onchange="applyTextColor('bbfs-num',this.value)">
-          </div>
-          <div class="cg">
-            <label>Angka Tarung</label>
-            <input type="color" id="clr-tarung" value="#f5d060" onchange="applyTextColor('tarung-num',this.value)">
-          </div>
-          <div class="cg">
-            <label>Syair</label>
-            <input type="color" id="clr-syair" value="#f5d060" onchange="applyTextColor('syair-txt',this.value)">
-          </div>
-          <button class="btn btn-reset btn-sm" onclick="resetColors()">&#8634; Reset Warna Default</button>
-        </div>
-      </div>
+      <div class="panel-header" onclick="togglePanel(this)"><h3>&#127912; Warna Tulisan</h3><span class="arrow">&#9660;</span></div>
+      <div class="panel-body" id="color-body"><div class="panel-body padded">
+        <div class="cg"><label>Tanggal</label><input type="color" id="clr-date" value="#f5d060" onchange="applyTextColor('date-txt',this.value)"></div>
+        <div class="cg"><label>Colok (4 angka)</label><input type="color" id="clr-colok" value="#f5d060" onchange="applyColokColor(this.value)"></div>
+        <div class="cg"><label>BBFS</label><input type="color" id="clr-bbfs" value="#f5d060" onchange="applyTextColor('bbfs-num',this.value)"></div>
+        <div class="cg"><label>Angka Tarung</label><input type="color" id="clr-tarung" value="#f5d060" onchange="applyTextColor('tarung-num',this.value)"></div>
+        <div class="cg"><label>Syair</label><input type="color" id="clr-syair" value="#f5d060" onchange="applyTextColor('syair-txt',this.value)"></div>
+        <button class="btn btn-reset btn-sm" onclick="resetColors()">&#8634; Reset Warna Default</button>
+      </div></div>
     </div>
-
-    <!-- Panel Panduan -->
     <div class="panel-box">
-      <div class="panel-header" onclick="togglePanel(this)">
-        <h3>&#9733; Panduan Singkat</h3>
-        <span class="arrow">&#9660;</span>
-      </div>
-      <div class="panel-body" id="info-body">
-        <div style="padding:12px 14px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:10px;line-height:1.7;letter-spacing:.3px;">
-          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Cloud Sync</span> — Data tersinkron otomatis via Firebase. Pindah PC langsung update.</p>
-          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Warna</span> — Pilih warna untuk mengubah tampilan tulisan di kartu.</p>
-          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi.</p>
-          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">A+/A-</span> — Ubah ukuran font. <span style="color:#4adc20;font-weight:600;">W+/H+</span> — Ubah ukuran gambar.</p>
-          <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil PNG 1350x1350 pixel.</p>
-        </div>
-      </div>
+      <div class="panel-header" onclick="togglePanel(this)"><h3>&#9733; Panduan Singkat</h3><span class="arrow">&#9660;</span></div>
+      <div class="panel-body" id="info-body"><div style="padding:12px 14px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:10px;line-height:1.7;letter-spacing:.3px;">
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Cloud Sync</span> — Data tersinkron via Firebase. Pindah PC langsung update.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Warna</span> — Pilih warna untuk mengubah tampilan tulisan.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">A+/A-</span> — Ubah ukuran font. <span style="color:#4adc20;font-weight:600;">W+/H+</span> — Ubah ukuran gambar.</p>
+        <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil Full HD 1920x1920 pixel.</p>
+      </div></div>
     </div>
-
-    <!-- Sync Status -->
-    <div class="sync-bar" id="sync-bar">
-      <span class="sync-dot" id="sync-dot"></span>
-      <span class="sync-text" id="sync-text">Menghubungkan...</span>
-    </div>
-
-    <div class="version-badge">v2.3 &mdash; Syair Generator Pro + Cloud Sync</div>
+    <div class="sync-bar" id="sync-bar"><span class="sync-dot" id="sync-dot"></span><span class="sync-text" id="sync-text">Menghubungkan...</span></div>
+    <div class="version-badge">v2.4 &mdash; Syair Generator Pro + Full HD</div>
   </div>
-
 </div>
-
 <div id="dl-overlay"><div class="spinner"></div><p id="dl-msg">Sedang memproses...</p></div>
 <div id="toast">Done</div>
 
 <script>
-/* ===== FIREBASE INIT ===== */
-const firebaseConfig = {
-  apiKey: "AIzaSyBhMi5z2VQPHui7k9Oq_GtlF5kZX6Y4zyE",
-  authDomain: "tabungan-91059.firebaseapp.com",
-  projectId: "tabungan-91059",
-  storageBucket: "tabungan-91059.firebasestorage.app",
-  messagingSenderId: "325286813441",
-  appId: "1:325286813441:web:fc29977e3a502bd84e8500",
-  measurementId: "G-2E4MVNCX5S"
-};
-
+/* ===== FIREBASE ===== */
+const firebaseConfig={apiKey:"AIzaSyBhMi5z2VQPHui7k9Oq_GtlF5kZX6Y4zyE",authDomain:"tabungan-91059.firebaseapp.com",projectId:"tabungan-91059",storageBucket:"tabungan-91059.firebasestorage.app",messagingSenderId:"325286813441",appId:"1:325286813441:web:fc29977e3a502bd84e8500",measurementId:"G-2E4MVNCX5S"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const DOC_PATH = 'syairGenerator/state'; // Document path di Firestore
+const db=firebase.firestore();
+const DOC_PATH='syairGenerator/state';
 
 /* ===== KONSTANTA ===== */
 const RAW='https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/';
-const CARD_W=960, CARD_H=960;
-const DL_W=1350, DL_H=1350;
-const STORAGE_KEY='syair_gen_state_v23';
+const CARD_W=960,CARD_H=960;
+const DL_W=1920,DL_H=1920; // Full HD square
+const STORAGE_KEY='syair_gen_state_v24';
 
 const PASARAN=[
-  {id:'sgp',name:'Singapore',file:'LOGO SINGAPORE.png'},
-  {id:'hk',name:'Hongkong',file:'logo hongkong-lotto.png'},
-  {id:'sydney',name:'Sydney',file:'logo sydney lotto.png'},
-  {id:'macau',name:'Toto Macau',file:'logo toto macau.png'},
-  {id:'cambodia',name:'Cambodia',file:'logo cambodia.png'},
-  {id:'bangkok',name:'Bangkok',file:'logo bangkok.png'},
-  {id:'huahin',name:'Huahin',file:'logo huahin.png'},
-  {id:'poipet',name:'Poipet',file:'logo poipet.png'},
-  {id:'brunei',name:'Brunei',file:'logo brunei.png'},
-  {id:'magnum',name:'Magnum',file:'logo magnum.jpg'},
-  {id:'pcso',name:'PCSO',file:'LOGO PCSO.png'},
-  {id:'kentucky',name:'Kentucky',file:'LOGO KENTUCKY.png'},
-  {id:'california',name:'California',file:'logo california.png'},
-  {id:'florida',name:'Florida',file:'logo florida.png'},
-  {id:'newyork',name:'New York',file:'logo newyork.png'},
-  {id:'nevada',name:'Nevada',file:'logo nevada.png'},
-  {id:'oregon',name:'Oregon',file:'logo oregon.png'},
-  {id:'carolina',name:'Carolina',file:'logo CAROLINa.png'},
-  {id:'bullseye',name:'Bullseye',file:'logo bulseye.png'},
-  {id:'kingkong',name:'King Kong',file:'logo king kong.png'},
-  {id:'hokidraw',name:'Hoki Draw',file:'logo hoki draw.png'},
-  {id:'totoMali',name:'Toto Mali',file:'logo toto mali.png'},
+  {id:'sgp',name:'Singapore',file:'LOGO SINGAPORE.png'},{id:'hk',name:'Hongkong',file:'logo hongkong-lotto.png'},
+  {id:'sydney',name:'Sydney',file:'logo sydney lotto.png'},{id:'macau',name:'Toto Macau',file:'logo toto macau.png'},
+  {id:'cambodia',name:'Cambodia',file:'logo cambodia.png'},{id:'bangkok',name:'Bangkok',file:'logo bangkok.png'},
+  {id:'huahin',name:'Huahin',file:'logo huahin.png'},{id:'poipet',name:'Poipet',file:'logo poipet.png'},
+  {id:'brunei',name:'Brunei',file:'logo brunei.png'},{id:'magnum',name:'Magnum',file:'logo magnum.jpg'},
+  {id:'pcso',name:'PCSO',file:'LOGO PCSO.png'},{id:'kentucky',name:'Kentucky',file:'LOGO KENTUCKY.png'},
+  {id:'california',name:'California',file:'logo california.png'},{id:'florida',name:'Florida',file:'logo florida.png'},
+  {id:'newyork',name:'New York',file:'logo newyork.png'},{id:'nevada',name:'Nevada',file:'logo nevada.png'},
+  {id:'oregon',name:'Oregon',file:'logo oregon.png'},{id:'carolina',name:'Carolina',file:'logo CAROLINa.png'},
+  {id:'bullseye',name:'Bullseye',file:'logo bulseye.png'},{id:'kingkong',name:'King Kong',file:'logo king kong.png'},
+  {id:'hokidraw',name:'Hoki Draw',file:'logo hoki draw.png'},{id:'totoMali',name:'Toto Mali',file:'logo toto mali.png'},
 ];
 const SHIO=[
   {name:'Tikus',file:'shio tikus.png'},{name:'Kerbau',file:'shio kerbau.png'},
@@ -431,473 +274,119 @@ const SYAIR=[
   "Roda berputar tiada henti,\nAngka jitu datang kembali.\nSatu hingga sembilan berjajar,\nRezeki mengalir semakin besar.",
 ];
 
-/* ===== STATE ===== */
 let lastPasIdx=-1,lastShioIdx=-1,lastColok='',lastBBFS='',lastTarung='';
 let curPas='bullseye',curShio=7;
 let customColors={};
-let isApplyingRemoteState = false; // Flag agar tidak loop saat terima update dari Firebase
-let lastSyncTimestamp = 0;
+let isApplyingRemoteState=false;
+let lastSyncTimestamp=0;
 
 /* ===== SYNC STATUS ===== */
-function setSyncStatus(status, text) {
-  const dot = document.getElementById('sync-dot');
-  const txt = document.getElementById('sync-text');
-  if (!dot || !txt) return;
-  dot.className = 'sync-dot ' + status;
-  txt.className = 'sync-text ' + status;
-  txt.textContent = text;
-}
+function setSyncStatus(s,t){const d=document.getElementById('sync-dot'),x=document.getElementById('sync-text');if(!d||!x)return;d.className='sync-dot '+s;x.className='sync-text '+s;x.textContent=t;}
 
-/* ===== WARNA TULISAN ===== */
-function applyTextColor(id, color) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  customColors[id] = color;
-  el.style.webkitTextFillColor = color;
-  el.style.background = 'none';
-  el.style.webkitBackgroundClip = 'unset';
-  el.style.backgroundClip = 'unset';
-  el.style.color = color;
-  el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
-  debouncedSave();
-}
+/* ===== WARNA ===== */
+function applyTextColor(id,c){const el=document.getElementById(id);if(!el)return;customColors[id]=c;el.style.webkitTextFillColor=c;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=c;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';debouncedSave();}
+function applyColokColor(c){['c1','c2','c3','c4'].forEach(id=>applyTextColor(id,c));}
+function clearElementColor(id){const el=document.getElementById(id);if(!el)return;el.style.webkitTextFillColor='';el.style.background='';el.style.webkitBackgroundClip='';el.style.backgroundClip='';el.style.color='';el.style.textShadow='';}
+function resetColors(){customColors={};['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));document.getElementById('clr-date').value='#f5d060';document.getElementById('clr-colok').value='#f5d060';document.getElementById('clr-bbfs').value='#f5d060';document.getElementById('clr-tarung').value='#f5d060';document.getElementById('clr-syair').value='#f5d060';debouncedSave();showToast('Warna direset ke gradient emas!');}
 
-function applyColokColor(color) {
-  ['c1','c2','c3','c4'].forEach(id => applyTextColor(id, color));
-}
-
-function clearElementColor(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.webkitTextFillColor = '';
-  el.style.background = '';
-  el.style.webkitBackgroundClip = '';
-  el.style.backgroundClip = '';
-  el.style.color = '';
-  el.style.textShadow = '';
-}
-
-function resetColors() {
-  customColors = {};
-  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id => clearElementColor(id));
-  document.getElementById('clr-date').value = '#f5d060';
-  document.getElementById('clr-colok').value = '#f5d060';
-  document.getElementById('clr-bbfs').value = '#f5d060';
-  document.getElementById('clr-tarung').value = '#f5d060';
-  document.getElementById('clr-syair').value = '#f5d060';
-  debouncedSave();
-  showToast('Warna direset ke gradient emas!');
-}
-
-/* ===== BUILD STATE OBJECT ===== */
-function buildState() {
+/* ===== STATE ===== */
+function buildState(){
   const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
   const state={elements:{},inputs:{},texts:{},imgSrcs:{},customColors:{},colorPickers:{}};
-
-  elIds.forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    const data={top:el.style.top,left:el.style.left};
-    const img=el.querySelector('img');
-    if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}
-    const txtIds=['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'];
-    txtIds.forEach(tid=>{
-      const txt=document.getElementById(tid);
-      if(txt&&el.contains(txt)){data[tid+'_fs']=txt.style.fontSize||'';}
-    });
-    state.elements[id]=data;
-  });
-
-  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}
-  });
-
-  ['pas-img','shio-img'].forEach(id=>{
-    const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;
-  });
-
-  state.inputs={
-    pasaran:curPas,shio:curShio,
-    date:document.getElementById('inp-date').value,
-    colok:document.getElementById('inp-colok').value,
-    bbfs:document.getElementById('inp-bbfs').value,
-    tarung:document.getElementById('inp-tarung').value,
-  };
-
-  state.customColors = {...customColors};
-  state.colorPickers = {
-    date: document.getElementById('clr-date').value,
-    colok: document.getElementById('clr-colok').value,
-    bbfs: document.getElementById('clr-bbfs').value,
-    tarung: document.getElementById('clr-tarung').value,
-    syair: document.getElementById('clr-syair').value,
-  };
-
-  state.timestamp = Date.now();
-  return state;
+  elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const data={top:el.style.top,left:el.style.left};const img=el.querySelector('img');if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{const txt=document.getElementById(tid);if(txt&&el.contains(txt)){data[tid+'_fs']=txt.style.fontSize||'';}});state.elements[id]=data;});
+  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{const el=document.getElementById(id);if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}});
+  ['pas-img','shio-img'].forEach(id=>{const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;});
+  state.inputs={pasaran:curPas,shio:curShio,date:document.getElementById('inp-date').value,colok:document.getElementById('inp-colok').value,bbfs:document.getElementById('inp-bbfs').value,tarung:document.getElementById('inp-tarung').value};
+  state.customColors={...customColors};
+  state.colorPickers={date:document.getElementById('clr-date').value,colok:document.getElementById('clr-colok').value,bbfs:document.getElementById('clr-bbfs').value,tarung:document.getElementById('clr-tarung').value,syair:document.getElementById('clr-syair').value};
+  state.timestamp=Date.now();return state;
 }
 
-/* ===== APPLY STATE ===== */
-function applyState(state) {
-  if (!state || !state.elements) return;
-
-  isApplyingRemoteState = true;
-
-  // Posisi & ukuran
-  Object.entries(state.elements).forEach(([id,data])=>{
-    const el=document.getElementById(id);if(!el)return;
-    if(data.top)el.style.top=data.top;
-    if(data.left)el.style.left=data.left;
-    const img=el.querySelector('img');
-    if(img){
-      if(data.imgW)img.style.width=data.imgW;
-      if(data.imgH)img.style.height=data.imgH;
-      if(data.imgDisplay)img.style.display=data.imgDisplay;
-    }
-    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
-      const fsKey=tid+'_fs';
-      if(data[fsKey]){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];}
-    });
-  });
-
-  // Konten teks
-  if(state.texts){
-    Object.entries(state.texts).forEach(([id,content])=>{
-      const el=document.getElementById(id);if(!el)return;
-      if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;
-      else el.textContent=content;
-    });
-  }
-
-  // Sumber gambar
-  if(state.imgSrcs){
-    Object.entries(state.imgSrcs).forEach(([id,src])=>{
-      const el=document.getElementById(id);
-      if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}
-    });
-  }
-
-  // Input form
-  if(state.inputs){
-    const inp=state.inputs;
-    if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}
-    if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}
-    if(inp.date)document.getElementById('inp-date').value=inp.date;
-    if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;
-    if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;
-    if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;
-  }
-
-  // Warna custom
-  customColors = {};
-  if(state.customColors && Object.keys(state.customColors).length > 0){
-    customColors = {...state.customColors};
-    Object.entries(customColors).forEach(([id, color]) => {
-      const el = document.getElementById(id);
-      if(el){
-        el.style.webkitTextFillColor = color;
-        el.style.background = 'none';
-        el.style.webkitBackgroundClip = 'unset';
-        el.style.backgroundClip = 'unset';
-        el.style.color = color;
-        el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
-      }
-    });
-  } else {
-    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id => clearElementColor(id));
-  }
-
-  // Color picker values
-  if(state.colorPickers){
-    const cp = state.colorPickers;
-    if(cp.date) document.getElementById('clr-date').value = cp.date;
-    if(cp.colok) document.getElementById('clr-colok').value = cp.colok;
-    if(cp.bbfs) document.getElementById('clr-bbfs').value = cp.bbfs;
-    if(cp.tarung) document.getElementById('clr-tarung').value = cp.tarung;
-    if(cp.syair) document.getElementById('clr-syair').value = cp.syair;
-  }
-
-  refreshSizeDisplays();
-
-  setTimeout(() => { isApplyingRemoteState = false; }, 500);
+function applyState(state){
+  if(!state||!state.elements)return;isApplyingRemoteState=true;
+  Object.entries(state.elements).forEach(([id,data])=>{const el=document.getElementById(id);if(!el)return;if(data.top)el.style.top=data.top;if(data.left)el.style.left=data.left;const img=el.querySelector('img');if(img){if(data.imgW)img.style.width=data.imgW;if(data.imgH)img.style.height=data.imgH;if(data.imgDisplay)img.style.display=data.imgDisplay;}['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{const fsKey=tid+'_fs';if(data[fsKey]){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];}});});
+  if(state.texts){Object.entries(state.texts).forEach(([id,content])=>{const el=document.getElementById(id);if(!el)return;if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;else el.textContent=content;});}
+  if(state.imgSrcs){Object.entries(state.imgSrcs).forEach(([id,src])=>{const el=document.getElementById(id);if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}});}
+  if(state.inputs){const inp=state.inputs;if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}if(inp.date)document.getElementById('inp-date').value=inp.date;if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;}
+  customColors={};if(state.customColors&&Object.keys(state.customColors).length>0){customColors={...state.customColors};Object.entries(customColors).forEach(([id,color])=>{const el=document.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});}else{['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));}
+  if(state.colorPickers){const cp=state.colorPickers;if(cp.date)document.getElementById('clr-date').value=cp.date;if(cp.colok)document.getElementById('clr-colok').value=cp.colok;if(cp.bbfs)document.getElementById('clr-bbfs').value=cp.bbfs;if(cp.tarung)document.getElementById('clr-tarung').value=cp.tarung;if(cp.syair)document.getElementById('clr-syair').value=cp.syair;}
+  refreshSizeDisplays();setTimeout(()=>{isApplyingRemoteState=false;},500);
 }
 
-/* ===== AUTO-SAVE (localStorage + Firebase) ===== */
+/* ===== AUTO-SAVE ===== */
 let saveTimer=null;
 function debouncedSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(autoSave,400);}
+function autoSave(){const state=buildState();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}saveToFirebase(state);setSyncStatus('syncing','Menyimpan...');setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);}
 
-function autoSave(){
-  const state = buildState();
+async function saveToFirebase(state){try{await db.doc(DOC_PATH).set(state,{merge:true});lastSyncTimestamp=state.timestamp||Date.now();}catch(e){console.warn('Firebase save gagal:',e);setSyncStatus('offline','Gagal sinkron');}}
 
-  // Simpan ke localStorage
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
-
-  // Simpan ke Firebase Firestore
-  saveToFirebase(state);
-
-  setSyncStatus('syncing','Menyimpan...');
-  setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);
-}
-
-/* ===== FIREBASE: SAVE ===== */
-async function saveToFirebase(state) {
-  try {
-    await db.doc(DOC_PATH).set(state, {merge: true});
-    lastSyncTimestamp = state.timestamp || Date.now();
-  } catch(e) {
-    console.warn('Firebase save gagal:', e);
-    setSyncStatus('offline','Gagal sinkron');
-  }
-}
-
-/* ===== FIREBASE: REAL-TIME LISTENER ===== */
-function initFirebaseListener() {
+function initFirebaseListener(){
   setSyncStatus('syncing','Menghubungkan...');
-
-  db.doc(DOC_PATH).onSnapshot((doc) => {
-    if (!doc.exists) return;
-    const remoteState = doc.data();
-    if (!remoteState || !remoteState.timestamp) return;
-
-    // Hanya terapkan jika data dari Firebase lebih baru dari yang kita simpan terakhir
-    // DAN kita sedang tidak dalam proses menyimpan sendiri
-    if (remoteState.timestamp > lastSyncTimestamp && !isApplyingRemoteState) {
-      // Cek apakah ada perbedaan signifikan
-      const localRaw = localStorage.getItem(STORAGE_KEY);
-      let localState = null;
-      try { localState = localRaw ? JSON.parse(localRaw) : null; } catch(e) {}
-
-      // Jika tidak ada data lokal ATAU timestamp Firebase lebih baru
-      if (!localState || remoteState.timestamp > (localState.timestamp || 0)) {
-        applyState(remoteState);
-        // Update localStorage juga
-        try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
-        lastSyncTimestamp = remoteState.timestamp;
-        setSyncStatus('online','Diperbarui dari cloud');
-        setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);
-      }
-    }
-  }, (error) => {
-    console.warn('Firebase listener error:', error);
-    setSyncStatus('offline','Offline - localStorage saja');
-  });
-
+  db.doc(DOC_PATH).onSnapshot((doc)=>{if(!doc.exists)return;const remoteState=doc.data();if(!remoteState||!remoteState.timestamp)return;if(remoteState.timestamp>lastSyncTimestamp&&!isApplyingRemoteState){const localRaw=localStorage.getItem(STORAGE_KEY);let localState=null;try{localState=localRaw?JSON.parse(localRaw):null;}catch(e){}if(!localState||remoteState.timestamp>(localState.timestamp||0)){applyState(remoteState);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}lastSyncTimestamp=remoteState.timestamp;setSyncStatus('online','Diperbarui dari cloud');setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);}}},(error)=>{console.warn('Firebase listener error:',error);setSyncStatus('offline','Offline - localStorage saja');});
   setSyncStatus('online','Tersinkron');
 }
 
-/* ===== LOAD INITIAL STATE ===== */
-function loadInitialState() {
-  return new Promise(async (resolve) => {
-    // 1. Coba load dari Firebase dulu (sumber terbaru)
-    try {
-      setSyncStatus('syncing','Memuat dari cloud...');
-      const doc = await db.doc(DOC_PATH).get();
-      if (doc.exists) {
-        const remoteState = doc.data();
-        if (remoteState && remoteState.elements) {
-          applyState(remoteState);
-          lastSyncTimestamp = remoteState.timestamp || 0;
-          try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
-          setSyncStatus('online','Dimuat dari cloud');
-          resolve(true);
-          return;
-        }
-      }
-    } catch(e) {
-      console.warn('Firebase load gagal, fallback ke localStorage:', e);
-      setSyncStatus('offline','Offline - localStorage saja');
-    }
-
-    // 2. Fallback ke localStorage
-    const loaded = autoLoadLocal();
-    resolve(loaded);
-  });
+async function loadInitialState(){
+  return new Promise(async(resolve)=>{try{setSyncStatus('syncing','Memuat dari cloud...');const doc=await db.doc(DOC_PATH).get();if(doc.exists){const remoteState=doc.data();if(remoteState&&remoteState.elements){applyState(remoteState);lastSyncTimestamp=remoteState.timestamp||0;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}setSyncStatus('online','Dimuat dari cloud');resolve(true);return;}}}catch(e){console.warn('Firebase load gagal:',e);setSyncStatus('offline','Offline - localStorage saja');}
+  const loaded=autoLoadLocal();resolve(loaded);});
 }
+function autoLoadLocal(){try{const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return false;const state=JSON.parse(saved);if(!state||!state.elements)return false;applyState(state);lastSyncTimestamp=state.timestamp||0;return true;}catch(e){return false;}}
+function refreshSizeDisplays(){const imgMap={'sv-lw':['logo-img','w'],'sv-lh':['logo-img','h'],'sv-pw':['pas-img','w'],'sv-ph':['pas-img','h'],'sv-sw':['shio-img','w'],'sv-sh':['shio-img','h']};Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{const sv=document.getElementById(svId);const img=document.getElementById(imgId);if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}});const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt'};Object.entries(fsMap).forEach(([svId,txtId])=>{const sv=document.getElementById(svId);const txt=document.getElementById(txtId);if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));});}
+function resetPositions(){localStorage.removeItem(STORAGE_KEY);db.doc(DOC_PATH).delete().catch(()=>{});location.reload();}
 
-function autoLoadLocal(){
-  try{
-    const saved=localStorage.getItem(STORAGE_KEY);
-    if(!saved)return false;
-    const state=JSON.parse(saved);
-    if(!state||!state.elements)return false;
-    applyState(state);
-    lastSyncTimestamp = state.timestamp || 0;
-    return true;
-  }catch(e){return false;}
-}
-
-function refreshSizeDisplays(){
-  const imgMap={'sv-lw':['logo-img','w'],'sv-lh':['logo-img','h'],'sv-pw':['pas-img','w'],'sv-ph':['pas-img','h'],'sv-sw':['shio-img','w'],'sv-sh':['shio-img','h']};
-  Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{
-    const sv=document.getElementById(svId);const img=document.getElementById(imgId);
-    if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}
-  });
-  const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt'};
-  Object.entries(fsMap).forEach(([svId,txtId])=>{
-    const sv=document.getElementById(svId);const txt=document.getElementById(txtId);
-    if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));
-  });
-}
-
-function resetPositions(){
-  localStorage.removeItem(STORAGE_KEY);
-  // Hapus juga di Firebase
-  db.doc(DOC_PATH).delete().catch(()=>{});
-  location.reload();
-}
-
-/* ===== ANTI-REPEAT ===== */
+/* ===== RANDOM ===== */
 function pickDiff(total,last){if(total<=1)return 0;let idx;do{idx=Math.floor(Math.random()*total);}while(idx===last);return idx;}
-
-/* ===== SYAIR SHUFFLE DECK ===== */
 let syairDeck=[],syairUsed=[];
 function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function initSyairDeck(){syairDeck=shuffleArray([...Array(SYAIR.length).keys()]);syairUsed=[];}
-function pickNextSyair(){
-  if(syairDeck.length===0){const lu=syairUsed[syairUsed.length-1];let nd;do{nd=shuffleArray([...Array(SYAIR.length).keys()]);}while(nd[0]===lu);syairDeck=nd;syairUsed=[];}
-  const idx=syairDeck.shift();syairUsed.push(idx);return idx;
-}
-
-/* ===== RANDOM GENERATORS ===== */
+function pickNextSyair(){if(syairDeck.length===0){const lu=syairUsed[syairUsed.length-1];let nd;do{nd=shuffleArray([...Array(SYAIR.length).keys()]);}while(nd[0]===lu);syairDeck=nd;syairUsed=[];}const idx=syairDeck.shift();syairUsed.push(idx);return idx;}
 function rColok(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,4).sort((a,b)=>a-b).join('');t++;}while(r===lastColok&&t<20);lastColok=r;return r;}
 function rBBFS(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,8).sort((a,b)=>a-b).join('');t++;}while(r===lastBBFS&&t<20);lastBBFS=r;return r;}
 function rTarung(n){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,n).sort((a,b)=>a-b).join('-');t++;}while(r===lastTarung&&t<20);lastTarung=r;return r;}
 
-/* ===== SET PASARAN & SHIO ===== */
-function setPasaran(id){
-  curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;
-  const img=document.getElementById('pas-img');
-  img.src=RAW+encodeURIComponent(p.file);img.style.display='block';
-  img.onerror=()=>{img.style.display='none';};
-  debouncedSave();
-}
-function setShio(idx){
-  curShio=Number(idx);const s=SHIO[curShio];if(!s)return;
-  const img=document.getElementById('shio-img');
-  img.src=RAW+encodeURIComponent(s.file);img.style.display='block';
-  img.onerror=()=>{img.style.display='none';};
-  document.getElementById('sel-shio').value=curShio;
-  debouncedSave();
-}
+function setPasaran(id){curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;const img=document.getElementById('pas-img');img.src=RAW+encodeURIComponent(p.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};debouncedSave();}
+function setShio(idx){curShio=Number(idx);const s=SHIO[curShio];if(!s)return;const img=document.getElementById('shio-img');img.src=RAW+encodeURIComponent(s.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};document.getElementById('sel-shio').value=curShio;debouncedSave();}
 
 /* ===== DRAG ===== */
-function initDrag(){
-  document.querySelectorAll('.el').forEach(el=>{
-    let drag=false,sx,sy,ox,oy;
-    const start=(cx,cy)=>{
-      drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));
-      el.classList.add('active');sx=cx;sy=cy;ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;
-    };
-    const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};
-    const end=()=>{if(drag){drag=false;debouncedSave();}};
-    el.addEventListener('mousedown',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.clientX,e.clientY);e.preventDefault();});
-    document.addEventListener('mousemove',e=>move(e.clientX,e.clientY));
-    document.addEventListener('mouseup',end);
-    el.addEventListener('touchstart',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
-    document.addEventListener('touchmove',e=>{if(drag){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}},{passive:false});
-    document.addEventListener('touchend',end);
-  });
-}
+function initDrag(){document.querySelectorAll('.el').forEach(el=>{let drag=false,sx,sy,ox,oy;const start=(cx,cy)=>{drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));el.classList.add('active');sx=cx;sy=cy;ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;};const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};const end=()=>{if(drag){drag=false;debouncedSave();}};el.addEventListener('mousedown',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.clientX,e.clientY);e.preventDefault();});document.addEventListener('mousemove',e=>move(e.clientX,e.clientY));document.addEventListener('mouseup',end);el.addEventListener('touchstart',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});document.addEventListener('touchmove',e=>{if(drag){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}},{passive:false});document.addEventListener('touchend',end);});}
 
 /* ===== RESIZE ===== */
-function initResize(){
-  document.querySelectorAll('.rh').forEach(handle=>{
-    const elId=handle.dataset.el;let resizing=false,sx,sy,sw,sh;
-    const start=(cx,cy)=>{resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);const img=el.querySelector('img');if(img){sw=img.offsetWidth;sh=img.offsetHeight;}else{sw=el.offsetWidth;sh=el.offsetHeight;}};
-    const move=(cx,cy)=>{if(!resizing)return;applyRZ(elId,Math.max(20,sw+cx-sx),Math.max(14,sh+cy-sy));};
-    handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.stopPropagation();e.preventDefault();});
-    document.addEventListener('mousemove',e=>{if(resizing)move(e.clientX,e.clientY);});
-    document.addEventListener('mouseup',()=>{if(resizing){resizing=false;debouncedSave();}});
-    handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});
-    document.addEventListener('touchmove',e=>{if(resizing)move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
-    document.addEventListener('touchend',()=>{if(resizing){resizing=false;debouncedSave();}});
-  });
-}
-function applyRZ(elId,w,h){
-  const el=document.getElementById(elId);const img=el.querySelector('img');if(!img)return;
-  img.style.width=w+'px';img.style.height=h+'px';
-  const wM={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'};
-  const hM={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'};
-  if(wM[elId])document.getElementById(wM[elId]).textContent=Math.round(w);
-  if(hM[elId])document.getElementById(hM[elId]).textContent=Math.round(h);
-}
-function rz(elId,axis,delta){
-  const img=document.getElementById(elId).querySelector('img');if(!img)return;
-  if(axis==='w'){const nw=Math.max(20,img.offsetWidth+delta);img.style.width=nw+'px';const sv={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'}[elId];if(sv)document.getElementById(sv).textContent=nw;}
-  else{const nh=Math.max(14,img.offsetHeight+delta);img.style.height=nh+'px';const sv={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'}[elId];if(sv)document.getElementById(sv).textContent=nh;}
-  debouncedSave();
-}
-function fs(txtId,delta){
-  const el=document.getElementById(txtId);const nf=Math.max(8,parseFloat(el.style.fontSize||16)+delta);
-  el.style.fontSize=nf+'px';
-  const m={'date-txt':'sv-dfs','c1':'sv-c1','c2':'sv-c2','c3':'sv-c3','c4':'sv-c4','bbfs-num':'sv-bfs','tarung-num':'sv-tfs','syair-txt':'sv-sfs'};
-  if(m[txtId])document.getElementById(m[txtId]).textContent=Math.round(nf);
-  debouncedSave();
-}
+function initResize(){document.querySelectorAll('.rh').forEach(handle=>{const elId=handle.dataset.el;let resizing=false,sx,sy,sw,sh;const start=(cx,cy)=>{resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);const img=el.querySelector('img');if(img){sw=img.offsetWidth;sh=img.offsetHeight;}else{sw=el.offsetWidth;sh=el.offsetHeight;}};const move=(cx,cy)=>{if(!resizing)return;applyRZ(elId,Math.max(20,sw+cx-sx),Math.max(14,sh+cy-sy));};handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.stopPropagation();e.preventDefault();});document.addEventListener('mousemove',e=>{if(resizing)move(e.clientX,e.clientY);});document.addEventListener('mouseup',()=>{if(resizing){resizing=false;debouncedSave();}});handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});document.addEventListener('touchmove',e=>{if(resizing)move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});document.addEventListener('touchend',()=>{if(resizing){resizing=false;debouncedSave();}});});}
+function applyRZ(elId,w,h){const el=document.getElementById(elId);const img=el.querySelector('img');if(!img)return;img.style.width=w+'px';img.style.height=h+'px';const wM={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'};const hM={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'};if(wM[elId])document.getElementById(wM[elId]).textContent=Math.round(w);if(hM[elId])document.getElementById(hM[elId]).textContent=Math.round(h);}
+function rz(elId,axis,delta){const img=document.getElementById(elId).querySelector('img');if(!img)return;if(axis==='w'){const nw=Math.max(20,img.offsetWidth+delta);img.style.width=nw+'px';const sv={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'}[elId];if(sv)document.getElementById(sv).textContent=nw;}else{const nh=Math.max(14,img.offsetHeight+delta);img.style.height=nh+'px';const sv={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'}[elId];if(sv)document.getElementById(sv).textContent=nh;}debouncedSave();}
+function fs(txtId,delta){const el=document.getElementById(txtId);const nf=Math.max(8,parseFloat(el.style.fontSize||16)+delta);el.style.fontSize=nf+'px';const m={'date-txt':'sv-dfs','c1':'sv-c1','c2':'sv-c2','c3':'sv-c3','c4':'sv-c4','bbfs-num':'sv-bfs','tarung-num':'sv-tfs','syair-txt':'sv-sfs'};if(m[txtId])document.getElementById(m[txtId]).textContent=Math.round(nf);debouncedSave();}
 
-/* ===== RANDOM ALL ===== */
-function randomAll(){
-  const piNew=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=piNew;curPas=PASARAN[piNew].id;
-  document.getElementById('sel-pas').value=curPas;
-  const siNew=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=siNew;curShio=siNew;
-  document.getElementById('sel-shio').value=curShio;
-  document.getElementById('inp-colok').value=rColok();
-  document.getElementById('inp-bbfs').value=rBBFS();
-  document.getElementById('inp-tarung').value=rTarung(5);
-  generate();
-}
+function randomAll(){const piNew=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=piNew;curPas=PASARAN[piNew].id;document.getElementById('sel-pas').value=curPas;const siNew=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=siNew;curShio=siNew;document.getElementById('sel-shio').value=curShio;document.getElementById('inp-colok').value=rColok();document.getElementById('inp-bbfs').value=rBBFS();document.getElementById('inp-tarung').value=rTarung(5);generate();}
 
-/* ===== GENERATE ===== */
 function generate(){
-  const dv=document.getElementById('inp-date').value;
-  if(dv){const dt=new Date(dv+'T00:00:00');const M=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];document.getElementById('date-txt').textContent=`${dt.getDate()} ${M[dt.getMonth()]} ${dt.getFullYear()}`;}
-  const cv=(document.getElementById('inp-colok').value||rColok()).padEnd(4,'0');
-  ['c1','c2','c3','c4'].forEach((id,i)=>document.getElementById(id).textContent=cv[i]||'?');
-  const bv=document.getElementById('inp-bbfs').value||rBBFS();
-  document.getElementById('bbfs-num').innerHTML=bv.slice(0,4).split('').join(' ')+'<br>'+bv.slice(4,8).split('').join(' ');
+  const dv=document.getElementById('inp-date').value;if(dv){const dt=new Date(dv+'T00:00:00');const M=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];document.getElementById('date-txt').textContent=`${dt.getDate()} ${M[dt.getMonth()]} ${dt.getFullYear()}`;}
+  const cv=(document.getElementById('inp-colok').value||rColok()).padEnd(4,'0');['c1','c2','c3','c4'].forEach((id,i)=>document.getElementById(id).textContent=cv[i]||'?');
+  const bv=document.getElementById('inp-bbfs').value||rBBFS();document.getElementById('bbfs-num').innerHTML=bv.slice(0,4).split('').join(' ')+'<br>'+bv.slice(4,8).split('').join(' ');
   document.getElementById('tarung-num').textContent=document.getElementById('inp-tarung').value||rTarung(5);
-  const siNew=pickNextSyair();const s=SYAIR[siNew];
-  document.getElementById('syair-txt').innerHTML=s.replace(/\n/g,'<br>');
+  const siNew=pickNextSyair();const s=SYAIR[siNew];document.getElementById('syair-txt').innerHTML=s.replace(/\n/g,'<br>');
   setPasaran(curPas);setShio(curShio);
-
-  // Reapply warna custom setelah generate
-  Object.entries(customColors).forEach(([id, color]) => {
-    const el = document.getElementById(id);
-    if(el){
-      el.style.webkitTextFillColor = color;
-      el.style.background = 'none';
-      el.style.webkitBackgroundClip = 'unset';
-      el.style.backgroundClip = 'unset';
-      el.style.color = color;
-      el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
-    }
-  });
-
+  Object.entries(customColors).forEach(([id,color])=>{const el=document.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});
   autoSave();
 }
 
-/* ===== DOWNLOAD PNG 1350x1350 ===== */
+/* ===== DOWNLOAD FULL HD 1920x1920 ===== */
 async function downloadCard(){
   const overlay=document.getElementById('dl-overlay');
-  document.getElementById('dl-msg').textContent='Membuat gambar 1350x1350...';
+  document.getElementById('dl-msg').textContent='Membuat Full HD 1920x1920...';
   overlay.classList.add('show');
   const card=document.getElementById('card');
   const ctrls=card.querySelectorAll('.el-ctrl,.rh');
-
   ctrls.forEach(el=>el.style.visibility='hidden');
   card.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
 
   try{
     const imgs=[...card.querySelectorAll('img')];
-    await Promise.all(imgs.map(img=>{
-      if(img.complete&&img.naturalHeight!==0)return Promise.resolve();
-      return new Promise(res=>{img.onload=res;img.onerror=res;});
-    }));
+    await Promise.all(imgs.map(img=>{if(img.complete&&img.naturalHeight!==0)return Promise.resolve();return new Promise(res=>{img.onload=res;img.onerror=res;});}));
     await new Promise(r=>setTimeout(r,400));
-
     card.classList.add('dl-mode');
     await new Promise(r=>setTimeout(r,100));
 
+    // Render scale 1 (960x960) lalu upscale ke 1920x1920
     const canvas960=await html2canvas(card,{
       useCORS:true,allowTaint:false,scale:1,
       width:CARD_W,height:CARD_H,
@@ -910,24 +399,15 @@ async function downloadCard(){
           c.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
           const bg=doc.getElementById('card-bg');
           if(bg){bg.style.display='block';bg.style.width=CARD_W+'px';bg.style.height=CARD_H+'px';}
-          Object.entries(customColors).forEach(([id, color]) => {
-            const el = doc.getElementById(id);
-            if(el){
-              el.style.webkitTextFillColor = color;
-              el.style.background = 'none';
-              el.style.webkitBackgroundClip = 'unset';
-              el.style.backgroundClip = 'unset';
-              el.style.color = color;
-              el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
-            }
-          });
+          Object.entries(customColors).forEach(([id,color])=>{const el=doc.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});
         }
       }
     });
 
-    const canvas1350=document.createElement('canvas');
-    canvas1350.width=DL_W;canvas1350.height=DL_H;
-    const ctx=canvas1350.getContext('2d');
+    // Upscale ke Full HD 1920x1920
+    const canvasFHD=document.createElement('canvas');
+    canvasFHD.width=DL_W;canvasFHD.height=DL_H;
+    const ctx=canvasFHD.getContext('2d');
     ctx.imageSmoothingEnabled=true;
     ctx.imageSmoothingQuality='high';
     ctx.drawImage(canvas960,0,0,DL_W,DL_H);
@@ -937,48 +417,20 @@ async function downloadCard(){
     const dateStr=document.getElementById('date-txt').textContent.replace(/\s+/g,'-');
     const pasName=(PASARAN.find(p=>p.id===curPas)||{name:'syair'}).name.replace(/\s+/g,'_');
     const link=document.createElement('a');
-    link.download=`syair_${pasName}_${dateStr}_1350x1350.png`;
-    link.href=canvas1350.toDataURL('image/png');
+    link.download=`syair_${pasName}_${dateStr}_FHD_1920x1920.png`;
+    link.href=canvasFHD.toDataURL('image/png');
     link.click();
 
-    showToast('Download berhasil! Ukuran: '+DL_W+'x'+DL_H+' pixel');
-  }catch(e){
-    card.classList.remove('dl-mode');
-    showToast('Gagal: '+e.message);
-  }finally{
-    ctrls.forEach(el=>el.style.visibility='');
-    overlay.classList.remove('show');
-  }
+    showToast('Download berhasil! Full HD: '+DL_W+'x'+DL_H+' pixel');
+  }catch(e){card.classList.remove('dl-mode');showToast('Gagal: '+e.message);}
+  finally{ctrls.forEach(el=>el.style.visibility='');overlay.classList.remove('show');}
 }
 
-/* ===== SIMPAN POSISI KE FILE HTML ===== */
-function savePositions(){
-  const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
-  const positions={};
-  elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const img=el.querySelector('img');positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};});
-  savePositionsRobust(positions);
-}
+/* ===== SIMPAN FILE HTML ===== */
+function savePositions(){const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];const positions={};elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const img=el.querySelector('img');positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};});savePositionsRobust(positions);}
+function savePositionsRobust(positions){const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let newSrc=src;Object.entries(positions).forEach(([id,data])=>{const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);});const logoImg=document.getElementById('logo-img');if(logoImg){const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);}const pasImg=document.getElementById('pas-img');if(pasImg){const re=/(id="pas-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${pasImg.style.width};height:${pasImg.style.height};object-fit:contain;display:${pasImg.style.display||'none'};filter:drop-shadow(0 0 18px rgba(200,150,44,.9));${post}`);}const shioImg=document.getElementById('shio-img');if(shioImg){const re=/(id="shio-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${shioImg.style.width};height:${shioImg.style.height};object-fit:contain;display:${shioImg.style.display||'none'};filter:drop-shadow(0 0 20px rgba(200,150,44,.7));${post}`);}const fontEls=[{id:'date-txt',extra:'letter-spacing:2px;'},{id:'c1',extra:'line-height:1;display:block;'},{id:'c2',extra:'line-height:1;display:block;'},{id:'c3',extra:'line-height:1;display:block;'},{id:'c4',extra:'line-height:1;display:block;'},{id:'bbfs-num',extra:'letter-spacing:4px;line-height:1.55;text-align:center;'},{id:'tarung-num',extra:'letter-spacing:3px;text-align:center;'},{id:'syair-txt',extra:'line-height:1.75;display:block;text-align:center;'}];fontEls.forEach(({id,extra})=>{const el=document.getElementById(id);if(!el)return;const fs=el.style.fontSize||'16px';const re=new RegExp(`(id="${id}"[^>]*style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1font-size:${fs};${extra}$2`);});const blob=new Blob([newSrc],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.download='syair_generator_saved.html';link.href=url;link.click();setTimeout(()=>URL.revokeObjectURL(url),3000);showToast('Posisi tersimpan ke file HTML!');}
 
-function savePositionsRobust(positions){
-  const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-  let newSrc=src;
-  Object.entries(positions).forEach(([id,data])=>{const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);});
-  const logoImg=document.getElementById('logo-img');
-  if(logoImg){const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);}
-  const pasImg=document.getElementById('pas-img');
-  if(pasImg){const re=/(id="pas-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${pasImg.style.width};height:${pasImg.style.height};object-fit:contain;display:${pasImg.style.display||'none'};filter:drop-shadow(0 0 18px rgba(200,150,44,.9));${post}`);}
-  const shioImg=document.getElementById('shio-img');
-  if(shioImg){const re=/(id="shio-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${shioImg.style.width};height:${shioImg.style.height};object-fit:contain;display:${shioImg.style.display||'none'};filter:drop-shadow(0 0 20px rgba(200,150,44,.7));${post}`);}
-  const fontEls=[{id:'date-txt',extra:'letter-spacing:2px;'},{id:'c1',extra:'line-height:1;display:block;'},{id:'c2',extra:'line-height:1;display:block;'},{id:'c3',extra:'line-height:1;display:block;'},{id:'c4',extra:'line-height:1;display:block;'},{id:'bbfs-num',extra:'letter-spacing:4px;line-height:1.55;text-align:center;'},{id:'tarung-num',extra:'letter-spacing:3px;text-align:center;'},{id:'syair-txt',extra:'line-height:1.75;display:block;text-align:center;'}];
-  fontEls.forEach(({id,extra})=>{const el=document.getElementById(id);if(!el)return;const fs=el.style.fontSize||'16px';const re=new RegExp(`(id="${id}"[^>]*style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1font-size:${fs};${extra}$2`);});
-  const blob=new Blob([newSrc],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.download='syair_generator_saved.html';link.href=url;link.click();setTimeout(()=>URL.revokeObjectURL(url),3000);
-  showToast('Posisi tersimpan ke file HTML!');
-}
-
-/* ===== TOAST ===== */
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg||'Done';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-
-/* ===== TOGGLE PANEL ===== */
 function togglePanel(header){header.classList.toggle('open');const body=header.nextElementSibling;body.classList.toggle('open');}
 
 /* ===== INIT ===== */
@@ -988,20 +440,12 @@ async function init(){
   const y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
   document.getElementById('inp-date').value=`${y}-${m}-${d}`;
   initDrag();initResize();
-
-  // Load state: Firebase dulu, fallback localStorage
-  const loaded = await loadInitialState();
-  if(!loaded){
-    randomAll();
-  }
-
-  // Aktifkan real-time listener setelah load awal
+  const loaded=await loadInitialState();
+  if(!loaded){randomAll();}
   initFirebaseListener();
 }
-
 init();
 </script>
-
 <script>
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('keydown',function(e){if(e.key==='F12')e.preventDefault();if(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))e.preventDefault();if(e.ctrlKey&&e.key.toUpperCase()==='U')e.preventDefault();});
