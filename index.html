@@ -7,6 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@1,700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- Firebase SDK v8 Compat -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -21,7 +26,7 @@
 
 body{
   font-family:'Cinzel',serif;background-color:var(--bg-deep);
-  background-image:url('https://cdn.areabermain.club/assets/cdn/az7/2026/06/13/20260613/6440b79d16d7215decaa0bf5a2f9f1a0/8e35011e-6793-4bfc-ba03-ac317c74beca.png');
+  background-image:url('https://i.postimg.cc/tCSs6kfd/fdebecc8-019e-4192-b4bc-07bccc553342.png');
   background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;
   display:flex;justify-content:center;min-height:100vh;padding:20px;overflow-x:hidden;
 }
@@ -40,14 +45,9 @@ body{
   border-radius:6px;
   box-shadow:0 0 0 1px rgba(200,150,44,.15),0 8px 40px rgba(0,0,0,.6),0 0 80px rgba(200,150,44,.06);
 }
+#card-bg{position:absolute;top:0;left:0;width:960px;height:960px;object-fit:fill;z-index:0;pointer-events:none;}
 
-/* Background gambar sebagai <img> di dalam card, bukan CSS background */
-#card-bg{
-  position:absolute;top:0;left:0;width:960px;height:960px;
-  object-fit:fill;z-index:0;pointer-events:none;
-}
-
-.side-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px;}
+.side-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:10px;position:sticky;top:20px;}
 
 .panel-box{
   width:100%;background:var(--bg-panel);border:1px solid var(--border-gold);
@@ -55,12 +55,12 @@ body{
   box-shadow:0 4px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(200,150,44,.08);
 }
 
-.panel-header{display:flex;align-items:center;justify-content:center;padding:14px 16px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:center;padding:12px 16px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
 .panel-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,150,44,.06),transparent 60%);pointer-events:none;}
 .panel-header.open{border-bottom-color:var(--border-gold);}
 .panel-header:hover{background:rgba(200,150,44,.04);}
-.panel-header h3{color:var(--gold-light);font-family:'Cinzel Decorative',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-align:center;position:relative;z-index:1;}
-.panel-header .arrow{color:var(--gold);font-size:12px;transition:transform .3s cubic-bezier(.4,0,.2,1);flex-shrink:0;margin-left:8px;}
+.panel-header h3{color:var(--gold-light);font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-align:center;position:relative;z-index:1;}
+.panel-header .arrow{color:var(--gold);font-size:11px;transition:transform .3s cubic-bezier(.4,0,.2,1);flex-shrink:0;margin-left:8px;}
 .panel-header.open .arrow{transform:rotate(180deg);}
 .panel-header.static{cursor:default;}
 .panel-header.static .arrow{display:none;}
@@ -71,17 +71,29 @@ body{
 .panel-body::-webkit-scrollbar-track{background:transparent;}
 .panel-body::-webkit-scrollbar-thumb{background:rgba(200,150,44,.3);border-radius:2px;}
 .panel-body::-webkit-scrollbar-thumb:hover{background:rgba(200,150,44,.5);}
-.panel-body.always-open{max-height:none;overflow:visible;padding:14px 16px 18px;display:flex;flex-direction:column;gap:10px;}
+.panel-body.always-open{max-height:none;overflow:visible;padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
+.panel-body.padded{padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
 
-.cg{display:flex;flex-direction:column;gap:4px;}
+.cg{display:flex;flex-direction:column;gap:3px;}
 .cg label{color:var(--gold);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:.85;}
-.cg input,.cg select{background:rgba(10,8,4,.7);border:1px solid var(--border-gold);border-radius:8px;color:#f0e6d0;padding:9px 12px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;width:100%;transition:border-color .2s,box-shadow .2s,background .2s;letter-spacing:.5px;}
+.cg input,.cg select{background:rgba(10,8,4,.7);border:1px solid var(--border-gold);border-radius:8px;color:#f0e6d0;padding:8px 10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;width:100%;transition:border-color .2s,box-shadow .2s,background .2s;letter-spacing:.5px;}
 .cg input:focus,.cg select:focus{outline:none;border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.12);background:rgba(10,8,4,.9);}
 .cg input::placeholder{color:var(--txt-dim);font-size:11px;}
 .cg select option{background:#1a1408;color:#f0e6d0;}
 
-.btn-row{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
-.btn{border:none;border-radius:10px;padding:12px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .25s cubic-bezier(.4,0,.2,1);width:100%;position:relative;overflow:hidden;}
+input[type="color"]{
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  border:1px solid var(--border-gold);border-radius:8px;
+  width:100%;height:38px;padding:4px;cursor:pointer;
+  background:rgba(10,8,4,.7);transition:border-color .2s,box-shadow .2s;
+}
+input[type="color"]:hover{border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.1);}
+input[type="color"]::-webkit-color-swatch-wrapper{padding:3px;}
+input[type="color"]::-webkit-color-swatch{border:none;border-radius:5px;}
+input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
+
+.btn-row{display:flex;flex-direction:column;gap:6px;margin-top:2px;}
+.btn{border:none;border-radius:10px;padding:10px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .25s cubic-bezier(.4,0,.2,1);width:100%;position:relative;overflow:hidden;}
 .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,transparent 50%);pointer-events:none;}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.4);}
 .btn:active{transform:translateY(0) scale(.98);box-shadow:0 2px 8px rgba(0,0,0,.3);}
@@ -94,13 +106,14 @@ body{
 .btn-dl:hover{background:linear-gradient(135deg,#0e3470,#2280ff,#124a90);}
 .btn-save{background:linear-gradient(135deg,#0a3a0a,#18a844,#0e4a0e);color:#fff;}
 .btn-save:hover{background:linear-gradient(135deg,#0e4a0e,#20c050,#124a12);}
-.btn-reset{background:transparent;color:var(--txt-dim);border:1px dashed rgba(200,150,44,.25);font-size:9px;padding:9px 14px;}
+.btn-reset{background:transparent;color:var(--txt-dim);border:1px dashed rgba(200,150,44,.25);font-size:9px;padding:8px 14px;}
 .btn-reset:hover{color:var(--red);border-color:var(--red);background:rgba(204,34,34,.08);transform:translateY(-1px);}
+.btn-sm{padding:7px 10px;font-size:8px;letter-spacing:1px;}
 
 .gt{font-family:'Cinzel Decorative',serif;font-weight:900;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;display:block;white-space:nowrap;}
 .gt-syair{font-family:'Playfair Display',serif;font-style:italic;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;text-align:center;}
 
-.dl-mode .gt,.dl-mode .gt-syair{background:none!important;-webkit-background-clip:unset!important;-webkit-text-fill-color:#e8c84a!important;background-clip:unset!important;color:#e8c84a!important;text-shadow:0 2px 8px rgba(0,0,0,.95)!important;filter:none!important;}
+.dl-mode .gt,.dl-mode .gt-syair{background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#e8c84a;background-clip:unset;color:#e8c84a;text-shadow:0 2px 8px rgba(0,0,0,.95);filter:none;}
 
 .el{position:absolute;z-index:10;cursor:move;user-select:none;transition:outline-color .15s;}
 .el:hover{outline:1.5px dashed rgba(100,220,40,.6);}
@@ -124,10 +137,26 @@ body{
 .spinner{width:48px;height:48px;border:3px solid rgba(200,150,44,.15);border-top-color:var(--gold-light);border-radius:50%;animation:spin .7s linear infinite;box-shadow:0 0 20px rgba(200,150,44,.15);}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-.version-badge{text-align:center;padding:8px;color:var(--txt-dim);font-family:'Outfit',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;}
-.panel-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:4px 0;}
-.save-indicator{font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(74,220,32,.5);text-align:center;padding:2px 0;transition:color .3s;}
-.save-indicator.saving{color:rgba(74,220,32,1);}
+.version-badge{text-align:center;padding:6px;color:var(--txt-dim);font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;}
+.panel-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:3px 0;}
+
+/* Status bar sync */
+.sync-bar{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:6px 10px;font-family:'Outfit',sans-serif;font-size:8px;
+  letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;
+  background:rgba(10,8,4,.5);border:1px solid rgba(200,150,44,.15);
+  transition:all .3s;
+}
+.sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:background .3s;}
+.sync-dot.online{background:#4adc20;box-shadow:0 0 6px rgba(74,220,32,.5);}
+.sync-dot.offline{background:#cc2222;box-shadow:0 0 6px rgba(204,34,34,.5);}
+.sync-dot.syncing{background:#f5d060;box-shadow:0 0 6px rgba(245,208,96,.5);animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.sync-text{color:var(--txt-dim);transition:color .3s;}
+.sync-text.online{color:rgba(74,220,32,.7);}
+.sync-text.offline{color:rgba(204,34,34,.7);}
+.sync-text.syncing{color:rgba(245,208,96,.8);}
 </style>
 </head>
 <body>
@@ -139,7 +168,6 @@ body{
 <div class="main-layout">
 
   <div class="cw"><div id="card">
-    <!-- Background sebagai <img> agar html2canvas akurat -->
     <img id="card-bg" src="https://files.catbox.moe/2ig1k5.png" crossorigin="anonymous" alt="">
 
     <div class="el" id="el-logo" style="top:56px;left:341px;">
@@ -218,7 +246,10 @@ body{
 
   </div></div>
 
+  <!-- ===== SIDE PANEL ===== -->
   <div class="side-panel">
+
+    <!-- Panel Utama -->
     <div class="panel-box">
       <div class="panel-header static">
         <h3>&#9876; Syair Generator</h3>
@@ -260,32 +291,70 @@ body{
         <div class="btn-row">
           <button class="btn btn-g" onclick="randomAll()">&#127922; Acak Semua</button>
           <button class="btn btn-r" onclick="generate()">&#9889; Generate</button>
-          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download PNG (1254x1254)</button>
+          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download PNG (1350x1350)</button>
           <button class="btn btn-save" onclick="savePositions()">&#128190; Simpan ke File HTML</button>
           <button class="btn btn-reset" onclick="resetPositions()">&#8634; Reset Semua Posisi</button>
         </div>
-        <div class="save-indicator" id="save-indicator">&#9679; Auto-save aktif</div>
       </div>
     </div>
 
+    <!-- Panel Warna Tulisan -->
     <div class="panel-box">
-      <div class="panel-header" onclick="toggleInfo(this)">
+      <div class="panel-header" onclick="togglePanel(this)">
+        <h3>&#127912; Warna Tulisan</h3>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="panel-body" id="color-body">
+        <div class="panel-body padded">
+          <div class="cg">
+            <label>Tanggal</label>
+            <input type="color" id="clr-date" value="#f5d060" onchange="applyTextColor('date-txt',this.value)">
+          </div>
+          <div class="cg">
+            <label>Colok (4 angka)</label>
+            <input type="color" id="clr-colok" value="#f5d060" onchange="applyColokColor(this.value)">
+          </div>
+          <div class="cg">
+            <label>BBFS</label>
+            <input type="color" id="clr-bbfs" value="#f5d060" onchange="applyTextColor('bbfs-num',this.value)">
+          </div>
+          <div class="cg">
+            <label>Angka Tarung</label>
+            <input type="color" id="clr-tarung" value="#f5d060" onchange="applyTextColor('tarung-num',this.value)">
+          </div>
+          <div class="cg">
+            <label>Syair</label>
+            <input type="color" id="clr-syair" value="#f5d060" onchange="applyTextColor('syair-txt',this.value)">
+          </div>
+          <button class="btn btn-reset btn-sm" onclick="resetColors()">&#8634; Reset Warna Default</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel Panduan -->
+    <div class="panel-box">
+      <div class="panel-header" onclick="togglePanel(this)">
         <h3>&#9733; Panduan Singkat</h3>
         <span class="arrow">&#9660;</span>
       </div>
       <div class="panel-body" id="info-body">
-        <div style="padding:14px 16px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:11px;line-height:1.7;letter-spacing:.3px;">
-          <p style="margin-bottom:8px;"><span style="color:var(--accent-green);font-weight:600;">Auto-Save</span> — Posisi, ukuran, dan konten tersimpan otomatis ke browser. Buka lagi tidak berpindah.</p>
-          <p style="margin-bottom:8px;"><span style="color:var(--accent-green);font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi pada kartu.</p>
-          <p style="margin-bottom:8px;"><span style="color:var(--accent-green);font-weight:600;">Resize</span> — Tarik titik hijau di pojok kanan bawah untuk mengubah ukuran gambar.</p>
-          <p style="margin-bottom:8px;"><span style="color:var(--accent-green);font-weight:600;">A+/A-</span> — Ubah ukuran font teks pada elemen terpilih.</p>
-          <p style="margin-bottom:8px;"><span style="color:var(--accent-green);font-weight:600;">W+/W-</span> — Ubah lebar gambar. <span style="color:var(--accent-green);font-weight:600;">H+/H-</span> — Ubah tinggi gambar.</p>
-          <p><span style="color:var(--accent-green);font-weight:600;">Download</span> — Hasil PNG berukuran 1254x1254 pixel, persis seperti tampilan di layar.</p>
+        <div style="padding:12px 14px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:10px;line-height:1.7;letter-spacing:.3px;">
+          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Cloud Sync</span> — Data tersinkron otomatis via Firebase. Pindah PC langsung update.</p>
+          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Warna</span> — Pilih warna untuk mengubah tampilan tulisan di kartu.</p>
+          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi.</p>
+          <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">A+/A-</span> — Ubah ukuran font. <span style="color:#4adc20;font-weight:600;">W+/H+</span> — Ubah ukuran gambar.</p>
+          <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil PNG 1350x1350 pixel.</p>
         </div>
       </div>
     </div>
 
-    <div class="version-badge">v2.1 &mdash; Syair Generator Pro</div>
+    <!-- Sync Status -->
+    <div class="sync-bar" id="sync-bar">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span class="sync-text" id="sync-text">Menghubungkan...</span>
+    </div>
+
+    <div class="version-badge">v2.3 &mdash; Syair Generator Pro + Cloud Sync</div>
   </div>
 
 </div>
@@ -294,11 +363,26 @@ body{
 <div id="toast">Done</div>
 
 <script>
+/* ===== FIREBASE INIT ===== */
+const firebaseConfig = {
+  apiKey: "AIzaSyBhMi5z2VQPHui7k9Oq_GtlF5kZX6Y4zyE",
+  authDomain: "tabungan-91059.firebaseapp.com",
+  projectId: "tabungan-91059",
+  storageBucket: "tabungan-91059.firebasestorage.app",
+  messagingSenderId: "325286813441",
+  appId: "1:325286813441:web:fc29977e3a502bd84e8500",
+  measurementId: "G-2E4MVNCX5S"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const DOC_PATH = 'syairGenerator/state'; // Document path di Firestore
+
 /* ===== KONSTANTA ===== */
 const RAW='https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/';
 const CARD_W=960, CARD_H=960;
-const DL_W=1254, DL_H=1254;
-const STORAGE_KEY='syair_gen_state_v2';
+const DL_W=1350, DL_H=1350;
+const STORAGE_KEY='syair_gen_state_v23';
 
 const PASARAN=[
   {id:'sgp',name:'Singapore',file:'LOGO SINGAPORE.png'},
@@ -329,7 +413,7 @@ const SHIO=[
   {name:'Harimau',file:'shio harimau.png'},{name:'Kelinci',file:'shio kelinci.png'},
   {name:'Naga',file:'shio naga.png'},{name:'Ular',file:'shio ular.png'},
   {name:'Kuda',file:'shio kuda.png'},{name:'Kambing',file:'shio kambing.png'},
-  {name:'Monyet',file:'shio monyet.png'},{name:'Ayem',file:'shio ayem.png'},
+  {name:'Monyet',file:'shio monyet.png'},{name:'Ayam',file:'shio ayam.png'},
   {name:'Anjing',file:'shio anjing.png'},{name:'Babi',file:'shio babi.png'},
 ];
 const SYAIR=[
@@ -350,14 +434,65 @@ const SYAIR=[
 /* ===== STATE ===== */
 let lastPasIdx=-1,lastShioIdx=-1,lastColok='',lastBBFS='',lastTarung='';
 let curPas='bullseye',curShio=7;
+let customColors={};
+let isApplyingRemoteState = false; // Flag agar tidak loop saat terima update dari Firebase
+let lastSyncTimestamp = 0;
 
-/* ===== AUTO-SAVE KE LOCALSTORAGE ===== */
-let saveTimer=null;
-function debouncedSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(autoSave,250);}
+/* ===== SYNC STATUS ===== */
+function setSyncStatus(status, text) {
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-text');
+  if (!dot || !txt) return;
+  dot.className = 'sync-dot ' + status;
+  txt.className = 'sync-text ' + status;
+  txt.textContent = text;
+}
 
-function autoSave(){
+/* ===== WARNA TULISAN ===== */
+function applyTextColor(id, color) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  customColors[id] = color;
+  el.style.webkitTextFillColor = color;
+  el.style.background = 'none';
+  el.style.webkitBackgroundClip = 'unset';
+  el.style.backgroundClip = 'unset';
+  el.style.color = color;
+  el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
+  debouncedSave();
+}
+
+function applyColokColor(color) {
+  ['c1','c2','c3','c4'].forEach(id => applyTextColor(id, color));
+}
+
+function clearElementColor(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.webkitTextFillColor = '';
+  el.style.background = '';
+  el.style.webkitBackgroundClip = '';
+  el.style.backgroundClip = '';
+  el.style.color = '';
+  el.style.textShadow = '';
+}
+
+function resetColors() {
+  customColors = {};
+  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id => clearElementColor(id));
+  document.getElementById('clr-date').value = '#f5d060';
+  document.getElementById('clr-colok').value = '#f5d060';
+  document.getElementById('clr-bbfs').value = '#f5d060';
+  document.getElementById('clr-tarung').value = '#f5d060';
+  document.getElementById('clr-syair').value = '#f5d060';
+  debouncedSave();
+  showToast('Warna direset ke gradient emas!');
+}
+
+/* ===== BUILD STATE OBJECT ===== */
+function buildState() {
   const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
-  const state={elements:{},inputs:{},texts:{},imgSrcs:{}};
+  const state={elements:{},inputs:{},texts:{},imgSrcs:{},customColors:{},colorPickers:{}};
 
   elIds.forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
@@ -372,8 +507,7 @@ function autoSave(){
     state.elements[id]=data;
   });
 
-  const textIds=['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'];
-  textIds.forEach(id=>{
+  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}
   });
@@ -390,60 +524,204 @@ function autoSave(){
     tarung:document.getElementById('inp-tarung').value,
   };
 
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
-  const ind=document.getElementById('save-indicator');
-  if(ind){ind.classList.add('saving');ind.textContent='\u25CF Tersimpan!';setTimeout(()=>{ind.classList.remove('saving');ind.textContent='\u25CF Auto-save aktif';},800);}
+  state.customColors = {...customColors};
+  state.colorPickers = {
+    date: document.getElementById('clr-date').value,
+    colok: document.getElementById('clr-colok').value,
+    bbfs: document.getElementById('clr-bbfs').value,
+    tarung: document.getElementById('clr-tarung').value,
+    syair: document.getElementById('clr-syair').value,
+  };
+
+  state.timestamp = Date.now();
+  return state;
 }
 
-function autoLoad(){
+/* ===== APPLY STATE ===== */
+function applyState(state) {
+  if (!state || !state.elements) return;
+
+  isApplyingRemoteState = true;
+
+  // Posisi & ukuran
+  Object.entries(state.elements).forEach(([id,data])=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(data.top)el.style.top=data.top;
+    if(data.left)el.style.left=data.left;
+    const img=el.querySelector('img');
+    if(img){
+      if(data.imgW)img.style.width=data.imgW;
+      if(data.imgH)img.style.height=data.imgH;
+      if(data.imgDisplay)img.style.display=data.imgDisplay;
+    }
+    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
+      const fsKey=tid+'_fs';
+      if(data[fsKey]){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];}
+    });
+  });
+
+  // Konten teks
+  if(state.texts){
+    Object.entries(state.texts).forEach(([id,content])=>{
+      const el=document.getElementById(id);if(!el)return;
+      if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;
+      else el.textContent=content;
+    });
+  }
+
+  // Sumber gambar
+  if(state.imgSrcs){
+    Object.entries(state.imgSrcs).forEach(([id,src])=>{
+      const el=document.getElementById(id);
+      if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}
+    });
+  }
+
+  // Input form
+  if(state.inputs){
+    const inp=state.inputs;
+    if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}
+    if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}
+    if(inp.date)document.getElementById('inp-date').value=inp.date;
+    if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;
+    if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;
+    if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;
+  }
+
+  // Warna custom
+  customColors = {};
+  if(state.customColors && Object.keys(state.customColors).length > 0){
+    customColors = {...state.customColors};
+    Object.entries(customColors).forEach(([id, color]) => {
+      const el = document.getElementById(id);
+      if(el){
+        el.style.webkitTextFillColor = color;
+        el.style.background = 'none';
+        el.style.webkitBackgroundClip = 'unset';
+        el.style.backgroundClip = 'unset';
+        el.style.color = color;
+        el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
+      }
+    });
+  } else {
+    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id => clearElementColor(id));
+  }
+
+  // Color picker values
+  if(state.colorPickers){
+    const cp = state.colorPickers;
+    if(cp.date) document.getElementById('clr-date').value = cp.date;
+    if(cp.colok) document.getElementById('clr-colok').value = cp.colok;
+    if(cp.bbfs) document.getElementById('clr-bbfs').value = cp.bbfs;
+    if(cp.tarung) document.getElementById('clr-tarung').value = cp.tarung;
+    if(cp.syair) document.getElementById('clr-syair').value = cp.syair;
+  }
+
+  refreshSizeDisplays();
+
+  setTimeout(() => { isApplyingRemoteState = false; }, 500);
+}
+
+/* ===== AUTO-SAVE (localStorage + Firebase) ===== */
+let saveTimer=null;
+function debouncedSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(autoSave,400);}
+
+function autoSave(){
+  const state = buildState();
+
+  // Simpan ke localStorage
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
+
+  // Simpan ke Firebase Firestore
+  saveToFirebase(state);
+
+  setSyncStatus('syncing','Menyimpan...');
+  setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);
+}
+
+/* ===== FIREBASE: SAVE ===== */
+async function saveToFirebase(state) {
+  try {
+    await db.doc(DOC_PATH).set(state, {merge: true});
+    lastSyncTimestamp = state.timestamp || Date.now();
+  } catch(e) {
+    console.warn('Firebase save gagal:', e);
+    setSyncStatus('offline','Gagal sinkron');
+  }
+}
+
+/* ===== FIREBASE: REAL-TIME LISTENER ===== */
+function initFirebaseListener() {
+  setSyncStatus('syncing','Menghubungkan...');
+
+  db.doc(DOC_PATH).onSnapshot((doc) => {
+    if (!doc.exists) return;
+    const remoteState = doc.data();
+    if (!remoteState || !remoteState.timestamp) return;
+
+    // Hanya terapkan jika data dari Firebase lebih baru dari yang kita simpan terakhir
+    // DAN kita sedang tidak dalam proses menyimpan sendiri
+    if (remoteState.timestamp > lastSyncTimestamp && !isApplyingRemoteState) {
+      // Cek apakah ada perbedaan signifikan
+      const localRaw = localStorage.getItem(STORAGE_KEY);
+      let localState = null;
+      try { localState = localRaw ? JSON.parse(localRaw) : null; } catch(e) {}
+
+      // Jika tidak ada data lokal ATAU timestamp Firebase lebih baru
+      if (!localState || remoteState.timestamp > (localState.timestamp || 0)) {
+        applyState(remoteState);
+        // Update localStorage juga
+        try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
+        lastSyncTimestamp = remoteState.timestamp;
+        setSyncStatus('online','Diperbarui dari cloud');
+        setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);
+      }
+    }
+  }, (error) => {
+    console.warn('Firebase listener error:', error);
+    setSyncStatus('offline','Offline - localStorage saja');
+  });
+
+  setSyncStatus('online','Tersinkron');
+}
+
+/* ===== LOAD INITIAL STATE ===== */
+function loadInitialState() {
+  return new Promise(async (resolve) => {
+    // 1. Coba load dari Firebase dulu (sumber terbaru)
+    try {
+      setSyncStatus('syncing','Memuat dari cloud...');
+      const doc = await db.doc(DOC_PATH).get();
+      if (doc.exists) {
+        const remoteState = doc.data();
+        if (remoteState && remoteState.elements) {
+          applyState(remoteState);
+          lastSyncTimestamp = remoteState.timestamp || 0;
+          try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
+          setSyncStatus('online','Dimuat dari cloud');
+          resolve(true);
+          return;
+        }
+      }
+    } catch(e) {
+      console.warn('Firebase load gagal, fallback ke localStorage:', e);
+      setSyncStatus('offline','Offline - localStorage saja');
+    }
+
+    // 2. Fallback ke localStorage
+    const loaded = autoLoadLocal();
+    resolve(loaded);
+  });
+}
+
+function autoLoadLocal(){
   try{
     const saved=localStorage.getItem(STORAGE_KEY);
     if(!saved)return false;
     const state=JSON.parse(saved);
     if(!state||!state.elements)return false;
-
-    Object.entries(state.elements).forEach(([id,data])=>{
-      const el=document.getElementById(id);if(!el)return;
-      if(data.top)el.style.top=data.top;
-      if(data.left)el.style.left=data.left;
-      const img=el.querySelector('img');
-      if(img){
-        if(data.imgW)img.style.width=data.imgW;
-        if(data.imgH)img.style.height=data.imgH;
-        if(data.imgDisplay)img.style.display=data.imgDisplay;
-      }
-      const txtIds=['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'];
-      txtIds.forEach(tid=>{
-        const fsKey=tid+'_fs';
-        if(data[fsKey]){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];}
-      });
-    });
-
-    if(state.texts){
-      Object.entries(state.texts).forEach(([id,content])=>{
-        const el=document.getElementById(id);if(!el)return;
-        if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;
-        else el.textContent=content;
-      });
-    }
-
-    if(state.imgSrcs){
-      Object.entries(state.imgSrcs).forEach(([id,src])=>{
-        const el=document.getElementById(id);
-        if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}
-      });
-    }
-
-    if(state.inputs){
-      const inp=state.inputs;
-      if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}
-      if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}
-      if(inp.date)document.getElementById('inp-date').value=inp.date;
-      if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;
-      if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;
-      if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;
-    }
-    refreshSizeDisplays();
+    applyState(state);
+    lastSyncTimestamp = state.timestamp || 0;
     return true;
   }catch(e){return false;}
 }
@@ -461,7 +739,12 @@ function refreshSizeDisplays(){
   });
 }
 
-function resetPositions(){localStorage.removeItem(STORAGE_KEY);location.reload();}
+function resetPositions(){
+  localStorage.removeItem(STORAGE_KEY);
+  // Hapus juga di Firebase
+  db.doc(DOC_PATH).delete().catch(()=>{});
+  location.reload();
+}
 
 /* ===== ANTI-REPEAT ===== */
 function pickDiff(total,last){if(total<=1)return 0;let idx;do{idx=Math.floor(Math.random()*total);}while(idx===last);return idx;}
@@ -502,10 +785,8 @@ function initDrag(){
   document.querySelectorAll('.el').forEach(el=>{
     let drag=false,sx,sy,ox,oy;
     const start=(cx,cy)=>{
-      drag=true;
-      document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));
-      el.classList.add('active');sx=cx;sy=cy;
-      ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;
+      drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');sx=cx;sy=cy;ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;
     };
     const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};
     const end=()=>{if(drag){drag=false;debouncedSave();}};
@@ -578,25 +859,35 @@ function generate(){
   const siNew=pickNextSyair();const s=SYAIR[siNew];
   document.getElementById('syair-txt').innerHTML=s.replace(/\n/g,'<br>');
   setPasaran(curPas);setShio(curShio);
+
+  // Reapply warna custom setelah generate
+  Object.entries(customColors).forEach(([id, color]) => {
+    const el = document.getElementById(id);
+    if(el){
+      el.style.webkitTextFillColor = color;
+      el.style.background = 'none';
+      el.style.webkitBackgroundClip = 'unset';
+      el.style.backgroundClip = 'unset';
+      el.style.color = color;
+      el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
+    }
+  });
+
   autoSave();
 }
 
-/* ===== DOWNLOAD PNG 1254x1254 ===== */
-/* Strategi: render di scale 1 (960x960) lalu upscale canvas ke 1254x1254.
-   Ini menghindari bug html2canvas dengan scale desimal yang merusak posisi elemen. */
+/* ===== DOWNLOAD PNG 1350x1350 ===== */
 async function downloadCard(){
   const overlay=document.getElementById('dl-overlay');
-  document.getElementById('dl-msg').textContent='Membuat gambar 1254x1254...';
+  document.getElementById('dl-msg').textContent='Membuat gambar 1350x1350...';
   overlay.classList.add('show');
   const card=document.getElementById('card');
   const ctrls=card.querySelectorAll('.el-ctrl,.rh');
 
-  // Sembunyikan kontrol
   ctrls.forEach(el=>el.style.visibility='hidden');
   card.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
 
   try{
-    // Tunggu semua gambar selesai loading
     const imgs=[...card.querySelectorAll('img')];
     await Promise.all(imgs.map(img=>{
       if(img.complete&&img.naturalHeight!==0)return Promise.resolve();
@@ -604,51 +895,50 @@ async function downloadCard(){
     }));
     await new Promise(r=>setTimeout(r,400));
 
-    // Aktifkan mode download (override gradient text)
     card.classList.add('dl-mode');
     await new Promise(r=>setTimeout(r,100));
 
-    // Step 1: Render di scale 1 (960x960) — paling akurat
     const canvas960=await html2canvas(card,{
-      useCORS:true,
-      allowTaint:false,
-      scale:1,
-      width:CARD_W,
-      height:CARD_H,
-      backgroundColor:null,
-      logging:false,
-      imageTimeout:30000,
+      useCORS:true,allowTaint:false,scale:1,
+      width:CARD_W,height:CARD_H,
+      backgroundColor:null,logging:false,imageTimeout:30000,
       onclone:(doc)=>{
         const c=doc.getElementById('card');
         if(c){
           c.classList.add('dl-mode');
           c.querySelectorAll('.el-ctrl,.rh').forEach(el=>el.style.visibility='hidden');
           c.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
-          // Pastikan background img terlihat di clone
           const bg=doc.getElementById('card-bg');
           if(bg){bg.style.display='block';bg.style.width=CARD_W+'px';bg.style.height=CARD_H+'px';}
+          Object.entries(customColors).forEach(([id, color]) => {
+            const el = doc.getElementById(id);
+            if(el){
+              el.style.webkitTextFillColor = color;
+              el.style.background = 'none';
+              el.style.webkitBackgroundClip = 'unset';
+              el.style.backgroundClip = 'unset';
+              el.style.color = color;
+              el.style.textShadow = '0 2px 10px rgba(0,0,0,.85)';
+            }
+          });
         }
       }
     });
 
-    // Step 2: Upscale dari 960x960 ke 1254x1254 dengan canvas API
-    const canvas1254=document.createElement('canvas');
-    canvas1254.width=DL_W;
-    canvas1254.height=DL_H;
-    const ctx=canvas1254.getContext('2d');
-    // Gunakan imageSmoothingEnabled untuk kualitas terbaik
+    const canvas1350=document.createElement('canvas');
+    canvas1350.width=DL_W;canvas1350.height=DL_H;
+    const ctx=canvas1350.getContext('2d');
     ctx.imageSmoothingEnabled=true;
     ctx.imageSmoothingQuality='high';
     ctx.drawImage(canvas960,0,0,DL_W,DL_H);
 
     card.classList.remove('dl-mode');
 
-    // Step 3: Download
     const dateStr=document.getElementById('date-txt').textContent.replace(/\s+/g,'-');
     const pasName=(PASARAN.find(p=>p.id===curPas)||{name:'syair'}).name.replace(/\s+/g,'_');
     const link=document.createElement('a');
-    link.download=`syair_${pasName}_${dateStr}_1254x1254.png`;
-    link.href=canvas1254.toDataURL('image/png');
+    link.download=`syair_${pasName}_${dateStr}_1350x1350.png`;
+    link.href=canvas1350.toDataURL('image/png');
     link.click();
 
     showToast('Download berhasil! Ukuran: '+DL_W+'x'+DL_H+' pixel');
@@ -665,18 +955,14 @@ async function downloadCard(){
 function savePositions(){
   const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
   const positions={};
-  elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const img=el.querySelector('img');const txt=el.querySelector('[id]');positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:'',txtFs:txt?txt.style.fontSize:''};});
+  elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const img=el.querySelector('img');positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};});
   savePositionsRobust(positions);
 }
 
 function savePositionsRobust(positions){
   const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-  const card=document.getElementById('card');
-  const elEls=card.querySelectorAll('.el');
-  const styleMap={};
-  elEls.forEach(el=>{const id=el.id;const top=el.style.top||'0px';const left=el.style.left||'0px';styleMap[id]={top,left,el};});
   let newSrc=src;
-  Object.entries(styleMap).forEach(([id,{top,left}])=>{const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1top:${top};left:${left};$2`);});
+  Object.entries(positions).forEach(([id,data])=>{const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);});
   const logoImg=document.getElementById('logo-img');
   if(logoImg){const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);}
   const pasImg=document.getElementById('pas-img');
@@ -692,19 +978,27 @@ function savePositionsRobust(positions){
 /* ===== TOAST ===== */
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg||'Done';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-/* ===== TOGGLE INFO PANEL ===== */
-function toggleInfo(header){header.classList.toggle('open');const body=header.nextElementSibling;body.classList.toggle('open');}
+/* ===== TOGGLE PANEL ===== */
+function togglePanel(header){header.classList.toggle('open');const body=header.nextElementSibling;body.classList.toggle('open');}
 
 /* ===== INIT ===== */
-function init(){
+async function init(){
   initSyairDeck();
   const t=new Date();t.setDate(t.getDate()+1);
   const y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
   document.getElementById('inp-date').value=`${y}-${m}-${d}`;
   initDrag();initResize();
-  const loaded=autoLoad();
-  if(!loaded){randomAll();}
+
+  // Load state: Firebase dulu, fallback localStorage
+  const loaded = await loadInitialState();
+  if(!loaded){
+    randomAll();
+  }
+
+  // Aktifkan real-time listener setelah load awal
+  initFirebaseListener();
 }
+
 init();
 </script>
 
