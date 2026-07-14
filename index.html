@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syair Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@1,700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Playfair+Display:ital,wght@1,700&family=Outfit:wght@300;400;600;700&family=MedievalSharp&family=UnifrakturMaguntia&family=Pirata+One&family=Uncial+Antiqua&family=Abril+Fatface&family=Righteous&family=Berkshire+Swash&family=Rye&family=Almendra+Display&family=Germania+One&family=Metamorphous&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -30,11 +30,17 @@ body{
 .ambient-orb.b{width:350px;height:350px;background:radial-gradient(circle,#8b5e0a,transparent 70%);bottom:-60px;right:-80px;animation-duration:16s;animation-delay:-5s;}
 .ambient-orb.c{width:260px;height:260px;background:radial-gradient(circle,#e8b84b,transparent 70%);top:40%;left:50%;animation-duration:20s;animation-delay:-10s;}
 @keyframes orbFloat{0%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.08);}66%{transform:translate(-20px,30px) scale(.94);}100%{transform:translate(15px,-15px) scale(1.03);}}
-.main-layout{display:flex;gap:18px;align-items:flex-start;width:100%;max-width:1240px;position:relative;z-index:1;}
+
+.main-layout{display:flex;gap:18px;align-items:flex-start;width:100%;max-width:1300px;position:relative;z-index:1;}
 .cw{flex-shrink:0;}
 #card{width:960px;height:960px;position:relative;overflow:hidden;border-radius:6px;box-shadow:0 0 0 1px rgba(200,150,44,.15),0 8px 40px rgba(0,0,0,.6),0 0 80px rgba(200,150,44,.06);}
 #card-bg{position:absolute;top:0;left:0;width:960px;height:960px;object-fit:fill;z-index:0;pointer-events:none;}
-.side-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:10px;position:sticky;top:20px;}
+
+.side-panel{flex-shrink:0;width:260px;display:flex;flex-direction:column;gap:10px;position:sticky;top:20px;max-height:96vh;overflow-y:auto;overflow-x:hidden;padding-right:4px;}
+.side-panel::-webkit-scrollbar{width:4px;}
+.side-panel::-webkit-scrollbar-track{background:transparent;}
+.side-panel::-webkit-scrollbar-thumb{background:rgba(200,150,44,.3);border-radius:2px;}
+
 .panel-box{width:100%;background:var(--bg-panel);border:1px solid var(--border-gold);border-radius:14px;overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(200,150,44,.08);}
 .panel-header{display:flex;align-items:center;justify-content:center;padding:12px 16px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
 .panel-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,150,44,.06),transparent 60%);pointer-events:none;}
@@ -44,25 +50,32 @@ body{
 .panel-header .arrow{color:var(--gold);font-size:11px;transition:transform .3s cubic-bezier(.4,0,.2,1);flex-shrink:0;margin-left:8px;}
 .panel-header.open .arrow{transform:rotate(180deg);}
 .panel-header.static{cursor:default;}.panel-header.static .arrow{display:none;}
+
 .panel-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-.panel-body.open{max-height:700px;overflow-y:auto;}
+.panel-body.open{max-height:2000px;overflow-y:auto;}
 .panel-body::-webkit-scrollbar{width:4px;}
 .panel-body::-webkit-scrollbar-track{background:transparent;}
 .panel-body::-webkit-scrollbar-thumb{background:rgba(200,150,44,.3);border-radius:2px;}
-.panel-body::-webkit-scrollbar-thumb:hover{background:rgba(200,150,44,.5);}
-.panel-body.always-open{max-height:none;overflow:visible;padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
+.panel-body.always-open{max-height:none;overflow-y:auto;overflow-x:hidden;padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
 .panel-body.padded{padding:12px 14px 16px;display:flex;flex-direction:column;gap:8px;}
+
 .cg{display:flex;flex-direction:column;gap:3px;}
 .cg label{color:var(--gold);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;opacity:.85;}
 .cg input,.cg select{background:rgba(10,8,4,.7);border:1px solid var(--border-gold);border-radius:8px;color:#f0e6d0;padding:8px 10px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:400;width:100%;transition:border-color .2s,box-shadow .2s,background .2s;letter-spacing:.5px;}
 .cg input:focus,.cg select:focus{outline:none;border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.12);background:rgba(10,8,4,.9);}
 .cg input::placeholder{color:var(--txt-dim);font-size:11px;}
 .cg select option{background:#1a1408;color:#f0e6d0;}
-input[type="color"]{-webkit-appearance:none;-moz-appearance:none;appearance:none;border:1px solid var(--border-gold);border-radius:8px;width:100%;height:38px;padding:4px;cursor:pointer;background:rgba(10,8,4,.7);transition:border-color .2s,box-shadow .2s;}
+
+input[type="color"]{-webkit-appearance:none;-moz-appearance:none;appearance:none;border:1px solid var(--border-gold);border-radius:8px;width:100%;height:34px;padding:4px;cursor:pointer;background:rgba(10,8,4,.7);transition:border-color .2s,box-shadow .2s;}
 input[type="color"]:hover{border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(200,150,44,.1);}
 input[type="color"]::-webkit-color-swatch-wrapper{padding:3px;}
 input[type="color"]::-webkit-color-swatch{border:none;border-radius:5px;}
 input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
+
+.color-row{display:flex;gap:6px;align-items:center;}
+.color-row input[type="color"]{width:42px;min-width:42px;height:34px;flex-shrink:0;}
+.color-row select{flex:1;}
+
 .btn-row{display:flex;flex-direction:column;gap:6px;margin-top:2px;}
 .btn{border:none;border-radius:10px;padding:10px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .25s cubic-bezier(.4,0,.2,1);width:100%;position:relative;overflow:hidden;}
 .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,transparent 50%);pointer-events:none;}
@@ -79,9 +92,19 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 .btn-reset{background:transparent;color:var(--txt-dim);border:1px dashed rgba(200,150,44,.25);font-size:9px;padding:8px 14px;}
 .btn-reset:hover{color:var(--red);border-color:var(--red);background:rgba(204,34,34,.08);transform:translateY(-1px);}
 .btn-sm{padding:7px 10px;font-size:8px;letter-spacing:1px;}
+
+/* ===== Teks emas di kartu ===== */
 .gt{font-family:'Cinzel Decorative',serif;font-weight:900;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;display:block;white-space:nowrap;}
 .gt-syair{font-family:'Playfair Display',serif;font-style:italic;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;text-align:center;}
-.dl-mode .gt,.dl-mode .gt-syair{background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#e8c84a;background-clip:unset;color:#e8c84a;text-shadow:0 2px 8px rgba(0,0,0,.95);filter:none;}
+.gt-link{font-family:'Outfit',sans-serif;font-weight:700;background:linear-gradient(180deg,#fffbe0 0%,#f5d060 18%,#c8962c 40%,#8b5e0a 58%,#c8962c 76%,#f5d060 92%,#fffbe0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;text-align:center;letter-spacing:2px;}
+
+/* Saat download — nonaktifkan gradient, pakai warna solid agar bersih */
+.dl-mode .gt,.dl-mode .gt-syair,.dl-mode .gt-link{background:none!important;-webkit-background-clip:unset!important;-webkit-text-fill-color:#e8c84a!important;background-clip:unset!important;color:#e8c84a!important;text-shadow:0 2px 8px rgba(0,0,0,.95);filter:none;}
+.dl-mode .el{outline:none!important;cursor:default!important;}
+.dl-mode .el-ctrl,.dl-mode .rh{display:none!important;opacity:0!important;}
+.dl-mode .el:hover{outline:none!important;}
+
+.el-label{font-family:'Cinzel Decorative',serif;font-size:9px;letter-spacing:2px;color:#e8b84b;text-shadow:0 1px 4px rgba(0,0,0,.8);text-align:center;display:block;margin-bottom:2px;}
 .el{position:absolute;z-index:10;cursor:move;user-select:none;transition:outline-color .15s;}
 .el:hover{outline:1.5px dashed rgba(100,220,40,.6);}
 .el.active{outline:2px solid rgba(100,220,40,1);z-index:50;}
@@ -93,15 +116,19 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 .rh{position:absolute;bottom:-6px;right:-6px;width:14px;height:14px;background:var(--accent-green);border:2px solid rgba(0,0,0,.5);border-radius:50%;cursor:se-resize;opacity:0;transition:opacity .15s,transform .15s;box-shadow:0 0 8px rgba(74,220,32,.4);}
 .el:hover .rh,.el.active .rh{opacity:1;}
 .rh:hover{transform:scale(1.3);}
+
 #toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,rgba(10,40,10,.95),rgba(20,80,20,.95));color:#b8ff80;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;padding:12px 28px;border-radius:12px;border:1px solid rgba(0,204,68,.3);z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;pointer-events:none;opacity:0;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.5);}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
 #dl-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:18px;backdrop-filter:blur(8px);}
 #dl-overlay.show{display:flex;}
 #dl-overlay p{color:var(--gold-light);font-family:'Outfit',sans-serif;font-size:14px;letter-spacing:2px;font-weight:600;}
 .spinner{width:48px;height:48px;border:3px solid rgba(200,150,44,.15);border-top-color:var(--gold-light);border-radius:50%;animation:spin .7s linear infinite;box-shadow:0 0 20px rgba(200,150,44,.15);}
 @keyframes spin{to{transform:rotate(360deg);}}
+
 .version-badge{text-align:center;padding:6px;color:var(--txt-dim);font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;}
 .panel-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:3px 0;}
+
 .sync-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 10px;font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;border-radius:8px;background:rgba(10,8,4,.5);border:1px solid rgba(200,150,44,.15);transition:all .3s;}
 .sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:background .3s;}
 .sync-dot.online{background:#4adc20;box-shadow:0 0 6px rgba(74,220,32,.5);}
@@ -118,24 +145,30 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
 <div class="ambient-orb a"></div>
 <div class="ambient-orb b"></div>
 <div class="ambient-orb c"></div>
+
 <div class="main-layout">
+  <!-- ===== KARTU ===== -->
   <div class="cw"><div id="card">
-    <img id="card-bg" src="https://files.catbox.moe/2ig1k5.png" crossorigin="anonymous" alt="">
+    <img id="card-bg" src="https://files.catbox.moe/wm2f7l.png" crossorigin="anonymous" alt="">
+
     <div class="el" id="el-logo" style="top:56px;left:341px;">
       <div class="el-ctrl"><button onclick="rz('el-logo','w',-10)">W-</button><span class="sv" id="sv-lw">283</span><button onclick="rz('el-logo','w',10)">W+</button><button onclick="rz('el-logo','h',-10)">H-</button><span class="sv" id="sv-lh">89</span><button onclick="rz('el-logo','h',10)">H+</button></div>
       <img id="logo-img" src="https://i.postimg.cc/BZCrMVJ8/togelon-1.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="LOGO" style="width:283px;height:89px;object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));">
       <div class="rh" data-el="el-logo"></div>
     </div>
+
     <div class="el" id="el-date" style="top:180px;left:352px;">
       <div class="el-ctrl"><button onclick="fs('date-txt',-1)">A-</button><span class="sv" id="sv-dfs">36</span><button onclick="fs('date-txt',1)">A+</button></div>
       <span id="date-txt" class="gt" style="font-size:36px;letter-spacing:2px;">12 JULI 2026</span>
       <div class="rh" data-el="el-date"></div>
     </div>
+
     <div class="el" id="el-pasaran" style="top:215px;left:387px;">
       <div class="el-ctrl"><button onclick="rz('el-pasaran','w',-10)">W-</button><span class="sv" id="sv-pw">220</span><button onclick="rz('el-pasaran','w',10)">W+</button><button onclick="rz('el-pasaran','h',-10)">H-</button><span class="sv" id="sv-ph">138</span><button onclick="rz('el-pasaran','h',10)">H+</button></div>
       <img id="pas-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/logo%20hoki%20draw.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:220px;height:138px;object-fit:contain;display:block;filter:drop-shadow(0 0 18px rgba(200,150,44,.9));">
       <div class="rh" data-el="el-pasaran"></div>
     </div>
+
     <div class="el" id="el-c1" style="top:422px;left:46px;">
       <div class="el-ctrl"><button onclick="fs('c1',-2)">A-</button><span class="sv" id="sv-c1">46</span><button onclick="fs('c1',2)">A+</button></div>
       <span id="c1" class="gt" style="font-size:46px;line-height:1;display:block;">1</span><div class="rh" data-el="el-c1"></div>
@@ -152,27 +185,47 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
       <div class="el-ctrl"><button onclick="fs('c4',-2)">A-</button><span class="sv" id="sv-c4">46</span><button onclick="fs('c4',2)">A+</button></div>
       <span id="c4" class="gt" style="font-size:46px;line-height:1;display:block;">8</span><div class="rh" data-el="el-c4"></div>
     </div>
+
+    <div class="el" id="el-cmacau" style="top:680px;left:46px;">
+      <div class="el-ctrl"><button onclick="fs('cmacau-txt',-1)">A-</button><span class="sv" id="sv-cm">28</span><button onclick="fs('cmacau-txt',1)">A+</button></div>
+      <span class="el-label">COLOK MACAU</span>
+      <span id="cmacau-txt" class="gt" style="font-size:28px;letter-spacing:6px;display:block;text-align:center;">3 - 7</span>
+      <div class="rh" data-el="el-cmacau"></div>
+    </div>
+
     <div class="el" id="el-bbfs" style="top:380px;left:771px;">
       <div class="el-ctrl"><button onclick="fs('bbfs-num',-1)">A-</button><span class="sv" id="sv-bfs">34</span><button onclick="fs('bbfs-num',1)">A+</button></div>
       <div id="bbfs-num" class="gt" style="font-size:34px;letter-spacing:4px;line-height:1.55;text-align:center;">0 1 2 3<br>5 6 7 8</div><div class="rh" data-el="el-bbfs"></div>
     </div>
+
     <div class="el" id="el-tarung" style="top:589px;left:744px;">
       <div class="el-ctrl"><button onclick="fs('tarung-num',-1)">A-</button><span class="sv" id="sv-tfs">31</span><button onclick="fs('tarung-num',1)">A+</button></div>
       <div id="tarung-num" class="gt" style="font-size:31px;letter-spacing:3px;text-align:center;">2-3-5-8-9</div><div class="rh" data-el="el-tarung"></div>
     </div>
+
     <div class="el" id="el-shio" style="top:312px;left:263px;">
       <div class="el-ctrl"><button onclick="rz('el-shio','w',-10)">W-</button><span class="sv" id="sv-sw">452</span><button onclick="rz('el-shio','w',10)">W+</button><button onclick="rz('el-shio','h',-10)">H-</button><span class="sv" id="sv-sh">391</span><button onclick="rz('el-shio','h',10)">H+</button></div>
       <img id="shio-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/shio%20kambing.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:452px;height:391px;object-fit:contain;display:block;filter:drop-shadow(0 0 20px rgba(200,150,44,.7));">
       <div class="rh" data-el="el-shio"></div>
     </div>
-    <div class="el" id="el-syair" style="top:759px;left:360px;">
-      <div class="el-ctrl"><button onclick="fs('syair-txt',-1)">A-</button><span class="sv" id="sv-sfs">15</span><button onclick="fs('syair-txt',1)">A+</button></div>
-      <span id="syair-txt" class="gt-syair" style="font-size:15px;line-height:1.75;display:block;text-align:center;">Kambing gunung berdiri di tebing,<br>Pandangan jauh penuh ketenangan.<br>Angka kambing membawa damai,<br>Kemenangan datang dengan tenang.</span>
+
+    <div class="el" id="el-syair" style="top:780px;left:105px;">
+      <div class="el-ctrl"><button onclick="fs('syair-txt',-1)">A-</button><span class="sv" id="sv-sfs">17</span><button onclick="fs('syair-txt',1)">A+</button></div>
+      <span id="syair-txt" class="gt-syair" style="font-size:17px;line-height:1.6;display:block;text-align:center;max-width:750px;">Kambing gunung berdiri di tebing pandangan jauh penuh ketenangan,<br>Angka kambing membawa damai kemenangan datang dengan tenang.</span>
       <div class="rh" data-el="el-syair"></div>
+    </div>
+
+    <div class="el" id="el-link" style="top:900px;left:260px;">
+      <div class="el-ctrl"><button onclick="fs('link-txt',-1)">A-</button><span class="sv" id="sv-lk">18</span><button onclick="fs('link-txt',1)">A+</button></div>
+      <span class="el-label">LINK ALTERNATIF</span>
+      <span id="link-txt" class="gt-link" style="font-size:18px;display:block;text-align:center;">www.togelon.com</span>
+      <div class="rh" data-el="el-link"></div>
     </div>
   </div></div>
 
+  <!-- ===== SIDEBAR ===== -->
   <div class="side-panel">
+    <!-- Panel Utama -->
     <div class="panel-box">
       <div class="panel-header static"><h3>&#9876; Syair Generator</h3></div>
       <div class="panel-body always-open">
@@ -184,59 +237,83 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
         </select></div>
         <div class="cg"><label>Tanggal</label><input type="date" id="inp-date"></div>
         <div class="panel-divider"></div>
-        <div class="cg"><label>Colok (4 angka)</label><input type="text" id="inp-colok" maxlength="4" placeholder="Contoh: 1234"></div>
+        <div class="cg"><label>Colok Bebas (4 angka)</label><input type="text" id="inp-colok" maxlength="4" placeholder="Contoh: 1234"></div>
+        <div class="cg"><label>Colok Macau (2 angka)</label><input type="text" id="inp-cmacau" maxlength="3" placeholder="Contoh: 37"></div>
         <div class="cg"><label>BBFS (8 angka)</label><input type="text" id="inp-bbfs" maxlength="8" placeholder="Contoh: 12345678"></div>
         <div class="cg"><label>Angka Tarung</label><input type="text" id="inp-tarung" maxlength="15" placeholder="Contoh: 1-2-3-4-5"></div>
+        <div class="panel-divider"></div>
+        <div class="cg"><label>Link Alternatif</label><input type="text" id="inp-link" placeholder="Contoh: www.togelon.com"></div>
         <div class="panel-divider"></div>
         <div class="btn-row">
           <button class="btn btn-g" onclick="randomAll()">&#127922; Acak Semua</button>
           <button class="btn btn-r" onclick="generate()">&#9889; Generate</button>
-          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download Full HD (1920x1920)</button>
-          <button class="btn btn-save" onclick="savePositions()">&#128190; Simpan ke File HTML</button>
-          <button class="btn btn-reset" onclick="resetPositions()">&#8634; Reset Semua Posisi</button>
+          <button class="btn btn-dl" onclick="downloadCard()">&#11015; Download Full HD</button>
+          <button class="btn btn-save" onclick="savePositions()">&#128190; Simpan ke HTML</button>
+          <button class="btn btn-reset" onclick="resetPositions()">&#8634; Reset Semua</button>
         </div>
       </div>
     </div>
+
+    <!-- Panel Ganti Font / Format Tulisan -->
     <div class="panel-box">
-      <div class="panel-header" onclick="togglePanel(this)"><h3>&#127912; Warna Tulisan</h3><span class="arrow">&#9660;</span></div>
+      <div class="panel-header" onclick="togglePanel(this)"><h3>&#9998; Ganti Format Tulisan</h3><span class="arrow">&#9660;</span></div>
+      <div class="panel-body" id="font-body"><div class="panel-body padded">
+        <div class="cg"><label>Tanggal</label><select onchange="applyFont('date-txt',this.value)"><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>Colok Bebas</label><select onchange="applyFontGroup(['c1','c2','c3','c4'],this.value)"><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>Colok Macau</label><select onchange="applyFont('cmacau-txt',this.value)"><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>BBFS</label><select onchange="applyFont('bbfs-num',this.value)"><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>Angka Tarung</label><select onchange="applyFont('tarung-num',this.value)"><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>Syair</label><select onchange="applyFont('syair-txt',this.value)"><option value="'Playfair Display',serif" selected>Playfair Display</option><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option><option value="'Outfit',sans-serif">Outfit</option></select></div>
+        <div class="cg"><label>Link Alternatif</label><select onchange="applyFont('link-txt',this.value)"><option value="'Outfit',sans-serif" selected>Outfit</option><option value="'Cinzel Decorative',serif">Cinzel Decorative</option><option value="'Cinzel',serif">Cinzel</option><option value="'Playfair Display',serif">Playfair Display</option><option value="'MedievalSharp',cursive">MedievalSharp</option><option value="'Pirata+One',cursive">Pirata One</option><option value="'Berkshire+Swash',cursive">Berkshire Swash</option><option value="'Rye',serif">Rye</option><option value="'Abril+Fatface',serif">Abril Fatface</option><option value="'Righteous',cursive">Righteous</option><option value="'Germania+One',cursive">Germania One</option><option value="'Metamorphous',cursive">Metamorphous</option><option value="'Almendra+Display',cursive">Almendra Display</option><option value="'Uncial+Antiqua',cursive">Uncial Antiqua</option><option value="'UnifrakturMaguntia',cursive">UnifrakturMaguntia</option></select></div>
+        <button class="btn btn-reset btn-sm" onclick="resetFonts()">&#8634; Reset Font Default</button>
+      </div></div>
+    </div>
+
+    <!-- Panel Ganti Warna Tulisan -->
+    <div class="panel-box">
+      <div class="panel-header" onclick="togglePanel(this)"><h3>&#127912; Ganti Warna Tulisan</h3><span class="arrow">&#9660;</span></div>
       <div class="panel-body" id="color-body"><div class="panel-body padded">
         <div class="cg"><label>Tanggal</label><input type="color" id="clr-date" value="#f5d060" onchange="applyTextColor('date-txt',this.value)"></div>
-        <div class="cg"><label>Colok (4 angka)</label><input type="color" id="clr-colok" value="#f5d060" onchange="applyColokColor(this.value)"></div>
+        <div class="cg"><label>Colok Bebas</label><input type="color" id="clr-colok" value="#f5d060" onchange="applyColokColor(this.value)"></div>
+        <div class="cg"><label>Colok Macau</label><input type="color" id="clr-cmacau" value="#f5d060" onchange="applyTextColor('cmacau-txt',this.value)"></div>
         <div class="cg"><label>BBFS</label><input type="color" id="clr-bbfs" value="#f5d060" onchange="applyTextColor('bbfs-num',this.value)"></div>
         <div class="cg"><label>Angka Tarung</label><input type="color" id="clr-tarung" value="#f5d060" onchange="applyTextColor('tarung-num',this.value)"></div>
         <div class="cg"><label>Syair</label><input type="color" id="clr-syair" value="#f5d060" onchange="applyTextColor('syair-txt',this.value)"></div>
+        <div class="cg"><label>Link Alternatif</label><input type="color" id="clr-link" value="#f5d060" onchange="applyTextColor('link-txt',this.value)"></div>
         <button class="btn btn-reset btn-sm" onclick="resetColors()">&#8634; Reset Warna Default</button>
       </div></div>
     </div>
+
+    <!-- Panduan -->
     <div class="panel-box">
-      <div class="panel-header" onclick="togglePanel(this)"><h3>&#9733; Panduan Singkat</h3><span class="arrow">&#9660;</span></div>
+      <div class="panel-header" onclick="togglePanel(this)"><h3>&#9733; Panduan</h3><span class="arrow">&#9660;</span></div>
       <div class="panel-body" id="info-body"><div style="padding:12px 14px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:10px;line-height:1.7;letter-spacing:.3px;">
-        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Syair Shio</span> — Setiap shio punya 5 syair bertema. Acak untuk ganti.</p>
-        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Cloud Sync</span> — Data tersinkron via Firebase. Pindah PC langsung update.</p>
-        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Warna</span> — Pilih warna untuk mengubah tampilan tulisan.</p>
-        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi.</p>
-        <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil Full HD 1920x1920 pixel.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Syair Shio</span> — 2 baris memanjang per shio, 5 varian berbeda.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Ganti Font</span> — Pilih format tulisan dari dropdown per elemen.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Ganti Warna</span> — Klik warna per elemen teks di panel Warna.</p>
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Colok Macau</span> — 2 angka terpisah dash, contoh: 3-7.</p>
+        <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil Full HD 1920x1920, bersih tanpa kontrol editor.</p>
       </div></div>
     </div>
+
     <div class="sync-bar" id="sync-bar"><span class="sync-dot" id="sync-dot"></span><span class="sync-text" id="sync-text">Menghubungkan...</span></div>
-    <div class="version-badge">v2.5 &mdash; Syair Shio Bertema + Full HD</div>
+    <div class="version-badge">v3.0 — Font + Warna + Download Bersih</div>
   </div>
 </div>
+
 <div id="dl-overlay"><div class="spinner"></div><p id="dl-msg">Sedang memproses...</p></div>
 <div id="toast">Done</div>
 
 <script>
-/* ===== FIREBASE ===== */
+/* ===== FIREBASE CONFIG ===== */
 const firebaseConfig={apiKey:"AIzaSyBhMi5z2VQPHui7k9Oq_GtlF5kZX6Y4zyE",authDomain:"tabungan-91059.firebaseapp.com",projectId:"tabungan-91059",storageBucket:"tabungan-91059.firebasestorage.app",messagingSenderId:"325286813441",appId:"1:325286813441:web:fc29977e3a502bd84e8500",measurementId:"G-2E4MVNCX5S"};
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 const DOC_PATH='syairGenerator/state';
 
-/* ===== KONSTANTA ===== */
 const RAW='https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/';
-const CARD_W=960,CARD_H=960;
-const DL_W=1920,DL_H=1920;
-const STORAGE_KEY='syair_gen_state_v25';
+const CARD_W=960,CARD_H=960,DL_W=1920,DL_H=1920;
+const STORAGE_KEY='syair_gen_state_v30';
 
 const PASARAN=[
   {id:'sgp',name:'Singapore',file:'LOGO SINGAPORE.png'},{id:'hk',name:'Hongkong',file:'logo hongkong-lotto.png'},
@@ -260,160 +337,85 @@ const SHIO=[
   {name:'Anjing',file:'shio anjing.png'},{name:'Babi',file:'shio babi.png'},
 ];
 
-/* ===== SYAIR PER SHIO — 5 syair unik bertema setiap shio ===== */
+/* ===== 60 SYAIR (12 shio x 5 syair) ===== */
 const SYAIR=[
-  // 0: Tikus — cerdik, lincah, malam, kecil tapi berbahaya
-  [
-    "Tikus cilik lincah di malam gelap,\nMengendap-endap mencari celah.\nAngka kecil jadi kebesaran,\nRezeki datang dari yang tak terduga.",
-    "Si tikus pandai menyelinap sunyi,\nMenembus rintangan tanpa ragu.\nDua empat enam delapan,\nJalan kemenangan kini terbuka.",
-    "Tikus cerdik tak pernah lengah,\nSelalu siap menghadapi tantang.\nAngka sakti kini tersimpan,\nKeberuntungan menanti di ujung.",
-    "Seekor tikus di gudang padi,\nMakan sepuasnya tanpa sedih.\nNomor jitu sudah menanti,\nRejeki besar kan segera tiba.",
-    "Tikus kecil berlari kencang,\nMenembus malam tanpa bimbang.\nAngka jitu kini di tangan,\nKemenangan datang berkavan."
-  ],
-  // 1: Kerbau — kuat, teguh, sabar, membajak tanah, tanduk
-  [
-    "Kerbau perkasa menginjak bumi,\nLangkah tegap penuh kemewahan.\nKekuatan besar tak terbendung,\nAngka sakti membawa kemenangan.",
-    "Kerbau gagah berdiri tegak,\nMenahan beban tanpa lelah.\nSatu tiga lima tujuh,\nRezeki mengalir deras dan lancar.",
-    "Tanduk kerbau menembus awan,\nKekuatan sejati tak terkalahkan.\nAngka jitu turun dari langit,\nKemewahan menanti di depan.",
-    "Kerbau tanah membajak sawah,\nKerja keras penuh kesabaran.\nDua enam delapan nol,\nHasil jerih dibayar berlipat.",
-    "Kerbau hitam berjalan pelan,\nNamun pasti sampai ke tujuan.\nAngka kerbau tak pernah bohong,\nKemenangan pasti kan datang."
-  ],
-  // 2: Harimau — garang, raja hutan, mengaum, belang, cakar
-  [
-    "Harimau mengaum di puncak gunung,\nSuara garang menggemparkan.\nAngka buas penuh keberanian,\nKemenangan besar menanti di depan.",
-    "Belang harimau menyala terang,\nRaja hutan tak terkalahkan.\nTiga lima tujuh sembilan,\nRezeki garang membanjiri.",
-    "Cakar harimau mencengkeram kuat,\nMangsa tak bisa melepaskan.\nAngka sakti mencengkeram kemenangan,\nTak ada yang bisa menghalangi.",
-    "Harimau berburu di malam gelap,\nMatanya tajam menembus gelita.\nNomor jitu terlihat jelas,\nKeberuntungan tak akan tersisa.",
-    "Raja hutan berjalan gagah,\nSemua makhluk menghormatinya.\nAngka harimau penuh wibawa,\nKemenangan besar tiba di mata."
-  ],
-  // 3: Kelinci — lincah, lembut, melompat, bulan, telinga panjang
-  [
-    "Kelinci melompat di padang rumput,\nGerakan lincah penuh keanggunan.\nAngka lembut membawa berkah,\nKeberuntungan datang berbisik.",
-    "Telinga panjang mendengar bisikan,\nKelinci pintar menangkap peluang.\nDua empat enam nol,\nRezeki manis seperti wortel.",
-    "Kelinci putih di bulan purnama,\nMelompat riang tanpa beban.\nAngka jitu bercahaya lembut,\nKemenangan hadir dengan tenang.",
-    "Kaki kelinci melompat tinggi,\nMelewati rintangan dengan mudah.\nNomor sakti melompat ke kemenangan,\nRezeki datang tanpa kesulitan.",
-    "Kelinci kecil bermain di taman,\nPenuh keceriaan dan kebahagiaan.\nAngka kelinci membawa hoki,\nKeberuntungan bersemi di hati."
-  ],
-  // 4: Naga — mitos, terbang, api, emas, sisik, kekuatan gaib
-  [
-    "Naga emas terbang melayang,\nMenyemburkan api ke angkasa.\nAngka naga penuh kekuatan,\nKemenangan besar kan terwujud.",
-    "Naga hijau melingkar di pilar,\nKekuatan gaib tak terbendung.\nSatu lima sembilan tiga,\nRezeki naga turun ke bumi.",
-    "Sisik naga bersinar terang,\nPermata langit yang termulia.\nAngka sakti dari dunia gaib,\nKemewahan melimpah ruah.",
-    "Naga terbang melintasi awan,\nEkor panjang menyapu bintang.\nNomor naga membawa berkah,\nKeberuntungan sebesar gunung.",
-    "Naga tua di gua kristal,\nMenjaga harta bertahun-tahun.\nAngka jitu tersembunyi dalam,\nRezeki besar menunggu waktu."
-  ],
-  // 5: Ular — merayap, misterius, melilit, bisa, diam-diam
-  [
-    "Ular melilit pohon beringin,\nGerakan licin penuh misteri.\nAngka ular merayap pelan,\nKemenangan datang diam-diam.",
-    "Ular kobra berdiri tegak,\nMenatap tajam penuh wibawa.\nTiga enam sembilan dua,\nRezeki berbisik dari kulit.",
-    "Ular sanca melingkar cantik,\nWarna-warni memukau mata.\nAngka sakti merayap masuk,\nKeberuntungan melingkar di tangan.",
-    "Ular berkelit di antara rumput,\nTak terlihat namun berbahaya.\nNomor jitu merayap diam,\nKemenangan datang tanpa suara.",
-    "Ular hijau di atas dahan,\nMenunggu mangsa dengan sabar.\nAngka ular penuh kesabaran,\nRezeki besar menanti di ujung."
-  ],
-  // 6: Kuda — lari kencang, derap, surai, pacu, bebas
-  [
-    "Kuda jantan berlari kencang,\nMenghentakkan kuda di padang.\nAngka kuda penuh semangat,\nKemenangan datang berderap.",
-    "Kuda hitam berlari angkuh,\nSurai terbang diterpa angin.\nLima tujuh nol dua,\nRezeki derap membawa kemenangan.",
-    "Kuda pacu melesat di lintasan,\nTak tertandingi oleh siapa pun.\nAngka sakti berlari cepat,\nKeberuntungan tiba di finish.",
-    "Kuda putih berlari bebas,\nDi padang luas tanpa batas.\nNomor jitu melesat maju,\nRezeki datang tanpa halangan.",
-    "Kuda kayuhan menembus malam,\nLangkah gagah penuh tenaga.\nAngka kuda penuh kemenangan,\nKeberuntungan berderap datang."
-  ],
-  // 7: Kambing — damai, lembut, gunung, merumput, tenang
-  [
-    "Kambing gunung berdiri di tebing,\nPandangan jauh penuh ketenangan.\nAngka kambing membawa damai,\nKemenangan datang dengan tenang.",
-    "Kambing putih merumput di bukit,\nHidup tenang penuh kedamaian.\nDua empat delapan nol,\nRezeki mengalir seperti susu.",
-    "Kambing jantan bertanduk melengkung,\nMelindungi kawanan dengan setia.\nAngka sakti penuh kelembutan,\nKeberuntungan hadir perlahan.",
-    "Bulu kambing lembut dan halus,\nMemberi kehangatan di musim dingin.\nNomor jitu membawa kenyamanan,\nRezeki datang tanpa gejolak.",
-    "Kambing berkembang di padang hijau,\nDamai sejahtera penuh berkah.\nAngka kambing penuh keberuntungan,\nKemenangan tiba dengan damai."
-  ],
-  // 8: Monyet — cerdas, akal, melompat, bercanda, lincah
-  [
-    "Monyet cerdas bermain di pohon,\nMelompat riang tanpa kekhawatiran.\nAngka monyet penuh kelicikan,\nKemenangan datang dari akal.",
-    "Monyet emas di gunung buah,\nCerdik dan lincah tak tertandingi.\nEmpat tujuh satu sembilan,\nRezeki datang dari kecerdasan.",
-    "Monyet raja di kerajaan apel,\nMengatur segala dengan cerdik.\nAngka sakti penuh tipu daya,\nKeberuntungan datang dari akal budi.",
-    "Monyet bergelantungan di tali,\nTerjatuh bangun tak pernah menyerah.\nNomor jitu bermain cerdik,\nRezeki datang dari kecekatan.",
-    "Monyet bayi bermain cermin,\nMengulangi gerak dengan tepat.\nAngka monyet meniru kemenangan,\nKeberuntungan berlipat ganda."
-  ],
-  // 9: Ayam — berkokok, fajar, jago, bertarung, bangga
-  [
-    "Ayam jantan berkokok subuh,\nMembangunkan dunia dari tidur.\nAngka ayam penuh kebanggaan,\nKemenangan datang di pagi hari.",
-    "Ayam hutan berkokok lantang,\nSuaranya merobohkan pagi.\nLima nol tiga delapan,\nRezeki berkokok di ambang pintu.",
-    "Ayam jago bertarung di arena,\nTak pernah mundur menghadapi lawan.\nAngka sakti penuh keberanian,\nKeberuntungan menang bertarung.",
-    "Jago berkokok tiga kali,\nMatahari terbit di ufuk timur.\nNomor jitu menyingsingkan fajar,\nRezeki datang saat subuh menyingsing.",
-    "Ayam berwarna-warni indah,\nBerjalan angkuh di halaman.\nAngka ayam penuh kemewahan,\nKemenangan datang dengan bangga."
-  ],
-  // 10: Anjing — setia, menjaga, berani, tulus, pemburu
-  [
-    "Anjing setia menjaga rumah,\nTak pernah meninggalkan tuannya.\nAngka anjing penuh kesetiaan,\nKemenangan datang dari kejujuran.",
-    "Anjing pemburu berlari cepat,\nMengikuti jejak tanpa ragu.\nSatu enam delapan tiga,\nRezeki setia mengikuti langkah.",
-    "Anjing hitam menggonggong malam,\nMenjaga keamanan dengan setia.\nAngka sakti penuh perlindungan,\nKeberuntungan menjaga dari bahaya.",
-    "Anjing emas bermain di halaman,\nSetia menunggu tuan pulang.\nNomor jitu penuh kesetiaan,\nRezeki datang dari ketaatan.",
-    "Anjing gembala membimbing kawanan,\nMenuntun jalan dengan sabar.\nAngka anjing penuh ketulusan,\nKemenangan datang dari keikhlasan."
-  ],
-  // 11: Babi — kemakmuran, rezeki, emas, makmur, berlimpah
-  [
-    "Babi hutan berlari di rimba,\nKekuatan penuh tak terbendung.\nAngka babi membawa kemakmuran,\nKemenangan datang berlimpah.",
-    "Babi emas di rumah kekayaan,\nSimbol rezeki dan kemewahan.\nDua delapan nol enam,\nRezeki melimpah ruah ke rumah.",
-    "Babi celeng menggali tanah,\nMenemukan harta tersembunyi.\nAngka sakti penuh kemakmuran,\nKeberuntungan digali dari dalam.",
-    "Babi putih gemuk dan sehat,\nTanda kemakmuran dan keberuntungan.\nNomor jitu membawa kekayaan,\nRezeki datang berlimpah-limpah.",
-    "Babi di kandang penuh makanan,\nHidup makmur tanpa kekurangan.\nAngka babi penuh kemewahan,\nKemenangan datang berlimpah ruah."
-  ],
+  ["Tikus cilik lincah di malam gelap mengendap-endap mencari celah,\nAngka kecil jadi kebesaran rezeki datang dari yang tak terduga.","Si tikus pandai menyelinap sunyi menembus rintangan tanpa ragu,\nDua empat enam delapan jalan kemenangan kini terbuka lebar.","Tikus cerdik tak pernah lengah selalu siap menghadapi tantang,\nAngka sakti kini tersimpan keberuntungan menanti di ujung.","Seekor tikus di gudang padi makan sepuasnya tanpa sedih,\nNomor jitu sudah menanti rejeki besar kan segera tiba.","Tikus kecil berlari kencang menembus malam tanpa bimbang,\nAngka jitu kini di tangan kemenangan datang berkavan."],
+  ["Kerbau perkasa menginjak bumi langkah tegap penuh kemewahan,\nKekuatan besar tak terbendung angka sakti membawa kemenangan.","Kerbau gagah berdiri tegak menahan beban tanpa lelah,\nSatu tiga lima tujuh rezeki mengalir deras dan lancar.","Tanduk kerbau menembus awan kekuatan sejati tak terkalahkan,\nAngka jitu turun dari langit kemewahan menanti di depan.","Kerbau tanah membajak sawah kerja keras penuh kesabaran,\nDua enam delapan nol hasil jerih dibayar berlipat ganda.","Kerbau hitam berjalan pelan namun pasti sampai ke tujuan,\nAngka kerbau tak pernah bohong kemenangan pasti kan datang."],
+  ["Harimau mengaum di puncak gunung suara garang menggemparkan,\nAngka buas penuh keberanian kemenangan besar menanti di depan.","Belang harimau menyala terang raja hutan tak terkalahkan,\nTiga lima tujuh sembilan rezeki garang membanjiri hari ini.","Cakar harimau mencengkeram kuat mangsa tak bisa melepaskan,\nAngka sakti mencengkeram kemenangan tak ada yang bisa menghalangi.","Harimau berburu di malam gelap matanya tajam menembus gelita,\nNomor jitu terlihat jelas keberuntungan tak akan tersisa.","Raja hutan berjalan gagah semua makhluk menghormatinya,\nAngka harimau penuh wibawa kemenangan besar tiba di mata."],
+  ["Kelinci melompat di padang rumput gerakan lincah penuh keanggunan,\nAngka lembut membawa berkah keberuntungan datang berbisik pelan.","Telinga panjang mendengar bisikan kelinci pintar menangkap peluang,\nDua empat enam nol rezeki manis mengalir seperti wortel.","Kelinci putih di bulan purnama melompat riang tanpa beban,\nAngka jitu bercahaya lembut kemenangan hadir dengan tenang.","Kaki kelinci melompat tinggi melewati rintangan dengan mudah,\nNomor sakti melompat ke kemenangan rezeki datang tanpa kesulitan.","Kelinci kecil bermain di taman penuh keceriaan dan kebahagiaan,\nAngka kelinci membawa hoki keberuntungan bersemi di hati."],
+  ["Naga emas terbang melayang menyemburkan api ke angkasa,\nAngka naga penuh kekuatan kemenangan besar kan terwujud nyata.","Naga hijau melingkar di pilar kekuatan gaib tak terbendung,\nSatu lima sembilan tiga rezeki naga turun ke bumi bergelimang.","Sisik naga bersinar terang permata langit yang termulia,\nAngka sakti dari dunia gaib kemewahan melimpah ruah ke pangkuan.","Naga terbang melintasi awan ekor panjang menyapu bintang,\nNomor naga membawa berkah keberuntungan sebesar gunung menjulang.","Naga tua di gua kristal menjaga harta bertahun-tahun lamanya,\nAngka jitu tersembunyi dalam rezeki besar menunggu waktu tiba."],
+  ["Ular melilit pohon beringin gerakan licin penuh misteri,\nAngka ular merayap pelan kemenangan datang diam-diam menyelinap.","Ular kobra berdiri tegak menatap tajam penuh wibawa,\nTiga enam sembilan dua rezeki berbisik dari kulit yang berganti.","Ular sanca melingkar cantik warna-warni memukau mata,\nAngka sakti merayap masuk keberuntungan melingkar di tangan erat.","Ular berkelit di antara rumput tak terlihat namun berbahaya,\nNomor jitu merayap diam kemenangan datang tanpa suara berbisik.","Ular hijau di atas dahan menunggu mangsa dengan penuh kesabaran,\nAngka ular penuh kesabaran rezeki besar menanti di ujung perjalanan."],
+  ["Kuda jantan berlari kencang menghentakkan kuda di padang luas,\nAngka kuda penuh semangat kemenangan datang berderap pasti.","Kuda hitam berlari angkuh surai terbang diterpa angin kencang,\nLima tujuh nol dua rezeki derap membawa kemenangan berkalung.","Kuda pacu melesat di lintasan tak tertandingi oleh siapa pun,\nAngka sakti berlari cepat keberuntungan tiba di garis finish.","Kuda putih berlari bebas di padang luas tanpa batas waktu,\nNomor jitu melesat maju rezeki datang tanpa halangan sedikit pun.","Kuda kayuhan menembus malam langkah gagah penuh tenaga baru,\nAngka kuda penuh kemenangan keberuntungan berderap datang menyapa."],
+  ["Kambing gunung berdiri di tebing pandangan jauh penuh ketenangan,\nAngka kambing membawa damai kemenangan datang dengan tenang pasti.","Kambing putih merumput di bukit hidup tenang penuh kedamaian,\nDua empat delapan nol rezeki mengalir lembut seperti susu murni.","Kambing jantan bertanduk melengkung melindungi kawanan dengan setia,\nAngka sakti penuh kelembutan keberuntungan hadir perlahan namun pasti.","Bulu kambing lembut dan halus memberi kehangatan di musim dingin,\nNomor jitu membawa kenyamanan rezeki datang tanpa gejolak sedikit.","Kambing berkembang di padang hijau damai sejahtera penuh berkah,\nAngka kambing penuh keberuntungan kemenangan tiba dengan damai abadi."],
+  ["Monyet cerdas bermain di pohon melompat riang tanpa kekhawatiran,\nAngka monyet penuh kelicikan kemenangan datang dari akal budi.","Monyet emas di gunung buah cerdik dan lincah tak tertandingi,\nEmpat tujuh satu sembilan rezeki datang dari kecerdasan otak.","Monyet raja di kerajaan apel mengatur segala dengan cerdik pandai,\nAngka sakti penuh tipu daya keberuntungan datang dari akal budi cerdik.","Monyet bergelantungan di tali terjatuh bangun tak pernah menyerah,\nNomor jitu bermain cerdik rezeki datang dari kecekatan tanpa henti.","Monyet bayi bermain cermin mengulangi gerak dengan tepat dan cekat,\nAngka monyet meniru kemenangan keberuntungan berlipat ganda menyertai."],
+  ["Ayam jantan berkokok subuh membangunkan dunia dari tidur lelap,\nAngka ayam penuh kebanggaan kemenangan datang di pagi hari cerah.","Ayam hutan berkokok lantang suaranya merobehkan pagi yang tenang,\nLima nol tiga delapan rezeki berkokok di ambang pintu rumah.","Ayam jago bertarung di arena tak pernah mundur menghadapi lawan,\nAngka sakti penuh keberanian keberuntungan menang bertarung gagah.","Jago berkokok tiga kali matahari terbit di ufuk timur menyingsing,\nNomor jitu menyingsingkan fajar rezeki datang saat subuh menjelang.","Ayam berwarna-warni indah berjalan angkuh di halaman rumah megah,\nAngka ayam penuh kemewahan kemenangan datang dengan bangga dan tegak."],
+  ["Anjing setia menjaga rumah tak pernah meninggalkan tuan yang dicintai,\nAngka anjing penuh kesetiaan kemenangan datang dari kejujuran hati.","Anjing pemburu berlari cepat mengikuti jejak tanpa ragu dan bimbang,\nSatu enam delapan tiga rezeki setia mengikuti langkah tanpa alpa.","Anjing hitam menggonggong malam menjaga keamanan dengan setia penuh,\nAngka sakti penuh perlindungan keberuntungan menjaga dari bahaya mengancam.","Anjing emas bermain di halaman setia menunggu tuan pulang ke rumah,\nNomor jitu penuh kesetiaan rezeki datang dari ketaatan dan kebajikan.","Anjing gembala membimbing kawanan menuntun jalan dengan sabar dan tekun,\nAngka anjing penuh ketulusan kemenangan datang dari keikhlasan tanpa pamrih."],
+  ["Babi hutan berlari di rimba kekuatan penuh tak terbendung oleh siapa,\nAngka babi membawa kemakmuran kemenangan datang berlimpah ruah ke rumah.","Babi emas di rumah kekayaan simbol rezeki dan kemewahan melimpah,\nDua delapan nol enam rezeki melimpah ruah ke pangkuan tanpa henti.","Babi celeng menggali tanah menemukan harta tersembunyi di dalam perut bumi,\nAngka sakti penuh kemakmuran keberuntungan digali dari dalam yang dalam.","Babi putih gemuk dan sehat tanda kemakmuran dan keberuntungan melimpah,\nNomor jitu membawa kekayaan rezeki datang berlimpah-limpah ke rumah tangga.","Babi di kandang penuh makanan hidup makmur tanpa kekurangan sedikit pun,\nAngka babi penuh kemewahan kemenangan datang berlimpah ruah sepanjang masa."],
 ];
 
-let lastPasIdx=-1,lastShioIdx=-1,lastColok='',lastBBFS='',lastTarung='';
+const EL_IDS=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-cmacau','el-bbfs','el-tarung','el-shio','el-syair','el-link'];
+const TXT_IDS=['date-txt','c1','c2','c3','c4','cmacau-txt','bbfs-num','tarung-num','syair-txt','link-txt'];
+const INNER_HTML_IDS=['bbfs-num','syair-txt'];
+
+/* ===== DEFAULT FONT PER ELEMEN ===== */
+const DEFAULT_FONTS={
+  'date-txt':"'Cinzel Decorative',serif",
+  'c1':"'Cinzel Decorative',serif",
+  'c2':"'Cinzel Decorative',serif",
+  'c3':"'Cinzel Decorative',serif",
+  'c4':"'Cinzel Decorative',serif",
+  'cmacau-txt':"'Cinzel Decorative',serif",
+  'bbfs-num':"'Cinzel Decorative',serif",
+  'tarung-num':"'Cinzel Decorative',serif",
+  'syair-txt':"'Playfair Display',serif",
+  'link-txt':"'Outfit',sans-serif"
+};
+let customFonts={...DEFAULT_FONTS};
+
+let lastPasIdx=-1,lastShioIdx=-1,lastColok='',lastBBFS='',lastTarung='',lastCMacau='';
 let curPas='bullseye',curShio=7;
 let customColors={};
 let isApplyingRemoteState=false;
 let lastSyncTimestamp=0;
 
-/* ===== SISTEM SYAIR PER SHIO ===== */
-let syairDecks={}; // {shioIdx: {deck:[], used:[]}}
-
-function shuffleArray(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-
-function initSyairDecks(){
-  for(let i=0;i<SYAIR.length;i++){
-    syairDecks[i]={deck:shuffleArray([...Array(SYAIR[i].length).keys()]),used:[]};
-  }
-}
-
+/* ===== SYAIR DECK ===== */
+let syairDecks={};
+function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function initSyairDecks(){for(let i=0;i<SYAIR.length;i++){syairDecks[i]={deck:shuffleArray([...Array(SYAIR[i].length).keys()]),used:[]};}}
 function pickNextSyair(shioIdx){
-  if(!syairDecks[shioIdx]){
-    syairDecks[shioIdx]={deck:shuffleArray([...Array(SYAIR[shioIdx].length).keys()]),used:[]};
-  }
+  if(!syairDecks[shioIdx])syairDecks[shioIdx]={deck:shuffleArray([...Array(SYAIR[shioIdx].length).keys()]),used:[]};
   const sd=syairDecks[shioIdx];
-  if(sd.deck.length===0){
-    const lastUsed=sd.used[sd.used.length-1];
-    let newDeck;
-    do{newDeck=shuffleArray([...Array(SYAIR[shioIdx].length).keys()]);}while(newDeck[0]===lastUsed);
-    sd.deck=newDeck;
-    sd.used=[];
-  }
-  const idx=sd.deck.shift();
-  sd.used.push(idx);
-  return SYAIR[shioIdx][idx];
+  if(sd.deck.length===0){const lu=sd.used.length?sd.used[sd.used.length-1]:-1;let nd;do{nd=shuffleArray([...Array(SYAIR[shioIdx].length).keys()]);}while(nd[0]===lu&&SYAIR[shioIdx].length>1);sd.deck=nd;sd.used=[];}
+  const idx=sd.deck.shift();sd.used.push(idx);return SYAIR[shioIdx][idx];
 }
 
 /* ===== SYNC STATUS ===== */
-function setSyncStatus(s,t){
-  const d=document.getElementById('sync-dot'),x=document.getElementById('sync-text');
-  if(!d||!x)return;d.className='sync-dot '+s;x.className='sync-text '+s;x.textContent=t;
+function setSyncStatus(s,t){const d=document.getElementById('sync-dot'),x=document.getElementById('sync-text');if(!d||!x)return;d.className='sync-dot '+s;x.className='sync-text '+s;x.textContent=t;}
+
+/* ===== FONT FUNCTIONS ===== */
+function applyFont(id,fontStr){
+  customFonts[id]=fontStr;
+  const el=document.getElementById(id);if(!el)return;
+  el.style.fontFamily=fontStr;
+  debouncedSave();
+}
+function applyFontGroup(ids,fontStr){ids.forEach(id=>applyFont(id,fontStr));}
+function resetFonts(){
+  customFonts={...DEFAULT_FONTS};
+  TXT_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.fontFamily=DEFAULT_FONTS[id]||'';});
+  debouncedSave();showToast('Font direset ke default!');
 }
 
-/* ===== WARNA ===== */
+/* ===== COLOR FUNCTIONS ===== */
 function applyTextColor(id,c){
   const el=document.getElementById(id);if(!el)return;
   customColors[id]=c;
-  el.style.webkitTextFillColor=c;el.style.background='none';
-  el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
-  el.style.color=c;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
+  el.style.webkitTextFillColor=c;
+  el.style.background='none';
+  el.style.webkitBackgroundClip='unset';
+  el.style.backgroundClip='unset';
+  el.style.color=c;
+  el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
   debouncedSave();
 }
 function applyColokColor(c){['c1','c2','c3','c4'].forEach(id=>applyTextColor(id,c));}
@@ -424,263 +426,125 @@ function clearElementColor(id){
   el.style.color='';el.style.textShadow='';
 }
 function resetColors(){
-  customColors={};
-  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));
+  customColors={};TXT_IDS.forEach(id=>clearElementColor(id));
   document.getElementById('clr-date').value='#f5d060';
   document.getElementById('clr-colok').value='#f5d060';
+  document.getElementById('clr-cmacau').value='#f5d060';
   document.getElementById('clr-bbfs').value='#f5d060';
   document.getElementById('clr-tarung').value='#f5d060';
   document.getElementById('clr-syair').value='#f5d060';
+  document.getElementById('clr-link').value='#f5d060';
   debouncedSave();showToast('Warna direset ke gradient emas!');
 }
 
-/* ===== STATE ===== */
+/* ===== STATE BUILD / APPLY ===== */
 function buildState(){
-  const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
-  const state={elements:{},inputs:{},texts:{},imgSrcs:{},customColors:{},colorPickers:{}};
-  elIds.forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    const data={top:el.style.top,left:el.style.left};
-    const img=el.querySelector('img');
-    if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}
-    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
-      const txt=document.getElementById(tid);
-      if(txt&&el.contains(txt)){data[tid+'_fs']=txt.style.fontSize||'';}
-    });
-    state.elements[id]=data;
-  });
-  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}
-  });
-  ['pas-img','shio-img'].forEach(id=>{
-    const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;
-  });
-  state.inputs={
-    pasaran:curPas,shio:curShio,
-    date:document.getElementById('inp-date').value,
-    colok:document.getElementById('inp-colok').value,
-    bbfs:document.getElementById('inp-bbfs').value,
-    tarung:document.getElementById('inp-tarung').value
-  };
+  const state={elements:{},inputs:{},texts:{},imgSrcs:{},customColors:{},colorPickers:{},customFonts:{}};;
+  EL_IDS.forEach(id=>{const el=document.getElementById(id);if(!el)return;const data={top:el.style.top,left:el.style.left};const img=el.querySelector('img');if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}TXT_IDS.forEach(tid=>{const txt=document.getElementById(tid);if(txt&&el.contains(txt))data[tid+'_fs']=txt.style.fontSize||'';});state.elements[id]=data;});
+  TXT_IDS.forEach(id=>{const el=document.getElementById(id);if(el)state.texts[id]=INNER_HTML_IDS.includes(id)?el.innerHTML:el.textContent;});
+  ['pas-img','shio-img'].forEach(id=>{const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;});
+  state.inputs={pasaran:curPas,shio:curShio,date:document.getElementById('inp-date').value,colok:document.getElementById('inp-colok').value,cmacau:document.getElementById('inp-cmacau').value,bbfs:document.getElementById('inp-bbfs').value,tarung:document.getElementById('inp-tarung').value,link:document.getElementById('inp-link').value};
   state.customColors={...customColors};
-  state.colorPickers={
-    date:document.getElementById('clr-date').value,
-    colok:document.getElementById('clr-colok').value,
-    bbfs:document.getElementById('clr-bbfs').value,
-    tarung:document.getElementById('clr-tarung').value,
-    syair:document.getElementById('clr-syair').value
-  };
-  state.timestamp=Date.now();
-  return state;
+  state.customFonts={...customFonts};
+  state.colorPickers={date:document.getElementById('clr-date').value,colok:document.getElementById('clr-colok').value,cmacau:document.getElementById('clr-cmacau').value,bbfs:document.getElementById('clr-bbfs').value,tarung:document.getElementById('clr-tarung').value,syair:document.getElementById('clr-syair').value,link:document.getElementById('clr-link').value};
+  state.timestamp=Date.now();return state;
 }
 
 function applyState(state){
-  if(!state||!state.elements)return;
-  isApplyingRemoteState=true;
-  Object.entries(state.elements).forEach(([id,data])=>{
-    const el=document.getElementById(id);if(!el)return;
-    if(data.top)el.style.top=data.top;
-    if(data.left)el.style.left=data.left;
-    const img=el.querySelector('img');
-    if(img){
-      if(data.imgW)img.style.width=data.imgW;
-      if(data.imgH)img.style.height=data.imgH;
-      if(data.imgDisplay)img.style.display=data.imgDisplay;
-    }
-    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
-      const fsKey=tid+'_fs';
-      if(data[fsKey]){
-        const txt=document.getElementById(tid);
-        if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];
-      }
-    });
-  });
-  if(state.texts){
-    Object.entries(state.texts).forEach(([id,content])=>{
-      const el=document.getElementById(id);if(!el)return;
-      if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;
-      else el.textContent=content;
-    });
-  }
-  if(state.imgSrcs){
-    Object.entries(state.imgSrcs).forEach(([id,src])=>{
-      const el=document.getElementById(id);
-      if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}
-    });
-  }
-  if(state.inputs){
-    const inp=state.inputs;
-    if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}
-    if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}
-    if(inp.date)document.getElementById('inp-date').value=inp.date;
-    if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;
-    if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;
-    if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;
-  }
+  if(!state||!state.elements)return;isApplyingRemoteState=true;
+  Object.entries(state.elements).forEach(([id,data])=>{const el=document.getElementById(id);if(!el)return;if(data.top)el.style.top=data.top;if(data.left)el.style.left=data.left;const img=el.querySelector('img');if(img){if(data.imgW)img.style.width=data.imgW;if(data.imgH)img.style.height=data.imgH;if(data.imgDisplay)img.style.display=data.imgDisplay;}TXT_IDS.forEach(tid=>{if(data[tid+'_fs']){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[tid+'_fs'];}});});
+  if(state.texts){Object.entries(state.texts).forEach(([id,content])=>{const el=document.getElementById(id);if(!el)return;if(INNER_HTML_IDS.includes(id))el.innerHTML=content;else el.textContent=content;});}
+  if(state.imgSrcs){Object.entries(state.imgSrcs).forEach(([id,src])=>{const el=document.getElementById(id);if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}});}
+  if(state.inputs){const inp=state.inputs;if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}if(inp.date)document.getElementById('inp-date').value=inp.date;if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;if(inp.cmacau!==undefined)document.getElementById('inp-cmacau').value=inp.cmacau;if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;if(inp.link!==undefined)document.getElementById('inp-link').value=inp.link;}
   customColors={};
-  if(state.customColors&&Object.keys(state.customColors).length>0){
-    customColors={...state.customColors};
-    Object.entries(customColors).forEach(([id,color])=>{
-      const el=document.getElementById(id);
-      if(el){
-        el.style.webkitTextFillColor=color;el.style.background='none';
-        el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
-        el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
-      }
-    });
-  }else{
-    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));
-  }
-  if(state.colorPickers){
-    const cp=state.colorPickers;
-    if(cp.date)document.getElementById('clr-date').value=cp.date;
-    if(cp.colok)document.getElementById('clr-colok').value=cp.colok;
-    if(cp.bbfs)document.getElementById('clr-bbfs').value=cp.bbfs;
-    if(cp.tarung)document.getElementById('clr-tarung').value=cp.tarung;
-    if(cp.syair)document.getElementById('clr-syair').value=cp.syir;
-  }
-  refreshSizeDisplays();
-  setTimeout(()=>{isApplyingRemoteState=false;},500);
+  if(state.customColors&&Object.keys(state.customColors).length>0){customColors={...state.customColors};Object.entries(customColors).forEach(([id,color])=>{const el=document.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});}else{TXT_IDS.forEach(id=>clearElementColor(id));}
+  if(state.customFonts&&Object.keys(state.customFonts).length>0){customFonts={...state.customFonts};Object.entries(customFonts).forEach(([id,font])=>{const el=document.getElementById(id);if(el)el.style.fontFamily=font;});}else{customFonts={...DEFAULT_FONTS};TXT_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.fontFamily=DEFAULT_FONTS[id]||'';});}
+  if(state.colorPickers){const cp=state.colorPickers;if(cp.date)document.getElementById('clr-date').value=cp.date;if(cp.colok)document.getElementById('clr-colok').value=cp.colok;if(cp.cmacau)document.getElementById('clr-cmacau').value=cp.cmacau;if(cp.bbfs)document.getElementById('clr-bbfs').value=cp.bbfs;if(cp.tarung)document.getElementById('clr-tarung').value=cp.tarung;if(cp.syair)document.getElementById('clr-syair').value=cp.syair;if(cp.link)document.getElementById('clr-link').value=cp.link;}
+  refreshSizeDisplays();setTimeout(()=>{isApplyingRemoteState=false;},500);
 }
 
-/* ===== AUTO-SAVE ===== */
+/* ===== SAVE / LOAD ===== */
 let saveTimer=null;
 function debouncedSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(autoSave,400);}
-function autoSave(){
-  const state=buildState();
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
-  saveToFirebase(state);
-  setSyncStatus('syncing','Menyimpan...');
-  setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);
-}
-
-async function saveToFirebase(state){
-  try{await db.doc(DOC_PATH).set(state,{merge:true});lastSyncTimestamp=state.timestamp||Date.now();}
-  catch(e){console.warn('Firebase save gagal:',e);setSyncStatus('offline','Gagal sinkron');}
-}
+function autoSave(){const state=buildState();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}saveToFirebase(state);setSyncStatus('syncing','Menyimpan...');setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);}
+async function saveToFirebase(state){try{await db.doc(DOC_PATH).set(state,{merge:true});lastSyncTimestamp=state.timestamp||Date.now();}catch(e){console.warn('Firebase save gagal:',e);setSyncStatus('offline','Gagal sinkron');}}
 
 function initFirebaseListener(){
   setSyncStatus('syncing','Menghubungkan...');
-  db.doc(DOC_PATH).onSnapshot((doc)=>{
-    if(!doc.exists)return;
-    const remoteState=doc.data();
-    if(!remoteState||!remoteState.timestamp)return;
-    if(remoteState.timestamp>lastSyncTimestamp&&!isApplyingRemoteState){
-      const localRaw=localStorage.getItem(STORAGE_KEY);
-      let localState=null;
-      try{localState=localRaw?JSON.parse(localRaw):null;}catch(e){}
-      if(!localState||remoteState.timestamp>(localState.timestamp||0)){
-        applyState(remoteState);
-        try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
-        lastSyncTimestamp=remoteState.timestamp;
-        setSyncStatus('online','Diperbarui dari cloud');
-        setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);
-      }
-    }
-  },(error)=>{
-    console.warn('Firebase listener error:',error);
-    setSyncStatus('offline','Offline - localStorage saja');
-  });
+  db.doc(DOC_PATH).onSnapshot((doc)=>{if(!doc.exists)return;const rs=doc.data();if(!rs||!rs.timestamp)return;if(rs.timestamp>lastSyncTimestamp&&!isApplyingRemoteState){const lr=localStorage.getItem(STORAGE_KEY);let ls=null;try{ls=lr?JSON.parse(lr):null;}catch(e){}if(!ls||rs.timestamp>(ls.timestamp||0)){applyState(rs);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(rs));}catch(e){}lastSyncTimestamp=rs.timestamp;setSyncStatus('online','Diperbarui dari cloud');setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);}}},(error)=>{console.warn('Firebase listener error:',error);setSyncStatus('offline','Offline - localStorage saja');});
   setSyncStatus('online','Tersinkron');
 }
 
 async function loadInitialState(){
   return new Promise(async(resolve)=>{
-    try{
-      setSyncStatus('syncing','Memuat dari cloud...');
-      const doc=await db.doc(DOC_PATH).get();
-      if(doc.exists){
-        const remoteState=doc.data();
-        if(remoteState&&remoteState.elements){
-          applyState(remoteState);lastSyncTimestamp=remoteState.timestamp||0;
-          try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
-          setSyncStatus('online','Dimuat dari cloud');resolve(true);return;
-        }
-      }
-    }catch(e){
-      console.warn('Firebase load gagal:',e);
-      setSyncStatus('offline','Offline - localStorage saja');
-    }
-    const loaded=autoLoadLocal();resolve(loaded);
+    try{setSyncStatus('syncing','Memuat dari cloud...');const doc=await db.doc(DOC_PATH).get();if(doc.exists){const rs=doc.data();if(rs&&rs.elements){applyState(rs);lastSyncTimestamp=rs.timestamp||0;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(rs));}catch(e){}setSyncStatus('online','Dimuat dari cloud');resolve(true);return;}}}catch(e){console.warn('Firebase load gagal:',e);setSyncStatus('offline','Offline - localStorage saja');}
+    resolve(autoLoadLocal());
   });
 }
+function autoLoadLocal(){try{const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return false;const state=JSON.parse(saved);if(!state||!state.elements)return false;applyState(state);lastSyncTimestamp=state.timestamp||0;return true;}catch(e){return false;}}
 
-function autoLoadLocal(){
-  try{
-    const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return false;
-    const state=JSON.parse(saved);if(!state||!state.elements)return false;
-    applyState(state);lastSyncTimestamp=state.timestamp||0;return true;
-  }catch(e){return false;}
-}
-
+/* ===== SIZE DISPLAY ===== */
 function refreshSizeDisplays(){
   const imgMap={'sv-lw':['logo-img','w'],'sv-lh':['logo-img','h'],'sv-pw':['pas-img','w'],'sv-ph':['pas-img','h'],'sv-sw':['shio-img','w'],'sv-sh':['shio-img','h']};
-  Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{
-    const sv=document.getElementById(svId),img=document.getElementById(imgId);
-    if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}
-  });
-  const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt'};
-  Object.entries(fsMap).forEach(([svId,txtId])=>{
-    const sv=document.getElementById(svId),txt=document.getElementById(txtId);
-    if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));
-  });
+  Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{const sv=document.getElementById(svId),img=document.getElementById(imgId);if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}});
+  const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-cm':'cmacau-txt','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt','sv-lk':'link-txt'};
+  Object.entries(fsMap).forEach(([svId,txtId])=>{const sv=document.getElementById(svId),txt=document.getElementById(txtId);if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));});
 }
 
-function resetPositions(){
-  localStorage.removeItem(STORAGE_KEY);
-  db.doc(DOC_PATH).delete().catch(()=>{});
-  location.reload();
-}
-
-/* ===== RANDOM ===== */
+/* ===== RANDOM FUNCTIONS ===== */
 function pickDiff(total,last){if(total<=1)return 0;let idx;do{idx=Math.floor(Math.random()*total);}while(idx===last);return idx;}
+function rColok(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,4).sort((a,b)=>a-b).join('');t++;}while(r===lastColok&&t<20);lastColok=r;return r;}
+function rCMacau(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d[0]+' - '+d[1];t++;}while(r===lastCMacau&&t<20);lastCMacau=r;return r;}
+function rBBFS(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,8).sort((a,b)=>a-b).join('');t++;}while(r===lastBBFS&&t<20);lastBBFS=r;return r;}
+function rTarung(n){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,n).sort((a,b)=>a-b).join('-');t++;}while(r===lastTarung&&t<20);lastTarung=r;return r;}
 
-function rColok(){
-  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
-  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,4).sort((a,b)=>a-b).join('');t++;}while(r===lastColok&&t<20);
-  lastColok=r;return r;
-}
-function rBBFS(){
-  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
-  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,8).sort((a,b)=>a-b).join('');t++;}while(r===lastBBFS&&t<20);
-  lastBBFS=r;return r;
-}
-function rTarung(n){
-  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
-  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,n).sort((a,b)=>a-b).join('-');t++;}while(r===lastTarung&&t<20);
-  lastTarung=r;return r;
+/* ===== SET PASARAN / SHIO ===== */
+function setPasaran(id){curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;const img=document.getElementById('pas-img');img.src=RAW+encodeURIComponent(p.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};debouncedSave();}
+function setShio(idx){curShio=Number(idx);const s=SHIO[curShio];if(!s)return;const img=document.getElementById('shio-img');img.src=RAW+encodeURIComponent(s.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};document.getElementById('sel-shio').value=curShio;const syair=pickNextSyair(curShio);document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');debouncedSave();}
+
+/* ===== GENERATE / RANDOM ===== */
+function randomAll(){
+  /* Acak pasaran */
+  const pi=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=pi;
+  curPas=PASARAN[pi].id;document.getElementById('sel-pas').value=curPas;
+  const pImg=document.getElementById('pas-img');pImg.src=RAW+encodeURIComponent(PASARAN[pi].file);pImg.style.display='block';pImg.onerror=()=>{pImg.style.display='none';};
+  /* Acak shio */
+  const si=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=si;curShio=si;
+  document.getElementById('sel-shio').value=si;
+  const sImg=document.getElementById('shio-img');sImg.src=RAW+encodeURIComponent(SHIO[si].file);sImg.style.display='block';sImg.onerror=()=>{sImg.style.display='none';};
+  const syair=pickNextSyair(si);document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
+  /* Acak angka */
+  const colok=rColok();document.getElementById('inp-colok').value=colok;
+  for(let i=0;i<4;i++)document.getElementById('c'+(i+1)).textContent=colok[i];
+  const cm=rCMacau();document.getElementById('inp-cmacau').value=cm.replace(' - ','');document.getElementById('cmacau-txt').textContent=cm;
+  const bbfs=rBBFS();document.getElementById('inp-bbfs').value=bbfs;
+  const bf=bbfs.split('');document.getElementById('bbfs-num').innerHTML=bf.slice(0,4).join(' ')+'<br>'+bf.slice(4,8).join(' ');
+  const tar=rTarung(5);document.getElementById('inp-tarung').value=tar;document.getElementById('tarung-num').textContent=tar;
+  debouncedSave();showToast('Semua diacak!');
 }
 
-function setPasaran(id){
-  curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;
-  const img=document.getElementById('pas-img');
-  img.src=RAW+encodeURIComponent(p.file);img.style.display='block';
-  img.onerror=()=>{img.style.display='none';};
-  debouncedSave();
-}
-
-function setShio(idx){
-  curShio=Number(idx);const s=SHIO[curShio];if(!s)return;
-  const img=document.getElementById('shio-img');
-  img.src=RAW+encodeURIComponent(s.file);img.style.display='block';
-  img.onerror=()=>{img.style.display='none';};
-  document.getElementById('sel-shio').value=curShio;
-  // Otomatis ganti syair sesuai shio yang dipilih
-  const syair=pickNextSyair(curShio);
-  document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
-  debouncedSave();
+function generate(){
+  const colok=document.getElementById('inp-colok').value.trim();
+  if(colok&&/^\d{4}$/.test(colok)){for(let i=0;i<4;i++)document.getElementById('c'+(i+1)).textContent=colok[i];lastColok=colok;}
+  const cm=document.getElementById('inp-cmacau').value.trim();
+  if(cm&&/^\d{2,3}$/.test(cm)){const f=cm.replace(/(.)(.)/,'$1 - $2');document.getElementById('cmacau-txt').textContent=f;lastCMacau=f;}
+  const bbfs=document.getElementById('inp-bbfs').value.trim();
+  if(bbfs&&/^\d{8}$/.test(bbfs)){const bf=bbfs.split('');document.getElementById('bbfs-num').innerHTML=bf.slice(0,4).join(' ')+'<br>'+bf.slice(4,8).join(' ');lastBBFS=bbfs;}
+  const tar=document.getElementById('inp-tarung').value.trim();
+  if(tar){document.getElementById('tarung-num').textContent=tar;lastTarung=tar;}
+  const link=document.getElementById('inp-link').value.trim();
+  if(link)document.getElementById('link-txt').textContent=link;
+  const dv=document.getElementById('inp-date').value;
+  if(dv){const d=new Date(dv);const months=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];document.getElementById('date-txt').textContent=d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();}
+  const syair=pickNextSyair(curShio);document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
+  debouncedSave();showToast('Berhasil di-generate!');
 }
 
 /* ===== DRAG ===== */
 function initDrag(){
   document.querySelectorAll('.el').forEach(el=>{
     let drag=false,sx,sy,ox,oy;
-    const start=(cx,cy)=>{
-      drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));
-      el.classList.add('active');sx=cx;sy=cy;
-      ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;
-    };
+    const start=(cx,cy)=>{drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));el.classList.add('active');sx=cx;sy=cy;ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;};
     const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};
     const end=()=>{if(drag){drag=false;debouncedSave();}};
     el.addEventListener('mousedown',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.clientX,e.clientY);e.preventDefault();});
@@ -692,247 +556,157 @@ function initDrag(){
   });
 }
 
-/* ===== RESIZE ===== */
+/* ===== RESIZE HANDLE ===== */
 function initResize(){
   document.querySelectorAll('.rh').forEach(handle=>{
     const elId=handle.dataset.el;let resizing=false,sx,sy,sw,sh;
-    const start=(cx,cy)=>{
-      resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);
-      const img=el.querySelector('img');
-      if(img){sw=img.offsetWidth;sh=img.offsetHeight;}
-      else{sw=el.offsetWidth;sh=el.offsetHeight;}
-    };
+    const start=(cx,cy)=>{resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);const img=el.querySelector('img');if(img){sw=img.offsetWidth;sh=img.offsetHeight;}else{sw=el.offsetWidth;sh=el.offsetHeight;}};
     const move=(cx,cy)=>{if(!resizing)return;applyRZ(elId,Math.max(20,sw+cx-sx),Math.max(14,sh+cy-sy));};
-    handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.stopPropagation();e.preventDefault();});
+    handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.preventDefault();e.stopPropagation();});
     document.addEventListener('mousemove',e=>{if(resizing)move(e.clientX,e.clientY);});
     document.addEventListener('mouseup',()=>{if(resizing){resizing=false;debouncedSave();}});
-    handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});
-    document.addEventListener('touchmove',e=>{if(resizing)move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+    handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();e.stopPropagation();},{passive:false});
+    document.addEventListener('touchmove',e=>{if(resizing){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}},{passive:false});
     document.addEventListener('touchend',()=>{if(resizing){resizing=false;debouncedSave();}});
   });
 }
 
+/* ===== RZ (resize via button) ===== */
+function rz(elId,prop,delta){
+  const el=document.getElementById(elId);if(!el)return;
+  const img=el.querySelector('img');
+  if(img){
+    if(prop==='w'){const cur=img.offsetWidth||parseInt(img.style.width)||100;img.style.width=Math.max(20,cur+delta)+'px';}
+    if(prop==='h'){const cur=img.offsetHeight||parseInt(img.style.height)||100;img.style.height=Math.max(14,cur+delta)+'px';}
+  }
+  refreshSizeDisplays();debouncedSave();
+}
 function applyRZ(elId,w,h){
-  const el=document.getElementById(elId),img=el.querySelector('img');if(!img)return;
-  img.style.width=w+'px';img.style.height=h+'px';
-  const wM={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'};
-  const hM={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'};
-  if(wM[elId])document.getElementById(wM[elId]).textContent=Math.round(w);
-  if(hM[elId])document.getElementById(hM[elId]).textContent=Math.round(h);
+  const el=document.getElementById(elId);if(!el)return;
+  const img=el.querySelector('img');
+  if(img){img.style.width=Math.max(20,w)+'px';img.style.height=Math.max(14,h)+'px';}
+  refreshSizeDisplays();
 }
 
-function rz(elId,axis,delta){
-  const img=document.getElementById(elId).querySelector('img');if(!img)return;
-  if(axis==='w'){
-    const nw=Math.max(20,img.offsetWidth+delta);img.style.width=nw+'px';
-    const sv={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'}[elId];
-    if(sv)document.getElementById(sv).textContent=nw;
-  }else{
-    const nh=Math.max(14,img.offsetHeight+delta);img.style.height=nh+'px';
-    const sv={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'}[elId];
-    if(sv)document.getElementById(sv).textContent=nh;
-  }
-  debouncedSave();
-}
-
+/* ===== FS (font size) ===== */
 function fs(txtId,delta){
-  const el=document.getElementById(txtId);
-  const nf=Math.max(8,parseFloat(el.style.fontSize||16)+delta);
-  el.style.fontSize=nf+'px';
-  const m={'date-txt':'sv-dfs','c1':'sv-c1','c2':'sv-c2','c3':'sv-c3','c4':'sv-c4','bbfs-num':'sv-bfs','tarung-num':'sv-tfs','syair-txt':'sv-sfs'};
-  if(m[txtId])document.getElementById(m[txtId]).textContent=Math.round(nf);
-  debouncedSave();
+  const el=document.getElementById(txtId);if(!el)return;
+  const cur=parseFloat(el.style.fontSize)||20;
+  el.style.fontSize=Math.max(6,cur+delta)+'px';
+  refreshSizeDisplays();debouncedSave();
 }
 
-function randomAll(){
-  const piNew=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=piNew;curPas=PASARAN[piNew].id;
-  document.getElementById('sel-pas').value=curPas;
-  const siNew=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=siNew;curShio=siNew;
-  document.getElementById('sel-shio').value=curShio;
-  document.getElementById('inp-colok').value=rColok();
-  document.getElementById('inp-bbfs').value=rBBFS();
-  document.getElementById('inp-tarung').value=rTarung(5);
-  generate();
+/* ===== TOGGLE PANEL ===== */
+function togglePanel(header){
+  header.classList.toggle('open');
+  const body=header.nextElementSibling;
+  if(body)body.classList.toggle('open');
 }
 
-function generate(){
-  // Tanggal
-  const dv=document.getElementById('inp-date').value;
-  if(dv){
-    const dt=new Date(dv+'T00:00:00');
-    const M=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];
-    document.getElementById('date-txt').textContent=`${dt.getDate()} ${M[dt.getMonth()]} ${dt.getFullYear()}`;
-  }
-  // Colok
-  const cv=(document.getElementById('inp-colok').value||rColok()).padEnd(4,'0');
-  ['c1','c2','c3','c4'].forEach((id,i)=>document.getElementById(id).textContent=cv[i]||'?');
-  // BBFS
-  const bv=document.getElementById('inp-bbfs').value||rBBFS();
-  document.getElementById('bbfs-num').innerHTML=bv.slice(0,4).split('').join(' ')+'<br>'+bv.slice(4,8).split('').join(' ');
-  // Tarung
-  document.getElementById('tarung-num').textContent=document.getElementById('inp-tarung').value||rTarung(5);
-  // Syair sesuai shio yang dipilih
-  const syair=pickNextSyair(curShio);
-  document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
-  // Gambar pasaran & shio
-  setPasaran(curPas);setShio(curShio);
-  // Re-apply custom colors
-  Object.entries(customColors).forEach(([id,color])=>{
-    const el=document.getElementById(id);
-    if(el){
-      el.style.webkitTextFillColor=color;el.style.background='none';
-      el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
-      el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
-    }
-  });
-  autoSave();
+/* ===== TOAST ===== */
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-/* ===== DOWNLOAD FULL HD 1920x1920 ===== */
+/* ===== DOWNLOAD FULL HD BERSIH ===== */
 async function downloadCard(){
   const overlay=document.getElementById('dl-overlay');
-  document.getElementById('dl-msg').textContent='Membuat Full HD 1920x1920...';
-  overlay.classList.add('show');
+  const msg=document.getElementById('dl-msg');
+  overlay.classList.add('show');msg.textContent='Mempersiapkan kartu...';
+
   const card=document.getElementById('card');
-  const ctrls=card.querySelectorAll('.el-ctrl,.rh');
-  ctrls.forEach(el=>el.style.visibility='hidden');
-  card.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
+
+  /* Tambah class dl-mode — sembunyikan kontrol & pakai warna solid */
+  card.classList.add('dl-mode');
+
+  /* Deaktifkan semua elemen aktif */
+  document.querySelectorAll('.el').forEach(e=>e.classList.remove('active'));
+
+  await new Promise(r=>setTimeout(r,300));
+  msg.textContent='Rendering Full HD 1920x1920...';
 
   try{
-    const imgs=[...card.querySelectorAll('img')];
-    await Promise.all(imgs.map(img=>{
-      if(img.complete&&img.naturalHeight!==0)return Promise.resolve();
-      return new Promise(res=>{img.onload=res;img.onerror=res;});
-    }));
-    await new Promise(r=>setTimeout(r,400));
-    card.classList.add('dl-mode');
-    await new Promise(r=>setTimeout(r,100));
-
-    const canvas960=await html2canvas(card,{
-      useCORS:true,allowTaint:false,scale:1,
-      width:CARD_W,height:CARD_H,
-      backgroundColor:null,logging:false,imageTimeout:30000,
-      onclone:(doc)=>{
-        const c=doc.getElementById('card');
-        if(c){
-          c.classList.add('dl-mode');
-          c.querySelectorAll('.el-ctrl,.rh').forEach(el=>el.style.visibility='hidden');
-          c.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
-          const bg=doc.getElementById('card-bg');
-          if(bg){bg.style.display='block';bg.style.width=CARD_W+'px';bg.style.height=CARD_H+'px';}
-          Object.entries(customColors).forEach(([id,color])=>{
-            const el=doc.getElementById(id);
-            if(el){
-              el.style.webkitTextFillColor=color;el.style.background='none';
-              el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
-              el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
-            }
-          });
+    const canvas=await html2canvas(card,{
+      scale: DL_W / CARD_W,   /* 2x = 1920px */
+      width: CARD_W,
+      height: CARD_H,
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: null,
+      logging: false,
+      imageTimeout: 30000,
+      removeContainer: true,
+      onclone: function(clonedDoc){
+        /* Pastikan clone juga bersih */
+        const clonedCard=clonedDoc.getElementById('card');
+        if(clonedCard){
+          clonedCard.classList.add('dl-mode');
+          clonedCard.style.boxShadow='none';
+          clonedCard.style.borderRadius='0';
+          clonedDoc.querySelectorAll('.el-ctrl,.rh').forEach(e=>{e.style.display='none';e.style.opacity='0';});
+          clonedDoc.querySelectorAll('.el').forEach(e=>{e.style.outline='none';e.style.cursor='default';});
         }
       }
     });
 
-    const canvasFHD=document.createElement('canvas');
-    canvasFHD.width=DL_W;canvasFHD.height=DL_H;
-    const ctx=canvasFHD.getContext('2d');
-    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-    ctx.drawImage(canvas960,0,0,DL_W,DL_H);
+    msg.textContent='Mengunduh gambar...';
+    await new Promise(r=>setTimeout(r,200));
 
-    card.classList.remove('dl-mode');
-
-    const dateStr=document.getElementById('date-txt').textContent.replace(/\s+/g,'-');
-    const pasName=(PASARAN.find(p=>p.id===curPas)||{name:'syair'}).name.replace(/\s+/g,'_');
-    const shioName=(SHIO[curShio]||{name:'shio'}).name.replace(/\s+/g,'_');
     const link=document.createElement('a');
-    link.download=`syair_${pasName}_${shioName}_${dateStr}_FHD.png`;
-    link.href=canvasFHD.toDataURL('image/png');
+    link.download='syair_'+curPas+'_'+Date.now()+'.png';
+    link.href=canvas.toDataURL('image/png',1.0);
     link.click();
 
-    showToast('Download berhasil! Full HD: '+DL_W+'x'+DL_H+' pixel');
-  }catch(e){card.classList.remove('dl-mode');showToast('Gagal: '+e.message);}
-  finally{ctrls.forEach(el=>el.style.visibility='');overlay.classList.remove('show');}
+    showToast('Download Full HD berhasil!');
+  }catch(err){
+    console.error('Download error:',err);
+    showToast('Gagal download, coba lagi!');
+  }finally{
+    card.classList.remove('dl-mode');
+    overlay.classList.remove('show');
+  }
 }
 
-/* ===== SIMPAN FILE HTML ===== */
+/* ===== SAVE POSITIONS KE HTML ===== */
 function savePositions(){
-  const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
-  const positions={};
-  elIds.forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    const img=el.querySelector('img');
-    positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};
-  });
-  savePositionsRobust(positions);
-}
-
-function savePositionsRobust(positions){
-  const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-  let newSrc=src;
-  Object.entries(positions).forEach(([id,data])=>{
-    const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');
-    newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);
-  });
-  const logoImg=document.getElementById('logo-img');
-  if(logoImg){
-    const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;
-    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);
-  }
-  const pasImg=document.getElementById('pas-img');
-  if(pasImg){
-    const re=/(id="pas-img"[^>]*style=")[^"]*(")/g;
-    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${pasImg.style.width};height:${pasImg.style.height};object-fit:contain;display:${pasImg.style.display||'none'};filter:drop-shadow(0 0 18px rgba(200,150,44,.9));${post}`);
-  }
-  const shioImg=document.getElementById('shio-img');
-  if(shioImg){
-    const re=/(id="shio-img"[^>]*style=")[^"]*(")/g;
-    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${shioImg.style.width};height:${shioImg.style.height};object-fit:contain;display:${shioImg.style.display||'none'};filter:drop-shadow(0 0 20px rgba(200,150,44,.7));${post}`);
-  }
-  const fontEls=[
-    {id:'date-txt',extra:'letter-spacing:2px;'},
-    {id:'c1',extra:'line-height:1;display:block;'},
-    {id:'c2',extra:'line-height:1;display:block;'},
-    {id:'c3',extra:'line-height:1;display:block;'},
-    {id:'c4',extra:'line-height:1;display:block;'},
-    {id:'bbfs-num',extra:'letter-spacing:4px;line-height:1.55;text-align:center;'},
-    {id:'tarung-num',extra:'letter-spacing:3px;text-align:center;'},
-    {id:'syair-txt',extra:'line-height:1.75;display:block;text-align:center;'}
-  ];
-  fontEls.forEach(({id,extra})=>{
-    const el=document.getElementById(id);if(!el)return;
-    const fs=el.style.fontSize||'16px';
-    const re=new RegExp(`(id="${id}"[^>]*style=")[^"]*(")`,'g');
-    newSrc=newSrc.replace(re,`$1font-size:${fs};${extra}$2`);
-  });
-  const blob=new Blob([newSrc],{type:'text/html;charset=utf-8'});
+  const state=buildState();
+  const json=JSON.stringify(state,null,2);
+  const blob=new Blob([json],{type:'application/json'});
   const url=URL.createObjectURL(blob);
-  const link=document.createElement('a');
-  link.download='syair_generator_saved.html';link.href=url;link.click();
-  setTimeout(()=>URL.revokeObjectURL(url),3000);
-  showToast('Posisi tersimpan ke file HTML!');
+  const a=document.createElement('a');a.href=url;a.download='syair_state_'+Date.now()+'.json';a.click();
+  URL.revokeObjectURL(url);
+  showToast('State disimpan ke file JSON!');
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg||'Done';
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);
-}
-function togglePanel(header){
-  header.classList.toggle('open');
-  const body=header.nextElementSibling;body.classList.toggle('open');
-}
+/* ===== RESET ===== */
+function resetPositions(){localStorage.removeItem(STORAGE_KEY);db.doc(DOC_PATH).delete().catch(()=>{});location.reload();}
 
 /* ===== INIT ===== */
-async function init(){
+(async function init(){
   initSyairDecks();
-  const t=new Date();t.setDate(t.getDate()+1);
-  const y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
-  document.getElementById('inp-date').value=`${y}-${m}-${d}`;
-  initDrag();initResize();
-  const loaded=await loadInitialState();
-  if(!loaded){randomAll();}
-  initFirebaseListener();
-}
+  initDrag();
+  initResize();
 
-init();
+  /* Set default tanggal */
+  const today=new Date();
+  const months=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];
+  document.getElementById('date-txt').textContent=today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear();
+  const yy=today.getFullYear(),mm=String(today.getMonth()+1).padStart(2,'0'),dd=String(today.getDate()).padStart(2,'0');
+  document.getElementById('inp-date').value=yy+'-'+mm+'-'+dd;
+
+  /* Load state */
+  const loaded=await loadInitialState();
+  if(!loaded){refreshSizeDisplays();}
+
+  /* Firebase realtime listener */
+  initFirebaseListener();
+
+  /* Klik di luar elemen untuk deselect */
+  document.getElementById('card').addEventListener('mousedown',e=>{
+    if(!e.target.closest('.el')){document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));}
+  });
+})();
 </script>
 </body>
 </html>
