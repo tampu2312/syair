@@ -162,12 +162,12 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
     </div>
     <div class="el" id="el-shio" style="top:312px;left:263px;">
       <div class="el-ctrl"><button onclick="rz('el-shio','w',-10)">W-</button><span class="sv" id="sv-sw">452</span><button onclick="rz('el-shio','w',10)">W+</button><button onclick="rz('el-shio','h',-10)">H-</button><span class="sv" id="sv-sh">391</span><button onclick="rz('el-shio','h',10)">H+</button></div>
-      <img id="shio-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/shio%20ular.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:452px;height:391px;object-fit:contain;display:block;filter:drop-shadow(0 0 20px rgba(200,150,44,.7));">
+      <img id="shio-img" src="https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/shio%20kambing.png" crossorigin="anonymous" onerror="this.style.display='none'" alt="" style="width:452px;height:391px;object-fit:contain;display:block;filter:drop-shadow(0 0 20px rgba(200,150,44,.7));">
       <div class="rh" data-el="el-shio"></div>
     </div>
     <div class="el" id="el-syair" style="top:759px;left:360px;">
       <div class="el-ctrl"><button onclick="fs('syair-txt',-1)">A-</button><span class="sv" id="sv-sfs">15</span><button onclick="fs('syair-txt',1)">A+</button></div>
-      <span id="syair-txt" class="gt-syair" style="font-size:15px;line-height:1.75;display:block;text-align:center;">Bintang bersinar di langit malam,<br>Angka turun dari kedalaman alam.<br>Semoga hoki menyertai kita,<br>Rezeki lancar tiada dusta.</span>
+      <span id="syair-txt" class="gt-syair" style="font-size:15px;line-height:1.75;display:block;text-align:center;">Kambing gunung berdiri di tebing,<br>Pandangan jauh penuh ketenangan.<br>Angka kambing membawa damai,<br>Kemenangan datang dengan tenang.</span>
       <div class="rh" data-el="el-syair"></div>
     </div>
   </div></div>
@@ -211,15 +211,15 @@ input[type="color"]::-moz-color-swatch{border:none;border-radius:5px;}
     <div class="panel-box">
       <div class="panel-header" onclick="togglePanel(this)"><h3>&#9733; Panduan Singkat</h3><span class="arrow">&#9660;</span></div>
       <div class="panel-body" id="info-body"><div style="padding:12px 14px;color:rgba(200,180,140,.65);font-family:'Outfit',sans-serif;font-size:10px;line-height:1.7;letter-spacing:.3px;">
+        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Syair Shio</span> — Setiap shio punya 5 syair bertema. Acak untuk ganti.</p>
         <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Cloud Sync</span> — Data tersinkron via Firebase. Pindah PC langsung update.</p>
         <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Warna</span> — Pilih warna untuk mengubah tampilan tulisan.</p>
         <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">Drag</span> — Klik & tahan elemen untuk memindahkan posisi.</p>
-        <p style="margin-bottom:6px;"><span style="color:#4adc20;font-weight:600;">A+/A-</span> — Ubah ukuran font. <span style="color:#4adc20;font-weight:600;">W+/H+</span> — Ubah ukuran gambar.</p>
         <p><span style="color:#4adc20;font-weight:600;">Download</span> — Hasil Full HD 1920x1920 pixel.</p>
       </div></div>
     </div>
     <div class="sync-bar" id="sync-bar"><span class="sync-dot" id="sync-dot"></span><span class="sync-text" id="sync-text">Menghubungkan...</span></div>
-    <div class="version-badge">v2.4 &mdash; Syair Generator Pro + Full HD</div>
+    <div class="version-badge">v2.5 &mdash; Syair Shio Bertema + Full HD</div>
   </div>
 </div>
 <div id="dl-overlay"><div class="spinner"></div><p id="dl-msg">Sedang memproses...</p></div>
@@ -235,8 +235,8 @@ const DOC_PATH='syairGenerator/state';
 /* ===== KONSTANTA ===== */
 const RAW='https://raw.githubusercontent.com/shortcutpro/shortcutpro/main/';
 const CARD_W=960,CARD_H=960;
-const DL_W=1920,DL_H=1920; // Full HD square
-const STORAGE_KEY='syair_gen_state_v24';
+const DL_W=1920,DL_H=1920;
+const STORAGE_KEY='syair_gen_state_v25';
 
 const PASARAN=[
   {id:'sgp',name:'Singapore',file:'LOGO SINGAPORE.png'},{id:'hk',name:'Hongkong',file:'logo hongkong-lotto.png'},
@@ -259,19 +259,105 @@ const SHIO=[
   {name:'Monyet',file:'shio monyet.png'},{name:'Ayam',file:'shio ayam.png'},
   {name:'Anjing',file:'shio anjing.png'},{name:'Babi',file:'shio babi.png'},
 ];
+
+/* ===== SYAIR PER SHIO — 5 syair unik bertema setiap shio ===== */
 const SYAIR=[
-  "Bunga mekar di taman indah,\nAngka jitu membawa berkah.\nSatu dua tiga empat lima,\nRezeki mengalir tiada tara.",
-  "Air mengalir ke laut luas,\nPetunjuk datang terang dan jelas.\nHitung baik angka pilihan,\nMudah-mudahan turun keberuntungan.",
-  "Bintang bersinar di langit malam,\nAngka turun dari kedalaman alam.\nSemoga hoki menyertai kita,\nRezeki lancar tiada dusta.",
-  "Naga emas terbang melayang,\nBawa hoki sepanjang zaman.\nAngka sakti telah tertulis,\nRezeki mengalir tiada habis.",
-  "Bulan purnama bersinar terang,\nAngka jitu kan datang serang.\nSemua petunjuk sudah nyata,\nKemenangan ada di mata.",
-  "Singa mengaum di padang luas,\nAngka hadir terang dan jelas.\nTiga enam delapan sembilan,\nKemenangan ada di tangan.",
-  "Awan berarak di langit biru,\nPetunjuk angka datang selalu.\nSemua hewan membawa tanda,\nNomor jitu ada di sana.",
-  "Dari timur matahari terbit,\nAngka jitu makin mendekat.\nHitung cermat dan teliti,\nRezeki datang pasti.",
-  "Lautan luas penuh misteri,\nAngka sakti hadir kembali.\nDua angka di depan mata,\nHoki datang membawa serta.",
-  "Pohon bambu tumbuh tinggi,\nAngka jitu turun hari ini.\nDua kali tiga sama enam,\nKemenangan pasti akan datang.",
-  "Di balik awan ada cahaya,\nAngka berkilau penuh pesona.\nSemua bilangan sudah terpilih,\nKeberuntungan datang berlipih.",
-  "Roda berputar tiada henti,\nAngka jitu datang kembali.\nSatu hingga sembilan berjajar,\nRezeki mengalir semakin besar.",
+  // 0: Tikus — cerdik, lincah, malam, kecil tapi berbahaya
+  [
+    "Tikus cilik lincah di malam gelap,\nMengendap-endap mencari celah.\nAngka kecil jadi kebesaran,\nRezeki datang dari yang tak terduga.",
+    "Si tikus pandai menyelinap sunyi,\nMenembus rintangan tanpa ragu.\nDua empat enam delapan,\nJalan kemenangan kini terbuka.",
+    "Tikus cerdik tak pernah lengah,\nSelalu siap menghadapi tantang.\nAngka sakti kini tersimpan,\nKeberuntungan menanti di ujung.",
+    "Seekor tikus di gudang padi,\nMakan sepuasnya tanpa sedih.\nNomor jitu sudah menanti,\nRejeki besar kan segera tiba.",
+    "Tikus kecil berlari kencang,\nMenembus malam tanpa bimbang.\nAngka jitu kini di tangan,\nKemenangan datang berkavan."
+  ],
+  // 1: Kerbau — kuat, teguh, sabar, membajak tanah, tanduk
+  [
+    "Kerbau perkasa menginjak bumi,\nLangkah tegap penuh kemewahan.\nKekuatan besar tak terbendung,\nAngka sakti membawa kemenangan.",
+    "Kerbau gagah berdiri tegak,\nMenahan beban tanpa lelah.\nSatu tiga lima tujuh,\nRezeki mengalir deras dan lancar.",
+    "Tanduk kerbau menembus awan,\nKekuatan sejati tak terkalahkan.\nAngka jitu turun dari langit,\nKemewahan menanti di depan.",
+    "Kerbau tanah membajak sawah,\nKerja keras penuh kesabaran.\nDua enam delapan nol,\nHasil jerih dibayar berlipat.",
+    "Kerbau hitam berjalan pelan,\nNamun pasti sampai ke tujuan.\nAngka kerbau tak pernah bohong,\nKemenangan pasti kan datang."
+  ],
+  // 2: Harimau — garang, raja hutan, mengaum, belang, cakar
+  [
+    "Harimau mengaum di puncak gunung,\nSuara garang menggemparkan.\nAngka buas penuh keberanian,\nKemenangan besar menanti di depan.",
+    "Belang harimau menyala terang,\nRaja hutan tak terkalahkan.\nTiga lima tujuh sembilan,\nRezeki garang membanjiri.",
+    "Cakar harimau mencengkeram kuat,\nMangsa tak bisa melepaskan.\nAngka sakti mencengkeram kemenangan,\nTak ada yang bisa menghalangi.",
+    "Harimau berburu di malam gelap,\nMatanya tajam menembus gelita.\nNomor jitu terlihat jelas,\nKeberuntungan tak akan tersisa.",
+    "Raja hutan berjalan gagah,\nSemua makhluk menghormatinya.\nAngka harimau penuh wibawa,\nKemenangan besar tiba di mata."
+  ],
+  // 3: Kelinci — lincah, lembut, melompat, bulan, telinga panjang
+  [
+    "Kelinci melompat di padang rumput,\nGerakan lincah penuh keanggunan.\nAngka lembut membawa berkah,\nKeberuntungan datang berbisik.",
+    "Telinga panjang mendengar bisikan,\nKelinci pintar menangkap peluang.\nDua empat enam nol,\nRezeki manis seperti wortel.",
+    "Kelinci putih di bulan purnama,\nMelompat riang tanpa beban.\nAngka jitu bercahaya lembut,\nKemenangan hadir dengan tenang.",
+    "Kaki kelinci melompat tinggi,\nMelewati rintangan dengan mudah.\nNomor sakti melompat ke kemenangan,\nRezeki datang tanpa kesulitan.",
+    "Kelinci kecil bermain di taman,\nPenuh keceriaan dan kebahagiaan.\nAngka kelinci membawa hoki,\nKeberuntungan bersemi di hati."
+  ],
+  // 4: Naga — mitos, terbang, api, emas, sisik, kekuatan gaib
+  [
+    "Naga emas terbang melayang,\nMenyemburkan api ke angkasa.\nAngka naga penuh kekuatan,\nKemenangan besar kan terwujud.",
+    "Naga hijau melingkar di pilar,\nKekuatan gaib tak terbendung.\nSatu lima sembilan tiga,\nRezeki naga turun ke bumi.",
+    "Sisik naga bersinar terang,\nPermata langit yang termulia.\nAngka sakti dari dunia gaib,\nKemewahan melimpah ruah.",
+    "Naga terbang melintasi awan,\nEkor panjang menyapu bintang.\nNomor naga membawa berkah,\nKeberuntungan sebesar gunung.",
+    "Naga tua di gua kristal,\nMenjaga harta bertahun-tahun.\nAngka jitu tersembunyi dalam,\nRezeki besar menunggu waktu."
+  ],
+  // 5: Ular — merayap, misterius, melilit, bisa, diam-diam
+  [
+    "Ular melilit pohon beringin,\nGerakan licin penuh misteri.\nAngka ular merayap pelan,\nKemenangan datang diam-diam.",
+    "Ular kobra berdiri tegak,\nMenatap tajam penuh wibawa.\nTiga enam sembilan dua,\nRezeki berbisik dari kulit.",
+    "Ular sanca melingkar cantik,\nWarna-warni memukau mata.\nAngka sakti merayap masuk,\nKeberuntungan melingkar di tangan.",
+    "Ular berkelit di antara rumput,\nTak terlihat namun berbahaya.\nNomor jitu merayap diam,\nKemenangan datang tanpa suara.",
+    "Ular hijau di atas dahan,\nMenunggu mangsa dengan sabar.\nAngka ular penuh kesabaran,\nRezeki besar menanti di ujung."
+  ],
+  // 6: Kuda — lari kencang, derap, surai, pacu, bebas
+  [
+    "Kuda jantan berlari kencang,\nMenghentakkan kuda di padang.\nAngka kuda penuh semangat,\nKemenangan datang berderap.",
+    "Kuda hitam berlari angkuh,\nSurai terbang diterpa angin.\nLima tujuh nol dua,\nRezeki derap membawa kemenangan.",
+    "Kuda pacu melesat di lintasan,\nTak tertandingi oleh siapa pun.\nAngka sakti berlari cepat,\nKeberuntungan tiba di finish.",
+    "Kuda putih berlari bebas,\nDi padang luas tanpa batas.\nNomor jitu melesat maju,\nRezeki datang tanpa halangan.",
+    "Kuda kayuhan menembus malam,\nLangkah gagah penuh tenaga.\nAngka kuda penuh kemenangan,\nKeberuntungan berderap datang."
+  ],
+  // 7: Kambing — damai, lembut, gunung, merumput, tenang
+  [
+    "Kambing gunung berdiri di tebing,\nPandangan jauh penuh ketenangan.\nAngka kambing membawa damai,\nKemenangan datang dengan tenang.",
+    "Kambing putih merumput di bukit,\nHidup tenang penuh kedamaian.\nDua empat delapan nol,\nRezeki mengalir seperti susu.",
+    "Kambing jantan bertanduk melengkung,\nMelindungi kawanan dengan setia.\nAngka sakti penuh kelembutan,\nKeberuntungan hadir perlahan.",
+    "Bulu kambing lembut dan halus,\nMemberi kehangatan di musim dingin.\nNomor jitu membawa kenyamanan,\nRezeki datang tanpa gejolak.",
+    "Kambing berkembang di padang hijau,\nDamai sejahtera penuh berkah.\nAngka kambing penuh keberuntungan,\nKemenangan tiba dengan damai."
+  ],
+  // 8: Monyet — cerdas, akal, melompat, bercanda, lincah
+  [
+    "Monyet cerdas bermain di pohon,\nMelompat riang tanpa kekhawatiran.\nAngka monyet penuh kelicikan,\nKemenangan datang dari akal.",
+    "Monyet emas di gunung buah,\nCerdik dan lincah tak tertandingi.\nEmpat tujuh satu sembilan,\nRezeki datang dari kecerdasan.",
+    "Monyet raja di kerajaan apel,\nMengatur segala dengan cerdik.\nAngka sakti penuh tipu daya,\nKeberuntungan datang dari akal budi.",
+    "Monyet bergelantungan di tali,\nTerjatuh bangun tak pernah menyerah.\nNomor jitu bermain cerdik,\nRezeki datang dari kecekatan.",
+    "Monyet bayi bermain cermin,\nMengulangi gerak dengan tepat.\nAngka monyet meniru kemenangan,\nKeberuntungan berlipat ganda."
+  ],
+  // 9: Ayam — berkokok, fajar, jago, bertarung, bangga
+  [
+    "Ayam jantan berkokok subuh,\nMembangunkan dunia dari tidur.\nAngka ayam penuh kebanggaan,\nKemenangan datang di pagi hari.",
+    "Ayam hutan berkokok lantang,\nSuaranya merobohkan pagi.\nLima nol tiga delapan,\nRezeki berkokok di ambang pintu.",
+    "Ayam jago bertarung di arena,\nTak pernah mundur menghadapi lawan.\nAngka sakti penuh keberanian,\nKeberuntungan menang bertarung.",
+    "Jago berkokok tiga kali,\nMatahari terbit di ufuk timur.\nNomor jitu menyingsingkan fajar,\nRezeki datang saat subuh menyingsing.",
+    "Ayam berwarna-warni indah,\nBerjalan angkuh di halaman.\nAngka ayam penuh kemewahan,\nKemenangan datang dengan bangga."
+  ],
+  // 10: Anjing — setia, menjaga, berani, tulus, pemburu
+  [
+    "Anjing setia menjaga rumah,\nTak pernah meninggalkan tuannya.\nAngka anjing penuh kesetiaan,\nKemenangan datang dari kejujuran.",
+    "Anjing pemburu berlari cepat,\nMengikuti jejak tanpa ragu.\nSatu enam delapan tiga,\nRezeki setia mengikuti langkah.",
+    "Anjing hitam menggonggong malam,\nMenjaga keamanan dengan setia.\nAngka sakti penuh perlindungan,\nKeberuntungan menjaga dari bahaya.",
+    "Anjing emas bermain di halaman,\nSetia menunggu tuan pulang.\nNomor jitu penuh kesetiaan,\nRezeki datang dari ketaatan.",
+    "Anjing gembala membimbing kawanan,\nMenuntun jalan dengan sabar.\nAngka anjing penuh ketulusan,\nKemenangan datang dari keikhlasan."
+  ],
+  // 11: Babi — kemakmuran, rezeki, emas, makmur, berlimpah
+  [
+    "Babi hutan berlari di rimba,\nKekuatan penuh tak terbendung.\nAngka babi membawa kemakmuran,\nKemenangan datang berlimpah.",
+    "Babi emas di rumah kekayaan,\nSimbol rezeki dan kemewahan.\nDua delapan nol enam,\nRezeki melimpah ruah ke rumah.",
+    "Babi celeng menggali tanah,\nMenemukan harta tersembunyi.\nAngka sakti penuh kemakmuran,\nKeberuntungan digali dari dalam.",
+    "Babi putih gemuk dan sehat,\nTanda kemakmuran dan keberuntungan.\nNomor jitu membawa kekayaan,\nRezeki datang berlimpah-limpah.",
+    "Babi di kandang penuh makanan,\nHidup makmur tanpa kekurangan.\nAngka babi penuh kemewahan,\nKemenangan datang berlimpah ruah."
+  ],
 ];
 
 let lastPasIdx=-1,lastShioIdx=-1,lastColok='',lastBBFS='',lastTarung='';
@@ -280,92 +366,425 @@ let customColors={};
 let isApplyingRemoteState=false;
 let lastSyncTimestamp=0;
 
+/* ===== SISTEM SYAIR PER SHIO ===== */
+let syairDecks={}; // {shioIdx: {deck:[], used:[]}}
+
+function shuffleArray(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function initSyairDecks(){
+  for(let i=0;i<SYAIR.length;i++){
+    syairDecks[i]={deck:shuffleArray([...Array(SYAIR[i].length).keys()]),used:[]};
+  }
+}
+
+function pickNextSyair(shioIdx){
+  if(!syairDecks[shioIdx]){
+    syairDecks[shioIdx]={deck:shuffleArray([...Array(SYAIR[shioIdx].length).keys()]),used:[]};
+  }
+  const sd=syairDecks[shioIdx];
+  if(sd.deck.length===0){
+    const lastUsed=sd.used[sd.used.length-1];
+    let newDeck;
+    do{newDeck=shuffleArray([...Array(SYAIR[shioIdx].length).keys()]);}while(newDeck[0]===lastUsed);
+    sd.deck=newDeck;
+    sd.used=[];
+  }
+  const idx=sd.deck.shift();
+  sd.used.push(idx);
+  return SYAIR[shioIdx][idx];
+}
+
 /* ===== SYNC STATUS ===== */
-function setSyncStatus(s,t){const d=document.getElementById('sync-dot'),x=document.getElementById('sync-text');if(!d||!x)return;d.className='sync-dot '+s;x.className='sync-text '+s;x.textContent=t;}
+function setSyncStatus(s,t){
+  const d=document.getElementById('sync-dot'),x=document.getElementById('sync-text');
+  if(!d||!x)return;d.className='sync-dot '+s;x.className='sync-text '+s;x.textContent=t;
+}
 
 /* ===== WARNA ===== */
-function applyTextColor(id,c){const el=document.getElementById(id);if(!el)return;customColors[id]=c;el.style.webkitTextFillColor=c;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=c;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';debouncedSave();}
+function applyTextColor(id,c){
+  const el=document.getElementById(id);if(!el)return;
+  customColors[id]=c;
+  el.style.webkitTextFillColor=c;el.style.background='none';
+  el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
+  el.style.color=c;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
+  debouncedSave();
+}
 function applyColokColor(c){['c1','c2','c3','c4'].forEach(id=>applyTextColor(id,c));}
-function clearElementColor(id){const el=document.getElementById(id);if(!el)return;el.style.webkitTextFillColor='';el.style.background='';el.style.webkitBackgroundClip='';el.style.backgroundClip='';el.style.color='';el.style.textShadow='';}
-function resetColors(){customColors={};['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));document.getElementById('clr-date').value='#f5d060';document.getElementById('clr-colok').value='#f5d060';document.getElementById('clr-bbfs').value='#f5d060';document.getElementById('clr-tarung').value='#f5d060';document.getElementById('clr-syair').value='#f5d060';debouncedSave();showToast('Warna direset ke gradient emas!');}
+function clearElementColor(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.style.webkitTextFillColor='';el.style.background='';
+  el.style.webkitBackgroundClip='';el.style.backgroundClip='';
+  el.style.color='';el.style.textShadow='';
+}
+function resetColors(){
+  customColors={};
+  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));
+  document.getElementById('clr-date').value='#f5d060';
+  document.getElementById('clr-colok').value='#f5d060';
+  document.getElementById('clr-bbfs').value='#f5d060';
+  document.getElementById('clr-tarung').value='#f5d060';
+  document.getElementById('clr-syair').value='#f5d060';
+  debouncedSave();showToast('Warna direset ke gradient emas!');
+}
 
 /* ===== STATE ===== */
 function buildState(){
   const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
   const state={elements:{},inputs:{},texts:{},imgSrcs:{},customColors:{},colorPickers:{}};
-  elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const data={top:el.style.top,left:el.style.left};const img=el.querySelector('img');if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{const txt=document.getElementById(tid);if(txt&&el.contains(txt)){data[tid+'_fs']=txt.style.fontSize||'';}});state.elements[id]=data;});
-  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{const el=document.getElementById(id);if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}});
-  ['pas-img','shio-img'].forEach(id=>{const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;});
-  state.inputs={pasaran:curPas,shio:curShio,date:document.getElementById('inp-date').value,colok:document.getElementById('inp-colok').value,bbfs:document.getElementById('inp-bbfs').value,tarung:document.getElementById('inp-tarung').value};
+  elIds.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const data={top:el.style.top,left:el.style.left};
+    const img=el.querySelector('img');
+    if(img){data.imgW=img.style.width;data.imgH=img.style.height;data.imgDisplay=img.style.display||'block';}
+    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
+      const txt=document.getElementById(tid);
+      if(txt&&el.contains(txt)){data[tid+'_fs']=txt.style.fontSize||'';}
+    });
+    state.elements[id]=data;
+  });
+  ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){state.texts[id]=(id==='bbfs-num'||id==='syair-txt')?el.innerHTML:el.textContent;}
+  });
+  ['pas-img','shio-img'].forEach(id=>{
+    const el=document.getElementById(id);if(el)state.imgSrcs[id]=el.src;
+  });
+  state.inputs={
+    pasaran:curPas,shio:curShio,
+    date:document.getElementById('inp-date').value,
+    colok:document.getElementById('inp-colok').value,
+    bbfs:document.getElementById('inp-bbfs').value,
+    tarung:document.getElementById('inp-tarung').value
+  };
   state.customColors={...customColors};
-  state.colorPickers={date:document.getElementById('clr-date').value,colok:document.getElementById('clr-colok').value,bbfs:document.getElementById('clr-bbfs').value,tarung:document.getElementById('clr-tarung').value,syair:document.getElementById('clr-syair').value};
-  state.timestamp=Date.now();return state;
+  state.colorPickers={
+    date:document.getElementById('clr-date').value,
+    colok:document.getElementById('clr-colok').value,
+    bbfs:document.getElementById('clr-bbfs').value,
+    tarung:document.getElementById('clr-tarung').value,
+    syair:document.getElementById('clr-syair').value
+  };
+  state.timestamp=Date.now();
+  return state;
 }
 
 function applyState(state){
-  if(!state||!state.elements)return;isApplyingRemoteState=true;
-  Object.entries(state.elements).forEach(([id,data])=>{const el=document.getElementById(id);if(!el)return;if(data.top)el.style.top=data.top;if(data.left)el.style.left=data.left;const img=el.querySelector('img');if(img){if(data.imgW)img.style.width=data.imgW;if(data.imgH)img.style.height=data.imgH;if(data.imgDisplay)img.style.display=data.imgDisplay;}['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{const fsKey=tid+'_fs';if(data[fsKey]){const txt=document.getElementById(tid);if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];}});});
-  if(state.texts){Object.entries(state.texts).forEach(([id,content])=>{const el=document.getElementById(id);if(!el)return;if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;else el.textContent=content;});}
-  if(state.imgSrcs){Object.entries(state.imgSrcs).forEach(([id,src])=>{const el=document.getElementById(id);if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}});}
-  if(state.inputs){const inp=state.inputs;if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}if(inp.date)document.getElementById('inp-date').value=inp.date;if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;}
-  customColors={};if(state.customColors&&Object.keys(state.customColors).length>0){customColors={...state.customColors};Object.entries(customColors).forEach(([id,color])=>{const el=document.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});}else{['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));}
-  if(state.colorPickers){const cp=state.colorPickers;if(cp.date)document.getElementById('clr-date').value=cp.date;if(cp.colok)document.getElementById('clr-colok').value=cp.colok;if(cp.bbfs)document.getElementById('clr-bbfs').value=cp.bbfs;if(cp.tarung)document.getElementById('clr-tarung').value=cp.tarung;if(cp.syair)document.getElementById('clr-syair').value=cp.syair;}
-  refreshSizeDisplays();setTimeout(()=>{isApplyingRemoteState=false;},500);
+  if(!state||!state.elements)return;
+  isApplyingRemoteState=true;
+  Object.entries(state.elements).forEach(([id,data])=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(data.top)el.style.top=data.top;
+    if(data.left)el.style.left=data.left;
+    const img=el.querySelector('img');
+    if(img){
+      if(data.imgW)img.style.width=data.imgW;
+      if(data.imgH)img.style.height=data.imgH;
+      if(data.imgDisplay)img.style.display=data.imgDisplay;
+    }
+    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(tid=>{
+      const fsKey=tid+'_fs';
+      if(data[fsKey]){
+        const txt=document.getElementById(tid);
+        if(txt&&el.contains(txt))txt.style.fontSize=data[fsKey];
+      }
+    });
+  });
+  if(state.texts){
+    Object.entries(state.texts).forEach(([id,content])=>{
+      const el=document.getElementById(id);if(!el)return;
+      if(id==='bbfs-num'||id==='syair-txt')el.innerHTML=content;
+      else el.textContent=content;
+    });
+  }
+  if(state.imgSrcs){
+    Object.entries(state.imgSrcs).forEach(([id,src])=>{
+      const el=document.getElementById(id);
+      if(el&&src){el.src=src;el.style.display='block';el.onerror=()=>{el.style.display='none';};}
+    });
+  }
+  if(state.inputs){
+    const inp=state.inputs;
+    if(inp.pasaran){curPas=inp.pasaran;document.getElementById('sel-pas').value=inp.pasaran;}
+    if(inp.shio!==undefined){curShio=Number(inp.shio);document.getElementById('sel-shio').value=inp.shio;}
+    if(inp.date)document.getElementById('inp-date').value=inp.date;
+    if(inp.colok!==undefined)document.getElementById('inp-colok').value=inp.colok;
+    if(inp.bbfs!==undefined)document.getElementById('inp-bbfs').value=inp.bbfs;
+    if(inp.tarung!==undefined)document.getElementById('inp-tarung').value=inp.tarung;
+  }
+  customColors={};
+  if(state.customColors&&Object.keys(state.customColors).length>0){
+    customColors={...state.customColors};
+    Object.entries(customColors).forEach(([id,color])=>{
+      const el=document.getElementById(id);
+      if(el){
+        el.style.webkitTextFillColor=color;el.style.background='none';
+        el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
+        el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
+      }
+    });
+  }else{
+    ['date-txt','c1','c2','c3','c4','bbfs-num','tarung-num','syair-txt'].forEach(id=>clearElementColor(id));
+  }
+  if(state.colorPickers){
+    const cp=state.colorPickers;
+    if(cp.date)document.getElementById('clr-date').value=cp.date;
+    if(cp.colok)document.getElementById('clr-colok').value=cp.colok;
+    if(cp.bbfs)document.getElementById('clr-bbfs').value=cp.bbfs;
+    if(cp.tarung)document.getElementById('clr-tarung').value=cp.tarung;
+    if(cp.syair)document.getElementById('clr-syair').value=cp.syir;
+  }
+  refreshSizeDisplays();
+  setTimeout(()=>{isApplyingRemoteState=false;},500);
 }
 
 /* ===== AUTO-SAVE ===== */
 let saveTimer=null;
 function debouncedSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(autoSave,400);}
-function autoSave(){const state=buildState();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}saveToFirebase(state);setSyncStatus('syncing','Menyimpan...');setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);}
+function autoSave(){
+  const state=buildState();
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
+  saveToFirebase(state);
+  setSyncStatus('syncing','Menyimpan...');
+  setTimeout(()=>{setSyncStatus('online','Tersinkron');},800);
+}
 
-async function saveToFirebase(state){try{await db.doc(DOC_PATH).set(state,{merge:true});lastSyncTimestamp=state.timestamp||Date.now();}catch(e){console.warn('Firebase save gagal:',e);setSyncStatus('offline','Gagal sinkron');}}
+async function saveToFirebase(state){
+  try{await db.doc(DOC_PATH).set(state,{merge:true});lastSyncTimestamp=state.timestamp||Date.now();}
+  catch(e){console.warn('Firebase save gagal:',e);setSyncStatus('offline','Gagal sinkron');}
+}
 
 function initFirebaseListener(){
   setSyncStatus('syncing','Menghubungkan...');
-  db.doc(DOC_PATH).onSnapshot((doc)=>{if(!doc.exists)return;const remoteState=doc.data();if(!remoteState||!remoteState.timestamp)return;if(remoteState.timestamp>lastSyncTimestamp&&!isApplyingRemoteState){const localRaw=localStorage.getItem(STORAGE_KEY);let localState=null;try{localState=localRaw?JSON.parse(localRaw):null;}catch(e){}if(!localState||remoteState.timestamp>(localState.timestamp||0)){applyState(remoteState);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}lastSyncTimestamp=remoteState.timestamp;setSyncStatus('online','Diperbarui dari cloud');setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);}}},(error)=>{console.warn('Firebase listener error:',error);setSyncStatus('offline','Offline - localStorage saja');});
+  db.doc(DOC_PATH).onSnapshot((doc)=>{
+    if(!doc.exists)return;
+    const remoteState=doc.data();
+    if(!remoteState||!remoteState.timestamp)return;
+    if(remoteState.timestamp>lastSyncTimestamp&&!isApplyingRemoteState){
+      const localRaw=localStorage.getItem(STORAGE_KEY);
+      let localState=null;
+      try{localState=localRaw?JSON.parse(localRaw):null;}catch(e){}
+      if(!localState||remoteState.timestamp>(localState.timestamp||0)){
+        applyState(remoteState);
+        try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
+        lastSyncTimestamp=remoteState.timestamp;
+        setSyncStatus('online','Diperbarui dari cloud');
+        setTimeout(()=>{setSyncStatus('online','Tersinkron');},2000);
+      }
+    }
+  },(error)=>{
+    console.warn('Firebase listener error:',error);
+    setSyncStatus('offline','Offline - localStorage saja');
+  });
   setSyncStatus('online','Tersinkron');
 }
 
 async function loadInitialState(){
-  return new Promise(async(resolve)=>{try{setSyncStatus('syncing','Memuat dari cloud...');const doc=await db.doc(DOC_PATH).get();if(doc.exists){const remoteState=doc.data();if(remoteState&&remoteState.elements){applyState(remoteState);lastSyncTimestamp=remoteState.timestamp||0;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}setSyncStatus('online','Dimuat dari cloud');resolve(true);return;}}}catch(e){console.warn('Firebase load gagal:',e);setSyncStatus('offline','Offline - localStorage saja');}
-  const loaded=autoLoadLocal();resolve(loaded);});
+  return new Promise(async(resolve)=>{
+    try{
+      setSyncStatus('syncing','Memuat dari cloud...');
+      const doc=await db.doc(DOC_PATH).get();
+      if(doc.exists){
+        const remoteState=doc.data();
+        if(remoteState&&remoteState.elements){
+          applyState(remoteState);lastSyncTimestamp=remoteState.timestamp||0;
+          try{localStorage.setItem(STORAGE_KEY,JSON.stringify(remoteState));}catch(e){}
+          setSyncStatus('online','Dimuat dari cloud');resolve(true);return;
+        }
+      }
+    }catch(e){
+      console.warn('Firebase load gagal:',e);
+      setSyncStatus('offline','Offline - localStorage saja');
+    }
+    const loaded=autoLoadLocal();resolve(loaded);
+  });
 }
-function autoLoadLocal(){try{const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return false;const state=JSON.parse(saved);if(!state||!state.elements)return false;applyState(state);lastSyncTimestamp=state.timestamp||0;return true;}catch(e){return false;}}
-function refreshSizeDisplays(){const imgMap={'sv-lw':['logo-img','w'],'sv-lh':['logo-img','h'],'sv-pw':['pas-img','w'],'sv-ph':['pas-img','h'],'sv-sw':['shio-img','w'],'sv-sh':['shio-img','h']};Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{const sv=document.getElementById(svId);const img=document.getElementById(imgId);if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}});const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt'};Object.entries(fsMap).forEach(([svId,txtId])=>{const sv=document.getElementById(svId);const txt=document.getElementById(txtId);if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));});}
-function resetPositions(){localStorage.removeItem(STORAGE_KEY);db.doc(DOC_PATH).delete().catch(()=>{});location.reload();}
+
+function autoLoadLocal(){
+  try{
+    const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return false;
+    const state=JSON.parse(saved);if(!state||!state.elements)return false;
+    applyState(state);lastSyncTimestamp=state.timestamp||0;return true;
+  }catch(e){return false;}
+}
+
+function refreshSizeDisplays(){
+  const imgMap={'sv-lw':['logo-img','w'],'sv-lh':['logo-img','h'],'sv-pw':['pas-img','w'],'sv-ph':['pas-img','h'],'sv-sw':['shio-img','w'],'sv-sh':['shio-img','h']};
+  Object.entries(imgMap).forEach(([svId,[imgId,prop]])=>{
+    const sv=document.getElementById(svId),img=document.getElementById(imgId);
+    if(sv&&img){const v=prop==='w'?img.offsetWidth:img.offsetHeight;if(v)sv.textContent=v;}
+  });
+  const fsMap={'sv-dfs':'date-txt','sv-c1':'c1','sv-c2':'c2','sv-c3':'c3','sv-c4':'c4','sv-bfs':'bbfs-num','sv-tfs':'tarung-num','sv-sfs':'syair-txt'};
+  Object.entries(fsMap).forEach(([svId,txtId])=>{
+    const sv=document.getElementById(svId),txt=document.getElementById(txtId);
+    if(sv&&txt&&txt.style.fontSize)sv.textContent=Math.round(parseFloat(txt.style.fontSize));
+  });
+}
+
+function resetPositions(){
+  localStorage.removeItem(STORAGE_KEY);
+  db.doc(DOC_PATH).delete().catch(()=>{});
+  location.reload();
+}
 
 /* ===== RANDOM ===== */
 function pickDiff(total,last){if(total<=1)return 0;let idx;do{idx=Math.floor(Math.random()*total);}while(idx===last);return idx;}
-let syairDeck=[],syairUsed=[];
-function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function initSyairDeck(){syairDeck=shuffleArray([...Array(SYAIR.length).keys()]);syairUsed=[];}
-function pickNextSyair(){if(syairDeck.length===0){const lu=syairUsed[syairUsed.length-1];let nd;do{nd=shuffleArray([...Array(SYAIR.length).keys()]);}while(nd[0]===lu);syairDeck=nd;syairUsed=[];}const idx=syairDeck.shift();syairUsed.push(idx);return idx;}
-function rColok(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,4).sort((a,b)=>a-b).join('');t++;}while(r===lastColok&&t<20);lastColok=r;return r;}
-function rBBFS(){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,8).sort((a,b)=>a-b).join('');t++;}while(r===lastBBFS&&t<20);lastBBFS=r;return r;}
-function rTarung(n){const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,n).sort((a,b)=>a-b).join('-');t++;}while(r===lastTarung&&t<20);lastTarung=r;return r;}
 
-function setPasaran(id){curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;const img=document.getElementById('pas-img');img.src=RAW+encodeURIComponent(p.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};debouncedSave();}
-function setShio(idx){curShio=Number(idx);const s=SHIO[curShio];if(!s)return;const img=document.getElementById('shio-img');img.src=RAW+encodeURIComponent(s.file);img.style.display='block';img.onerror=()=>{img.style.display='none';};document.getElementById('sel-shio').value=curShio;debouncedSave();}
+function rColok(){
+  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
+  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,4).sort((a,b)=>a-b).join('');t++;}while(r===lastColok&&t<20);
+  lastColok=r;return r;
+}
+function rBBFS(){
+  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
+  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,8).sort((a,b)=>a-b).join('');t++;}while(r===lastBBFS&&t<20);
+  lastBBFS=r;return r;
+}
+function rTarung(n){
+  const d=[0,1,2,3,4,5,6,7,8,9];let r,t=0;
+  do{for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}r=d.slice(0,n).sort((a,b)=>a-b).join('-');t++;}while(r===lastTarung&&t<20);
+  lastTarung=r;return r;
+}
+
+function setPasaran(id){
+  curPas=id;const p=PASARAN.find(x=>x.id===id);if(!p)return;
+  const img=document.getElementById('pas-img');
+  img.src=RAW+encodeURIComponent(p.file);img.style.display='block';
+  img.onerror=()=>{img.style.display='none';};
+  debouncedSave();
+}
+
+function setShio(idx){
+  curShio=Number(idx);const s=SHIO[curShio];if(!s)return;
+  const img=document.getElementById('shio-img');
+  img.src=RAW+encodeURIComponent(s.file);img.style.display='block';
+  img.onerror=()=>{img.style.display='none';};
+  document.getElementById('sel-shio').value=curShio;
+  // Otomatis ganti syair sesuai shio yang dipilih
+  const syair=pickNextSyair(curShio);
+  document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
+  debouncedSave();
+}
 
 /* ===== DRAG ===== */
-function initDrag(){document.querySelectorAll('.el').forEach(el=>{let drag=false,sx,sy,ox,oy;const start=(cx,cy)=>{drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));el.classList.add('active');sx=cx;sy=cy;ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;};const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};const end=()=>{if(drag){drag=false;debouncedSave();}};el.addEventListener('mousedown',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.clientX,e.clientY);e.preventDefault();});document.addEventListener('mousemove',e=>move(e.clientX,e.clientY));document.addEventListener('mouseup',end);el.addEventListener('touchstart',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});document.addEventListener('touchmove',e=>{if(drag){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}},{passive:false});document.addEventListener('touchend',end);});}
+function initDrag(){
+  document.querySelectorAll('.el').forEach(el=>{
+    let drag=false,sx,sy,ox,oy;
+    const start=(cx,cy)=>{
+      drag=true;document.querySelectorAll('.el').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');sx=cx;sy=cy;
+      ox=parseInt(el.style.left)||0;oy=parseInt(el.style.top)||0;
+    };
+    const move=(cx,cy)=>{if(!drag)return;el.style.left=(ox+cx-sx)+'px';el.style.top=(oy+cy-sy)+'px';};
+    const end=()=>{if(drag){drag=false;debouncedSave();}};
+    el.addEventListener('mousedown',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.clientX,e.clientY);e.preventDefault();});
+    document.addEventListener('mousemove',e=>move(e.clientX,e.clientY));
+    document.addEventListener('mouseup',end);
+    el.addEventListener('touchstart',e=>{if(e.target.closest('.el-ctrl,.rh'))return;start(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
+    document.addEventListener('touchmove',e=>{if(drag){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}},{passive:false});
+    document.addEventListener('touchend',end);
+  });
+}
 
 /* ===== RESIZE ===== */
-function initResize(){document.querySelectorAll('.rh').forEach(handle=>{const elId=handle.dataset.el;let resizing=false,sx,sy,sw,sh;const start=(cx,cy)=>{resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);const img=el.querySelector('img');if(img){sw=img.offsetWidth;sh=img.offsetHeight;}else{sw=el.offsetWidth;sh=el.offsetHeight;}};const move=(cx,cy)=>{if(!resizing)return;applyRZ(elId,Math.max(20,sw+cx-sx),Math.max(14,sh+cy-sy));};handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.stopPropagation();e.preventDefault();});document.addEventListener('mousemove',e=>{if(resizing)move(e.clientX,e.clientY);});document.addEventListener('mouseup',()=>{if(resizing){resizing=false;debouncedSave();}});handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});document.addEventListener('touchmove',e=>{if(resizing)move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});document.addEventListener('touchend',()=>{if(resizing){resizing=false;debouncedSave();}});});}
-function applyRZ(elId,w,h){const el=document.getElementById(elId);const img=el.querySelector('img');if(!img)return;img.style.width=w+'px';img.style.height=h+'px';const wM={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'};const hM={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'};if(wM[elId])document.getElementById(wM[elId]).textContent=Math.round(w);if(hM[elId])document.getElementById(hM[elId]).textContent=Math.round(h);}
-function rz(elId,axis,delta){const img=document.getElementById(elId).querySelector('img');if(!img)return;if(axis==='w'){const nw=Math.max(20,img.offsetWidth+delta);img.style.width=nw+'px';const sv={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'}[elId];if(sv)document.getElementById(sv).textContent=nw;}else{const nh=Math.max(14,img.offsetHeight+delta);img.style.height=nh+'px';const sv={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'}[elId];if(sv)document.getElementById(sv).textContent=nh;}debouncedSave();}
-function fs(txtId,delta){const el=document.getElementById(txtId);const nf=Math.max(8,parseFloat(el.style.fontSize||16)+delta);el.style.fontSize=nf+'px';const m={'date-txt':'sv-dfs','c1':'sv-c1','c2':'sv-c2','c3':'sv-c3','c4':'sv-c4','bbfs-num':'sv-bfs','tarung-num':'sv-tfs','syair-txt':'sv-sfs'};if(m[txtId])document.getElementById(m[txtId]).textContent=Math.round(nf);debouncedSave();}
+function initResize(){
+  document.querySelectorAll('.rh').forEach(handle=>{
+    const elId=handle.dataset.el;let resizing=false,sx,sy,sw,sh;
+    const start=(cx,cy)=>{
+      resizing=true;sx=cx;sy=cy;const el=document.getElementById(elId);
+      const img=el.querySelector('img');
+      if(img){sw=img.offsetWidth;sh=img.offsetHeight;}
+      else{sw=el.offsetWidth;sh=el.offsetHeight;}
+    };
+    const move=(cx,cy)=>{if(!resizing)return;applyRZ(elId,Math.max(20,sw+cx-sx),Math.max(14,sh+cy-sy));};
+    handle.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);e.stopPropagation();e.preventDefault();});
+    document.addEventListener('mousemove',e=>{if(resizing)move(e.clientX,e.clientY);});
+    document.addEventListener('mouseup',()=>{if(resizing){resizing=false;debouncedSave();}});
+    handle.addEventListener('touchstart',e=>{start(e.touches[0].clientX,e.touches[0].clientY);e.stopPropagation();e.preventDefault();},{passive:false});
+    document.addEventListener('touchmove',e=>{if(resizing)move(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+    document.addEventListener('touchend',()=>{if(resizing){resizing=false;debouncedSave();}});
+  });
+}
 
-function randomAll(){const piNew=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=piNew;curPas=PASARAN[piNew].id;document.getElementById('sel-pas').value=curPas;const siNew=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=siNew;curShio=siNew;document.getElementById('sel-shio').value=curShio;document.getElementById('inp-colok').value=rColok();document.getElementById('inp-bbfs').value=rBBFS();document.getElementById('inp-tarung').value=rTarung(5);generate();}
+function applyRZ(elId,w,h){
+  const el=document.getElementById(elId),img=el.querySelector('img');if(!img)return;
+  img.style.width=w+'px';img.style.height=h+'px';
+  const wM={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'};
+  const hM={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'};
+  if(wM[elId])document.getElementById(wM[elId]).textContent=Math.round(w);
+  if(hM[elId])document.getElementById(hM[elId]).textContent=Math.round(h);
+}
+
+function rz(elId,axis,delta){
+  const img=document.getElementById(elId).querySelector('img');if(!img)return;
+  if(axis==='w'){
+    const nw=Math.max(20,img.offsetWidth+delta);img.style.width=nw+'px';
+    const sv={'el-logo':'sv-lw','el-pasaran':'sv-pw','el-shio':'sv-sw'}[elId];
+    if(sv)document.getElementById(sv).textContent=nw;
+  }else{
+    const nh=Math.max(14,img.offsetHeight+delta);img.style.height=nh+'px';
+    const sv={'el-logo':'sv-lh','el-pasaran':'sv-ph','el-shio':'sv-sh'}[elId];
+    if(sv)document.getElementById(sv).textContent=nh;
+  }
+  debouncedSave();
+}
+
+function fs(txtId,delta){
+  const el=document.getElementById(txtId);
+  const nf=Math.max(8,parseFloat(el.style.fontSize||16)+delta);
+  el.style.fontSize=nf+'px';
+  const m={'date-txt':'sv-dfs','c1':'sv-c1','c2':'sv-c2','c3':'sv-c3','c4':'sv-c4','bbfs-num':'sv-bfs','tarung-num':'sv-tfs','syair-txt':'sv-sfs'};
+  if(m[txtId])document.getElementById(m[txtId]).textContent=Math.round(nf);
+  debouncedSave();
+}
+
+function randomAll(){
+  const piNew=pickDiff(PASARAN.length,lastPasIdx);lastPasIdx=piNew;curPas=PASARAN[piNew].id;
+  document.getElementById('sel-pas').value=curPas;
+  const siNew=pickDiff(SHIO.length,lastShioIdx);lastShioIdx=siNew;curShio=siNew;
+  document.getElementById('sel-shio').value=curShio;
+  document.getElementById('inp-colok').value=rColok();
+  document.getElementById('inp-bbfs').value=rBBFS();
+  document.getElementById('inp-tarung').value=rTarung(5);
+  generate();
+}
 
 function generate(){
-  const dv=document.getElementById('inp-date').value;if(dv){const dt=new Date(dv+'T00:00:00');const M=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];document.getElementById('date-txt').textContent=`${dt.getDate()} ${M[dt.getMonth()]} ${dt.getFullYear()}`;}
-  const cv=(document.getElementById('inp-colok').value||rColok()).padEnd(4,'0');['c1','c2','c3','c4'].forEach((id,i)=>document.getElementById(id).textContent=cv[i]||'?');
-  const bv=document.getElementById('inp-bbfs').value||rBBFS();document.getElementById('bbfs-num').innerHTML=bv.slice(0,4).split('').join(' ')+'<br>'+bv.slice(4,8).split('').join(' ');
+  // Tanggal
+  const dv=document.getElementById('inp-date').value;
+  if(dv){
+    const dt=new Date(dv+'T00:00:00');
+    const M=['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'];
+    document.getElementById('date-txt').textContent=`${dt.getDate()} ${M[dt.getMonth()]} ${dt.getFullYear()}`;
+  }
+  // Colok
+  const cv=(document.getElementById('inp-colok').value||rColok()).padEnd(4,'0');
+  ['c1','c2','c3','c4'].forEach((id,i)=>document.getElementById(id).textContent=cv[i]||'?');
+  // BBFS
+  const bv=document.getElementById('inp-bbfs').value||rBBFS();
+  document.getElementById('bbfs-num').innerHTML=bv.slice(0,4).split('').join(' ')+'<br>'+bv.slice(4,8).split('').join(' ');
+  // Tarung
   document.getElementById('tarung-num').textContent=document.getElementById('inp-tarung').value||rTarung(5);
-  const siNew=pickNextSyair();const s=SYAIR[siNew];document.getElementById('syair-txt').innerHTML=s.replace(/\n/g,'<br>');
+  // Syair sesuai shio yang dipilih
+  const syair=pickNextSyair(curShio);
+  document.getElementById('syair-txt').innerHTML=syair.replace(/\n/g,'<br>');
+  // Gambar pasaran & shio
   setPasaran(curPas);setShio(curShio);
-  Object.entries(customColors).forEach(([id,color])=>{const el=document.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});
+  // Re-apply custom colors
+  Object.entries(customColors).forEach(([id,color])=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.style.webkitTextFillColor=color;el.style.background='none';
+      el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
+      el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
+    }
+  });
   autoSave();
 }
 
@@ -381,12 +800,14 @@ async function downloadCard(){
 
   try{
     const imgs=[...card.querySelectorAll('img')];
-    await Promise.all(imgs.map(img=>{if(img.complete&&img.naturalHeight!==0)return Promise.resolve();return new Promise(res=>{img.onload=res;img.onerror=res;});}));
+    await Promise.all(imgs.map(img=>{
+      if(img.complete&&img.naturalHeight!==0)return Promise.resolve();
+      return new Promise(res=>{img.onload=res;img.onerror=res;});
+    }));
     await new Promise(r=>setTimeout(r,400));
     card.classList.add('dl-mode');
     await new Promise(r=>setTimeout(r,100));
 
-    // Render scale 1 (960x960) lalu upscale ke 1920x1920
     const canvas960=await html2canvas(card,{
       useCORS:true,allowTaint:false,scale:1,
       width:CARD_W,height:CARD_H,
@@ -399,25 +820,31 @@ async function downloadCard(){
           c.querySelectorAll('.el').forEach(el=>{el.classList.remove('active');el.style.outline='none';});
           const bg=doc.getElementById('card-bg');
           if(bg){bg.style.display='block';bg.style.width=CARD_W+'px';bg.style.height=CARD_H+'px';}
-          Object.entries(customColors).forEach(([id,color])=>{const el=doc.getElementById(id);if(el){el.style.webkitTextFillColor=color;el.style.background='none';el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';}});
+          Object.entries(customColors).forEach(([id,color])=>{
+            const el=doc.getElementById(id);
+            if(el){
+              el.style.webkitTextFillColor=color;el.style.background='none';
+              el.style.webkitBackgroundClip='unset';el.style.backgroundClip='unset';
+              el.style.color=color;el.style.textShadow='0 2px 10px rgba(0,0,0,.85)';
+            }
+          });
         }
       }
     });
 
-    // Upscale ke Full HD 1920x1920
     const canvasFHD=document.createElement('canvas');
     canvasFHD.width=DL_W;canvasFHD.height=DL_H;
     const ctx=canvasFHD.getContext('2d');
-    ctx.imageSmoothingEnabled=true;
-    ctx.imageSmoothingQuality='high';
+    ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
     ctx.drawImage(canvas960,0,0,DL_W,DL_H);
 
     card.classList.remove('dl-mode');
 
     const dateStr=document.getElementById('date-txt').textContent.replace(/\s+/g,'-');
     const pasName=(PASARAN.find(p=>p.id===curPas)||{name:'syair'}).name.replace(/\s+/g,'_');
+    const shioName=(SHIO[curShio]||{name:'shio'}).name.replace(/\s+/g,'_');
     const link=document.createElement('a');
-    link.download=`syair_${pasName}_${dateStr}_FHD_1920x1920.png`;
+    link.download=`syair_${pasName}_${shioName}_${dateStr}_FHD.png`;
     link.href=canvasFHD.toDataURL('image/png');
     link.click();
 
@@ -427,15 +854,75 @@ async function downloadCard(){
 }
 
 /* ===== SIMPAN FILE HTML ===== */
-function savePositions(){const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];const positions={};elIds.forEach(id=>{const el=document.getElementById(id);if(!el)return;const img=el.querySelector('img');positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};});savePositionsRobust(positions);}
-function savePositionsRobust(positions){const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let newSrc=src;Object.entries(positions).forEach(([id,data])=>{const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);});const logoImg=document.getElementById('logo-img');if(logoImg){const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);}const pasImg=document.getElementById('pas-img');if(pasImg){const re=/(id="pas-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${pasImg.style.width};height:${pasImg.style.height};object-fit:contain;display:${pasImg.style.display||'none'};filter:drop-shadow(0 0 18px rgba(200,150,44,.9));${post}`);}const shioImg=document.getElementById('shio-img');if(shioImg){const re=/(id="shio-img"[^>]*style=")[^"]*(")/g;newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${shioImg.style.width};height:${shioImg.style.height};object-fit:contain;display:${shioImg.style.display||'none'};filter:drop-shadow(0 0 20px rgba(200,150,44,.7));${post}`);}const fontEls=[{id:'date-txt',extra:'letter-spacing:2px;'},{id:'c1',extra:'line-height:1;display:block;'},{id:'c2',extra:'line-height:1;display:block;'},{id:'c3',extra:'line-height:1;display:block;'},{id:'c4',extra:'line-height:1;display:block;'},{id:'bbfs-num',extra:'letter-spacing:4px;line-height:1.55;text-align:center;'},{id:'tarung-num',extra:'letter-spacing:3px;text-align:center;'},{id:'syair-txt',extra:'line-height:1.75;display:block;text-align:center;'}];fontEls.forEach(({id,extra})=>{const el=document.getElementById(id);if(!el)return;const fs=el.style.fontSize||'16px';const re=new RegExp(`(id="${id}"[^>]*style=")[^"]*(")`,'g');newSrc=newSrc.replace(re,`$1font-size:${fs};${extra}$2`);});const blob=new Blob([newSrc],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.download='syair_generator_saved.html';link.href=url;link.click();setTimeout(()=>URL.revokeObjectURL(url),3000);showToast('Posisi tersimpan ke file HTML!');}
+function savePositions(){
+  const elIds=['el-logo','el-date','el-pasaran','el-c1','el-c2','el-c3','el-c4','el-bbfs','el-tarung','el-shio','el-syair'];
+  const positions={};
+  elIds.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const img=el.querySelector('img');
+    positions[id]={top:el.style.top,left:el.style.left,imgW:img?img.style.width:'',imgH:img?img.style.height:''};
+  });
+  savePositionsRobust(positions);
+}
 
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg||'Done';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-function togglePanel(header){header.classList.toggle('open');const body=header.nextElementSibling;body.classList.toggle('open');}
+function savePositionsRobust(positions){
+  const src='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  let newSrc=src;
+  Object.entries(positions).forEach(([id,data])=>{
+    const re=new RegExp(`(<div class="el" id="${id}" style=")[^"]*(")`,'g');
+    newSrc=newSrc.replace(re,`$1top:${data.top};left:${data.left};$2`);
+  });
+  const logoImg=document.getElementById('logo-img');
+  if(logoImg){
+    const re=/(id="logo-img"[^>]*style=")[^"]*(")/g;
+    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${logoImg.style.width};height:${logoImg.style.height};object-fit:contain;display:block;filter:drop-shadow(0 0 14px rgba(200,150,44,.85));${post}`);
+  }
+  const pasImg=document.getElementById('pas-img');
+  if(pasImg){
+    const re=/(id="pas-img"[^>]*style=")[^"]*(")/g;
+    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${pasImg.style.width};height:${pasImg.style.height};object-fit:contain;display:${pasImg.style.display||'none'};filter:drop-shadow(0 0 18px rgba(200,150,44,.9));${post}`);
+  }
+  const shioImg=document.getElementById('shio-img');
+  if(shioImg){
+    const re=/(id="shio-img"[^>]*style=")[^"]*(")/g;
+    newSrc=newSrc.replace(re,(m,pre,post)=>`${pre}width:${shioImg.style.width};height:${shioImg.style.height};object-fit:contain;display:${shioImg.style.display||'none'};filter:drop-shadow(0 0 20px rgba(200,150,44,.7));${post}`);
+  }
+  const fontEls=[
+    {id:'date-txt',extra:'letter-spacing:2px;'},
+    {id:'c1',extra:'line-height:1;display:block;'},
+    {id:'c2',extra:'line-height:1;display:block;'},
+    {id:'c3',extra:'line-height:1;display:block;'},
+    {id:'c4',extra:'line-height:1;display:block;'},
+    {id:'bbfs-num',extra:'letter-spacing:4px;line-height:1.55;text-align:center;'},
+    {id:'tarung-num',extra:'letter-spacing:3px;text-align:center;'},
+    {id:'syair-txt',extra:'line-height:1.75;display:block;text-align:center;'}
+  ];
+  fontEls.forEach(({id,extra})=>{
+    const el=document.getElementById(id);if(!el)return;
+    const fs=el.style.fontSize||'16px';
+    const re=new RegExp(`(id="${id}"[^>]*style=")[^"]*(")`,'g');
+    newSrc=newSrc.replace(re,`$1font-size:${fs};${extra}$2`);
+  });
+  const blob=new Blob([newSrc],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.download='syair_generator_saved.html';link.href=url;link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  showToast('Posisi tersimpan ke file HTML!');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg||'Done';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);
+}
+function togglePanel(header){
+  header.classList.toggle('open');
+  const body=header.nextElementSibling;body.classList.toggle('open');
+}
 
 /* ===== INIT ===== */
 async function init(){
-  initSyairDeck();
+  initSyairDecks();
   const t=new Date();t.setDate(t.getDate()+1);
   const y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
   document.getElementById('inp-date').value=`${y}-${m}-${d}`;
@@ -444,12 +931,8 @@ async function init(){
   if(!loaded){randomAll();}
   initFirebaseListener();
 }
+
 init();
-</script>
-<script>
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('keydown',function(e){if(e.key==='F12')e.preventDefault();if(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))e.preventDefault();if(e.ctrlKey&&e.key.toUpperCase()==='U')e.preventDefault();});
-setInterval(()=>{const before=new Date();debugger;const after=new Date();if(after-before>100){document.body.innerHTML='<h1 style="text-align:center;margin-top:50px;color:#c8962c;font-family:Cinzel,serif;">Akses ditolak</h1>';}},1000);
 </script>
 </body>
 </html>
